@@ -1,5 +1,6 @@
 import json
 import csv
+import pandas
 
 
 def write_json_data(msg=None, file_name='json_file', do_read=False):
@@ -16,12 +17,16 @@ def write_json_data(msg=None, file_name='json_file', do_read=False):
 
 def write_csv_data(msg=None, file_name='csv_file', header=None, do_read=False):
     if do_read:
+        # 用csv格式读取
         with open('{}.csv'.format(file_name), 'r', encoding='utf-8') as rf:
             reader = csv.reader(rf)
             print('find csv data: ')
             for line in reader:
                 print(line)
-            return reader
+
+        # 用pandas格式读取
+        result = pandas.read_csv('{}.csv'.format(file_name))
+        print(result)
     else:
         with open('{}.csv'.format(file_name), 'w', encoding='utf-8', newline='') as wf:
             # TODO 这个是普通格式的写入

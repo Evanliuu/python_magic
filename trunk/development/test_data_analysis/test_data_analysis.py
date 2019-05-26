@@ -121,7 +121,8 @@ class Excel_crawler(object):
         if final_list:
             self.create_excel(final_list)
 
-    def create_excel(self, write_info=None):
+    @staticmethod
+    def create_excel(write_info=None):
         f = xlwt.Workbook()
         sheet1 = f.add_sheet('Summary', cell_overwrite_ok=True)
 

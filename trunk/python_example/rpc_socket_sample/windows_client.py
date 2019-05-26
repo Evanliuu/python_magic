@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from xmlrpc.client import ServerProxy
 
 
@@ -49,21 +50,24 @@ class Gui(object):
         self.text.delete(1.0, tk.END)
 
     def open_connection(self):
-        try:
-            windows = WindowsConnect(addr=self.input1.get(), port=self.input2.get())
-            self.text.insert(tk.END, 'Connect ip {} port {}\n'.
-                             format(self.input1.get(), self.input2.get()))
-            self.text.insert(tk.END, 'Wait for the remote server to respond...\n')
-            host = windows.get_windows_host()
-        except Exception as ex:
-            host = None
-            self.text.insert(tk.END, 'No server response was received\nerror msg: {}'.format(ex))
+        if not self.input1.get() or not self.input2.get():
+            messagebox.showwarning('Warning', 'IP and host cannot be empty!')
+        else:
+            try:
+                windows = WindowsConnect(addr=self.input1.get(), port=self.input2.get())
+                self.text.insert(tk.END, 'Connect ip {} port {}\n'.
+                                 format(self.input1.get(), self.input2.get()))
+                self.text.insert(tk.END, 'Wait for the remote server to respond...\n')
+                host = windows.get_windows_host()
+            except Exception as ex:
+                host = None
+                self.text.insert(tk.END, 'No server response was received\nerror msg: {}'.format(ex))
 
-        if host:
-            self.text.insert(tk.END, 'read ok!\n')
-            self.text.insert(tk.END, '*' * 30 + '\n')
-            self.text.insert(tk.END, 'read the server host name: {}\n'.format(host))
-            self.text.insert(tk.END, '*' * 30 + '\n')
+            if host:
+                self.text.insert(tk.END, 'read ok!\n')
+                self.text.insert(tk.END, '*' * 30 + '\n')
+                self.text.insert(tk.END, 'read the server host name: {}\n'.format(host))
+                self.text.insert(tk.END, '*' * 30 + '\n')
 
     def set_window_center(self, width=300, height=300):
         """

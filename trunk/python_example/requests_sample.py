@@ -1,11 +1,6 @@
-import time
-import datetime
 import re
-import json
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException
-from multiprocessing import Pool
-from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from requests.auth import HTTPBasicAuth
 
@@ -40,9 +35,9 @@ class Crawler(object):
         try:
             # TODO 使用Session保持会话状态
             # s = requests.Session()
-            # response = requests.get(self.base_url)
+            # response = requests.get(url)
             # TODO 登陆网站时需要输入账户密码则调用auth参数传入即可
-            # response = requests.get(self.base_url, auth=HTTPBasicAuth('username', 'password'))
+            # response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
             if purpose == GET:
                 response = requests.get(url, headers=headers, params=params, timeout=5)
             else:
@@ -59,13 +54,13 @@ class Crawler(object):
             else:
                 return None
         except ReadTimeout:  # 访问超时错误
-            print('the url ({}) Time out'.format(self.base_url))
+            print('the url ({}) Time out'.format(url))
             return None
         except ConnectionError:  # 网络连接中断错误
-            print('the url ({}) Connect error'.format(self.base_url))
+            print('the url ({}) Connect error'.format(url))
             return None
         except RequestException:  # 父类错误
-            print('the url ({}) Error'.format(self.base_url))
+            print('the url ({}) Error'.format(url))
             return None
 
     @staticmethod
