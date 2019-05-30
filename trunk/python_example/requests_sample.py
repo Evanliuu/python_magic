@@ -3,6 +3,7 @@ import requests
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException
 from fake_useragent import UserAgent
 from requests.auth import HTTPBasicAuth
+from urllib.parse import urljoin, quote
 
 GET = 'get'
 POST = 'post'
@@ -73,6 +74,10 @@ class Crawler(object):
 
     @staticmethod
     def main():
+        # 中文转换字节码
+        like = quote('你好')
+        print(like)
+
         source = crawler.get_web_page(purpose=GET)
         if source:
             # 筛选出网页里的url
