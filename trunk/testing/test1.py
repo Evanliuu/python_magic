@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
-import re
 import requests
-from urllib.parse import urljoin, quote
-from fake_useragent import UserAgent
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 GET = 'get'
@@ -22,7 +20,7 @@ class Crawler(object):
         chrome_ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'
 
         headers = {
-            "User-Agent": android_ua,
+            "User-Agent": chrome_ua,
             'Host': 'www.623zz.com'
         }
         params = {
@@ -97,8 +95,8 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
-    base_url = 'https://www.623zz.com/'
-    like_movie = '鬼父'
+    base_url = 'https://www.com/'
+    like_movie = '忍者神龟'
 
     crawler = Crawler(base_url=base_url, like_movie=like_movie)
     crawler.main()
