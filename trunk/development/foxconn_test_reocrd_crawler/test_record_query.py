@@ -157,14 +157,16 @@ class Spider(object):
 
         return result_page, station
 
-    def parse_page(self, content=None):
+    @staticmethod
+    def parse_page(content=None):
         soup = BeautifulSoup(content, 'lxml')
         result = soup.find_all(name='td')
         # 保存所有Failure的文本数据
         total_list = ['None' if not r.string else r.string for r in result]
         return total_list
 
-    def get_summary_data(self, test_data=None):
+    @staticmethod
+    def get_summary_data(test_data=None):
         # 循环取出Summary数据
         result_list = []
         i = 0
@@ -180,7 +182,10 @@ class Spider(object):
             i += 1
         return result_list, test_data
 
-    def format_control(self, data='', format='^\d+$'):
+    @staticmethod
+    def format_control(data='', format=None):
+        format = format or '^\d+$'
+
         r = re.match(format, data)
         if r:
             return True
@@ -227,7 +232,8 @@ class Spider(object):
             loops += 1
         return result_list
 
-    def write_excel(self, sheet1_info=None, sheet2_info=None, excel_name='example', test_time=None):
+    @staticmethod
+    def write_excel(sheet1_info=None, sheet2_info=None, excel_name='example', test_time=None):
         # 默认值为 "empty"
         sheet1_info = sheet1_info or ['empty']
         sheet2_info = sheet2_info or ['empty']
@@ -357,7 +363,9 @@ class Magic_gui(object):
         for i in [self.input1, self.input2]:
             i.set('')
 
-    def format_control(self, data='', format='^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'):
+    @staticmethod
+    def format_control(data='', format=None):
+        format = format or '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
         r = re.search(format, data)
         if r:
             return r.group()
