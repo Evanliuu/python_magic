@@ -95,6 +95,7 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
+    # TODO 选择你喜欢的电影
     base_url = 'https://www.com/'
     like_movie = '忍者神龟'
 
