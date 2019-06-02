@@ -3,6 +3,7 @@ import datetime
 import os
 import threading
 import urllib3
+import random
 from urllib.parse import urljoin
 
 
@@ -15,16 +16,28 @@ class Crawler(object):
         self.movie_local_path = r'C:\Users\86151\Desktop\m3u8_movies'
         self.movie_directory_name = 'movie_1'
         self.failed_tx_url = []
-        self.headers = {
-            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
+
+    @staticmethod
+    def random_headers():
+        ua_list = [
+            # Chrome UA
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
+            # IE UA
+            'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+            # Microsoft Edge UA
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
+        ]
+        ua = random.choice(ua_list)
+        headers = {
+            'User-Agent': ua,
         }
+        return headers
 
     def download_movies(self, index=None, ts_url=None):
         ts_file_name = str(ts_url).split('/')[-1]
         try:
             print('{}, 正在下载第{}个TS >> {}'.format(datetime.datetime.now(), index + 1, ts_url))
-            resp = requests.get(url=ts_url, headers=self.headers, stream=True, verify=False)
+            resp = requests.get(url=ts_url, headers=self.random_headers(), stream=True, verify=False)
             # 保存TS数据流
             with open(ts_file_name, 'wb+') as file:
                 for chunk in resp.iter_content(chunk_size=1024):
@@ -45,7 +58,7 @@ class Crawler(object):
 
     def get_m3u8_movie(self):
         # 获取m3u8格式的电影文件
-        resp = requests.get(url=self.source_url, headers=self.headers)
+        resp = requests.get(url=self.source_url, headers=self.random_headers())
         # 从m3u8文件里面获取所有的TS文件（原视频数据分割为很多个TS流，每个TS流的地址记录在m3u8文件列表中）
         for line in resp.text.splitlines():
             if '.ts' in line:
