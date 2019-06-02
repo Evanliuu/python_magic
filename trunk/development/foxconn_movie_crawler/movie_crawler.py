@@ -121,7 +121,7 @@ class Crawler(object):
                             print('{} 下载失败, Error: {}'.format(datetime.datetime.now(), ex))
 
             end_time = datetime.datetime.now()
-            print('全部下载完毕： 累计{}分钟'.format((start_time - end_time).seconds/60))
+            print('全部下载完毕： 累计{}分钟'.format((end_time - start_time).seconds / 60))
 
 
 if __name__ == '__main__':
