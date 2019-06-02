@@ -79,7 +79,7 @@ class Crawler(object):
             # 检查保存路径
             self.check_local_file()
 
-            # # TODO 读取failed的txt文件重新下载
+            # TODO 读取failed的txt文件重新下载
             # ts_list = self.read_failed_txt_file()
 
             start_time = datetime.datetime.now()
@@ -124,6 +124,6 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
-    base_url = 'https://156zy.suyunbo.tv/2019/05/30/M4dY96iXziI1DgqH/'
+    base_url = 'https://sample/'
     crawler = Crawler(base_url=base_url)
     crawler.main()
