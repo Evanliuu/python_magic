@@ -70,6 +70,13 @@ class Crawler(object):
                 line.append(each_line.strip())
         return line
 
+    def merge_ts_file(self):
+        os.chdir(urljoin(self.movie_local_path, self.movie_directory_name))
+        cmd = "copy /b *.ts movie.mp4"
+        os.system(cmd)
+        # TODO 整合完mp4格式后后，ts文件不想留可删除
+        # os.system('del /Q *.ts')
+
     def main(self):
         # 禁用安全请求警告(requests.get(url, verify=False))
         urllib3.disable_warnings()
@@ -119,8 +126,11 @@ class Crawler(object):
             print('全部下载完毕： 累计{}分钟'.format((end_time - start_time).seconds / 60))
 
             if self.failed_tx_url:
-                print('Failed TX url: {}'.format(self.failed_tx_url))
+                print('Failed ts url: {}'.format(self.failed_tx_url))
                 print('Length: {}'.format(len(self.failed_tx_url)))
+            else:
+                # 如果ts文件全部下载成功，则整合成一个mp4格式的电影文件（可手动下命令整合）
+                self.merge_ts_file()
 
 
 if __name__ == '__main__':
