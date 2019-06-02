@@ -13,9 +13,10 @@ def sleep_test(sleep):
 
 def thread_loop(index, sleep_list):
     # 添加多线程
-    print('start thread {} time: '.format(index), datetime.datetime.now())
+    start_time = datetime.datetime.now()
     loops = range(len(sleep_list))
     threads = []
+
     # insert all threads to threads list
     for i in sleep_list:
         t = threading.Thread(target=sleep_test, args=(i,))
@@ -28,7 +29,9 @@ def thread_loop(index, sleep_list):
     # waiting all thread close
     for i in loops:
         threads[i].join()
-    print('thread {} all done: '.format(index), datetime.datetime.now())
+
+    end_time = datetime.datetime.now()
+    print('thread {} down, total {} minutes！'.format(index, (end_time - start_time).seconds / 60))
 
 
 def main(sleep_list=None):
