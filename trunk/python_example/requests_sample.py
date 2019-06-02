@@ -11,8 +11,8 @@ POST = 'post'
 
 class Crawler(object):
 
-    def __init__(self, url=''):
-        self.base_url = url
+    def __init__(self, base_url=None):
+        self.base_url = base_url
 
     def get_web_page(self, url=None, purpose=GET):
         url = url or self.base_url
@@ -85,5 +85,6 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
-    crawler = Crawler(url='https://www.baidu.com')
+    base_url = 'https://www.baidu.com'
+    crawler = Crawler(base_url=base_url)
     crawler.main()
