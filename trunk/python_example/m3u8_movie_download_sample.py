@@ -12,7 +12,6 @@ class Crawler(object):
     def __init__(self, base_url=None):
         self.base_url = base_url
         self.source_url = urljoin(self.base_url, 'playlist.m3u8')
-        self.ts_list = []
         self.movie_local_path = r'C:\Users\86151\Desktop\m3u8_movies'
         self.movie_directory_name = 'movie_1'
         self.failed_tx_url = []
@@ -59,24 +58,28 @@ class Crawler(object):
     def get_m3u8_movie(self):
         # 获取m3u8格式的电影文件
         resp = requests.get(url=self.source_url, headers=self.random_headers())
-        # 从m3u8文件里面获取所有的TS文件（原视频数据分割为很多个TS流，每个TS流的地址记录在m3u8文件列表中）
-        for line in resp.text.splitlines():
-            if '.ts' in line:
-                self.ts_list.append(urljoin(self.base_url, line))
+
+        ts_list = []
+        if resp.status_code == 200:
+            # 从m3u8文件里面获取所有的TS文件（原视频数据分割为很多个TS流，每个TS流的地址记录在m3u8文件列表中）
+            for line in resp.text.splitlines():
+                if '.ts' in line:
+                    ts_list.append(urljoin(self.base_url, line))
+        return ts_list
 
     def main(self):
         # 禁用安全请求警告(requests.get(url, verify=False))
         urllib3.disable_warnings()
 
-        self.get_m3u8_movie()
-        if self.ts_list:
+        ts_list = self.get_m3u8_movie()
+        if ts_list:
             self.check_local_file()
 
             start_time = datetime.datetime.now()
-            loops = range(len(self.ts_list))
+            loops = range(len(ts_list))
             threads = []
 
-            for index, ts_url in enumerate(self.ts_list):
+            for index, ts_url in enumerate(ts_list):
                 t = threading.Thread(target=self.download_movies, args=(index + 1, ts_url))
                 threads.append(t)
 
