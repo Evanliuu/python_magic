@@ -113,8 +113,8 @@ class Crawler(object):
 
                         print('{} 正在下载：{}'.format(datetime.datetime.now(), name))
                         try:
+                            resp = self.open_url(url=movie)
                             with open('{}.{}'.format(name, movie_format), 'wb') as file:
-                                resp = self.open_url(url=movie)
                                 file.write(resp.content)
                             print('{} 下载成功'.format(datetime.datetime.now()))
                         except Exception as ex:
