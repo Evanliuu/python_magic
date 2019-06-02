@@ -62,6 +62,14 @@ class Crawler(object):
                     ts_list.append(urljoin(self.base_url, line))
         return ts_list
 
+    @staticmethod
+    def read_failed_txt_file():
+        line = []
+        with open('failed_tx_url.txt') as file:
+            for each_line in file.readlines():
+                line.append(each_line.strip())
+        return line
+
     def main(self):
         # 禁用安全请求警告(requests.get(url, verify=False))
         urllib3.disable_warnings()
@@ -70,6 +78,9 @@ class Crawler(object):
         if ts_list:
             # 检查保存路径
             self.check_local_file()
+
+            # # TODO 读取failed的txt文件重新下载
+            # ts_list = self.read_failed_txt_file()
 
             start_time = datetime.datetime.now()
             queue_index = 1
