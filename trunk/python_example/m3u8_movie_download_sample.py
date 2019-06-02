@@ -95,7 +95,7 @@ class Crawler(object):
                 queue = []
                 try:
                     # 设置队列个数上限
-                    queue_count = range(20)
+                    queue_count = range(50)
                     for i in queue_count:
                         queue.append(ts_list.pop())
                 except IndexError:
@@ -120,7 +120,7 @@ class Crawler(object):
                 print('*' * 100)
                 print('第{}个队列， 下载完成\n'.format(queue_index))
                 queue_index += 1
-                time.sleep(5)
+                time.sleep(10)
 
             end_time = datetime.datetime.now()
             print('全部下载完毕： 累计{}分钟'.format((end_time - start_time).seconds / 60))
@@ -131,9 +131,14 @@ class Crawler(object):
             else:
                 # 如果ts文件全部下载成功，则整合成一个mp4格式的电影文件（可手动下命令整合）
                 self.merge_ts_file()
+        else:
+            print('没有发现任何ts文件, 请检查m3u8网址正确性!')
 
 
 if __name__ == '__main__':
+    # TODO 填入你的m3u8网址，去除 'playlist.m3u8' 组成base_url
+    # m3u8_url = https://xxx.xxx.tv/2019/05/30/xxxxxxx/playlist.m3u8
+    # base_url = m3u8_url[:-13]     # https://xxx.xxx.tv/2019/05/30/xxxxxxx/
     base_url = 'https://sample/'
     crawler = Crawler(base_url=base_url)
     crawler.main()
