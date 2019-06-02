@@ -214,8 +214,8 @@ class Crawler(object):
             try:
                 for i in range(20):
                     queue.append(machine_list.pop())
-            except Exception:
-                queue.extend(machine_list)
+            except IndexError:
+                pass
 
             print('{} Queue {} start, length is {}'.format(datetime.datetime.now(), loop_index, len(queue)))
             print('*' * 100)
