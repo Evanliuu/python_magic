@@ -8,11 +8,17 @@ import random
 from urllib.parse import urljoin
 
 
-class Crawler(object):
+class Movie_download(object):
 
-    def __init__(self, base_url=None):
-        self.base_url = base_url
-        self.source_url = urljoin(self.base_url, 'playlist.m3u8')
+    def __init__(self, source_url=''):
+        if 'm3u8' in source_url:
+            base_url = source_url.split('/')
+            base_url.pop()
+            self.base_url = '/'.join(base_url)
+        else:
+            raise ValueError('url不是m3u8的格式，请检查url的正确性！')
+
+        self.source_url = source_url
         self.movie_local_path = r'C:\Users\86151\Desktop\m3u8_movies'
         self.movie_directory_name = 'movie_1'
         self.failed_tx_url = []
@@ -92,7 +98,7 @@ class Crawler(object):
             # TODO 读取failed的txt文件重新下载
             # ts_list = self.read_failed_txt_file()
 
-            print('一共获取到{}个ts文件, 等待下载...'.format(len(ts_list)))
+            print('总共获取到{}个ts文件, 等待下载...'.format(len(ts_list)))
             start_time = datetime.datetime.now()
             queue_index = 1
             while ts_list:
@@ -136,15 +142,10 @@ class Crawler(object):
                 # 如果ts文件全部下载成功，则整合成一个mp4格式的电影文件（可手动下命令整合）
                 self.merge_ts_file()
         else:
-            print('没有发现任何ts文件, 请检查m3u8网址正确性!')
+            print('没有发现任何ts文件, 请检查url的正确性！')
 
 
 if __name__ == '__main__':
-    # TODO 填入你的m3u8网址，除去 'playlist.m3u8' 组成base_url
-    """Example:
-    m3u8_url = https://xxx.xxx.tv/2019/05/30/xxxxxxx/playlist.m3u8
-    base_url = m3u8_url[:-13]     # https://xxx.xxx.tv/2019/05/30/xxxxxxx/
-    """
-    base_url = 'https://sample/'
-    crawler = Crawler(base_url=base_url)
-    crawler.main()
+    source_url = 'https://xxx.xxx.tv/xxxxxx/index.m3u8'
+    movie_download = Movie_download(source_url=source_url)
+    movie_download.main()
