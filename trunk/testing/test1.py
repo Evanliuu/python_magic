@@ -16,11 +16,9 @@ class Crawler(object):
         self.like_movie = like_movie
 
     def parameter(self):
-        android_ua = 'Mozilla/5.0 (Linux; U; Android 2.2; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
-        chrome_ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'
-
         headers = {
-            "User-Agent": chrome_ua,
+            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                          '(KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
             'Host': 'www.623zz.com'
         }
         params = {
@@ -92,12 +90,13 @@ class Crawler(object):
                         download_url = urljoin(self.base_url, download_url)
                         resp = self.get_web_page(url=download_url, purpose=GET)
                         print(resp.text)
+                        print(resp.url)
 
 
 if __name__ == '__main__':
     # TODO 选择你喜欢的电影
-    base_url = 'https://www.com/'
-    like_movie = '忍者神龟'
+    base_url = 'https://www.623zz.com/'
+    like_movie = '鬼父'
 
     crawler = Crawler(base_url=base_url, like_movie=like_movie)
     crawler.main()
