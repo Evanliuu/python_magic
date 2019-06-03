@@ -140,9 +140,11 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
-    # TODO 填入你的m3u8网址，去除 'playlist.m3u8' 组成base_url
-    # m3u8_url = https://xxx.xxx.tv/2019/05/30/xxxxxxx/playlist.m3u8
-    # base_url = m3u8_url[:-13]     # https://xxx.xxx.tv/2019/05/30/xxxxxxx/
+    # TODO 填入你的m3u8网址，除去 'playlist.m3u8' 组成base_url
+    """Example:
+    m3u8_url = https://xxx.xxx.tv/2019/05/30/xxxxxxx/playlist.m3u8
+    base_url = m3u8_url[:-13]     # https://xxx.xxx.tv/2019/05/30/xxxxxxx/
+    """
     base_url = 'https://sample/'
     crawler = Crawler(base_url=base_url)
     crawler.main()
