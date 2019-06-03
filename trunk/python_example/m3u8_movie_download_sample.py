@@ -53,13 +53,16 @@ class Crawler(object):
         os.chdir(urljoin(self.movie_local_path, self.movie_directory_name))
 
     def get_m3u8_movie(self):
-        resp = requests.get(url=self.source_url, headers=self.random_headers())
         ts_list = []
-        if resp.status_code == 200:
-            # 从m3u8文件里面获取所有的TS文件（原视频数据分割为很多个TS流，每个TS流的地址记录在m3u8文件列表中）
-            for line in resp.text.splitlines():
-                if '.ts' in line:
-                    ts_list.append(urljoin(self.base_url, line))
+        try:
+            resp = requests.get(url=self.source_url, headers=self.random_headers())
+            if resp.status_code == 200:
+                # 从m3u8文件里面获取所有的TS文件（原视频数据分割为很多个TS流，每个TS流的地址记录在m3u8文件列表中）
+                for line in resp.text.splitlines():
+                    if '.ts' in line:
+                        ts_list.append(urljoin(self.base_url, line))
+        except Exception:
+            ts_list = None
         return ts_list
 
     @staticmethod
@@ -89,6 +92,7 @@ class Crawler(object):
             # TODO 读取failed的txt文件重新下载
             # ts_list = self.read_failed_txt_file()
 
+            print('一共获取到{}个ts文件, 等待下载...'.format(len(ts_list)))
             start_time = datetime.datetime.now()
             queue_index = 1
             while ts_list:
@@ -126,8 +130,8 @@ class Crawler(object):
             print('全部下载完毕： 累计{}分钟'.format((end_time - start_time).seconds / 60))
 
             if self.failed_tx_url:
-                print('Failed ts url: {}'.format(self.failed_tx_url))
-                print('Length: {}'.format(len(self.failed_tx_url)))
+                print('失败的ts文件: {}'.format(self.failed_tx_url))
+                print('失败总数{}个'.format(len(self.failed_tx_url)))
             else:
                 # 如果ts文件全部下载成功，则整合成一个mp4格式的电影文件（可手动下命令整合）
                 self.merge_ts_file()
