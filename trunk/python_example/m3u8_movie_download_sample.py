@@ -67,7 +67,8 @@ class Movie_download(object):
                 for line in resp.text.splitlines():
                     if '.ts' in line:
                         ts_list.append(urljoin(self.base_url, line))
-        except Exception:
+        except Exception as ex:
+            print('请求错误: {}'.format(ex))
             ts_list = None
         return ts_list
 
