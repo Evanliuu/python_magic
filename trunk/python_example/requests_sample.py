@@ -1,9 +1,6 @@
-import re
 import random
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException
-from fake_useragent import UserAgent
-from requests.auth import HTTPBasicAuth
 from urllib.parse import urljoin, quote
 
 GET = 'get'
@@ -16,50 +13,58 @@ class Crawler(object):
         self.base_url = base_url
 
     @staticmethod
-    def parameter():
+    def random_headers():
         ua_list = [
             # Chrome UA
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
             # IE UA
             'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
             # Microsoft Edge UA
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
         ]
         ua = random.choice(ua_list)
-        headers = {
-            'User-Agent': ua,
-        }
+        headers = {'User-Agent': ua}
         return headers
 
     def get_web_page(self, url=None, purpose=GET):
+        """ Request function
+        1:
+        使用随机请求头:
+            from fake_useragent import UserAgent
+            ua = UserAgent(use_cache_server=False)
+            headers = {'User-Agent': ua.random}
+            or
+            headers = self.random_headers()
+        2:
+        使用带请求参数的request：
+            GET: params = {"wd": 'python'}
+            POST: data = {"wd": 'python'}
+        3:
+        使用代理突破限制IP访问频率:
+            proxies = {
+                "http": "http://10.10.1.10:3128",
+                "https": "http://10.10.1.10:1080",
+            }
+        4:
+        使用Session保持会话状态：
+            s = requests.Session()
+            response = s.get(url)
+        5:
+        登陆网站时需要输入账户密码则调用auth参数传入即可:
+            from requests.auth import HTTPBasicAuth
+            response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
+        """
         url = url or self.base_url
-        # TODO 使用随机请求头
-        # ua = UserAgent(use_cache_server=False)
-        # headers = {'User-Agent': ua.random}
         headers = {
             # 使用谷歌浏览器请求头
             "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                           '(KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'
         }
-        params = {
-            # 请求体内容
-            "wd": 'python'
-        }
-        # TODO 使用代理突破限制IP访问频率
-        # proxies = {
-        #     "http": "http://10.10.1.10:3128",
-        #     "https": "http://10.10.1.10:1080",
-        # }
         try:
-            # TODO 使用Session保持会话状态
-            # s = requests.Session()
-            # response = requests.get(url)
-            # TODO 登陆网站时需要输入账户密码则调用auth参数传入即可
-            # response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
             if purpose == GET:
-                response = requests.get(url, headers=headers, params=params, timeout=5)
+                response = requests.get(url, headers=headers, timeout=60)
             else:
-                response = requests.post(url, headers=headers, data=params, timeout=5)
+                response = requests.post(url, headers=headers, timeout=60)
 
             if response.status_code == 200:
                 return response
