@@ -162,8 +162,11 @@ class Movie_download(object):
 if __name__ == '__main__':
     # 填入任意个m3u8网址开始下载
     source_url = [
-        'https://zy.kubozy-youku-163-aiqi.com/20190411/5523_67b9a5ba/1000k/hls/index.m3u8',
+        'https://xx.xxx-xxxx/xxx.m3u8',
+        'https://yy.yyy-yyyy/yyy.m3u8'
     ]
+    # ts文件同时下载数量
     queue_count = 100
+
     movie_download = Movie_download(source_url=source_url, queue_count=queue_count)
     movie_download.main()
