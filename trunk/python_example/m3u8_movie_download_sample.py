@@ -97,7 +97,7 @@ class Movie_download(object):
         # 创建保存所有电影的文件目录
         self.check_record_directory_path()
 
-        for url, base_url in self.source_url:
+        for url, base_url in self.source_url.items():
             # 初始化failed_ts_url
             self.failed_ts_url = {}
 
@@ -158,8 +158,7 @@ class Movie_download(object):
 if __name__ == '__main__':
     # 填入任意个m3u8网址开始下载
     source_url = [
-        'https://xxx.xxx.tv/xxxxxx/index.m3u8',
-        'https://yyy.yyy.tv/yyyyyy/index.m3u8'
+        'https://zy.kubozy-youku-163-aiqi.com/20190411/5523_67b9a5ba/1000k/hls/index.m3u8',
     ]
     movie_download = Movie_download(source_url=source_url)
     movie_download.main()
