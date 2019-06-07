@@ -141,6 +141,7 @@ class Movie_download(object):
                 print('失败总数{}个'.format(len(self.failed_tx_url)))
             else:
                 # 如果ts文件全部下载成功，则整合成一个mp4格式的电影文件（可手动下命令整合）
+                print('现在开始整合成mp4格式文件')
                 self.merge_ts_file()
         else:
             print('没有发现任何ts文件, 请检查url的正确性！')
