@@ -11,18 +11,22 @@ from urllib.parse import urljoin
 
 class Movie_download(object):
 
-    def __init__(self, source_url=None):
-        self.directory_name = 'm3u8_movies'
-        self.failed_ts_url = {}
-        self.source_url = {}
+    def __init__(self, source_url=None, queue_count=30):
         for each_url in source_url:
             if 'm3u8' in each_url:
                 url = each_url.split('/')
                 url.pop()
                 base_url = '/'.join(url)
+
+                if not base_url.endswith('/'):
+                    base_url = base_url + '/'
                 self.source_url[each_url] = base_url
             else:
                 raise ValueError('这个url [{}] 不是m3u8的格式，请检查url的正确性！'.format(each_url))
+        self.directory_name = 'm3u8_movies'
+        self.failed_ts_url = {}
+        self.source_url = {}
+        self.queue_count = queue_count
 
     @staticmethod
     def random_headers():
@@ -113,7 +117,7 @@ class Movie_download(object):
                     queue = []
                     try:
                         # 设置队列个数上限
-                        queue_count = range(30)
+                        queue_count = range(self.queue_count)
                         for i in queue_count:
                             queue.append(ts_list.pop())
                     except IndexError:
@@ -160,5 +164,6 @@ if __name__ == '__main__':
     source_url = [
         'https://zy.kubozy-youku-163-aiqi.com/20190411/5523_67b9a5ba/1000k/hls/index.m3u8',
     ]
-    movie_download = Movie_download(source_url=source_url)
+    queue_count = 100
+    movie_download = Movie_download(source_url=source_url, queue_count=queue_count)
     movie_download.main()
