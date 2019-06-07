@@ -12,6 +12,7 @@ from urllib.parse import urljoin
 class Movie_download(object):
 
     def __init__(self, source_url=None, queue_count=30):
+        self.source_url = {}
         for each_url in source_url:
             if 'm3u8' in each_url:
                 url = each_url.split('/')
@@ -25,7 +26,6 @@ class Movie_download(object):
                 raise ValueError('这个url [{}] 不是m3u8的格式，请检查url的正确性！'.format(each_url))
         self.directory_name = 'm3u8_movies'
         self.failed_ts_url = {}
-        self.source_url = {}
         self.queue_count = queue_count
 
     @staticmethod
@@ -67,7 +67,7 @@ class Movie_download(object):
     @staticmethod
     def check_record_movie_path(movie_name):
         if '/' in movie_name:
-            movie_name = movie_name.split('/')[-1]
+            movie_name = movie_name.split('/')[-2]
         movie_path = os.path.join(os.getcwd(), movie_name)
 
         if not os.path.isdir(movie_path):
