@@ -95,8 +95,8 @@ class Crawler(object):
 
 if __name__ == '__main__':
     # TODO 选择你喜欢的电影
-    base_url = 'https://www.623zz.com/'
-    like_movie = '鬼父'
+    base_url = 'https://www.com/'
+    like_movie = '忍者神龟'
 
     crawler = Crawler(base_url=base_url, like_movie=like_movie)
     crawler.main()
