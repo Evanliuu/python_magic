@@ -27,7 +27,7 @@ class Crawler(object):
         return headers
 
     def get_web_page(self, url=None, purpose=GET):
-        """ Request function
+        """ Request example：
         1:
         使用随机请求头:
             from fake_useragent import UserAgent
