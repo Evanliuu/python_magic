@@ -89,16 +89,17 @@ class Crawler(object):
     @staticmethod
     def main():
         # 中文转换字节码
-        like = quote('你好')
-        print(like)
+        # like = quote('你好')
+        # print(like)
 
         # 获取网页内容
         source = crawler.get_web_page(purpose=GET)
         if source:
-            print(source.text)
+            with open('beautiful.jpg', 'wb') as file:
+                file.write(source.content)
 
 
 if __name__ == '__main__':
-    base_url = 'https://www.baidu.com'
+    base_url = 'http://img.netbian.com/file/2019/0418/92a06dd21f1a38d97c930ce3e11b4123.jpg'
     crawler = Crawler(base_url=base_url)
     crawler.main()
