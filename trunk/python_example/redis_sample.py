@@ -5,7 +5,7 @@ from redis import StrictRedis
 
 class Redis_DB(object):
 
-    def __init__(self, host='localhost', port=6666):
+    def __init__(self, host='localhost', port=6379):
         self.host = host
         self.port = port
         self.redis = StrictRedis(host=self.host, port=self.port, db=0, password='')
