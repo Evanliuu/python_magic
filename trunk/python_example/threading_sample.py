@@ -1,25 +1,24 @@
 import threading
 import datetime
 import time
-import multiprocessing
 
 
-def sleep_test(sleep):
+def unit_test(sleep):
     # 执行测试
-    print('start {} loop: '.format(sleep), datetime.datetime.now())
+    print('start loop {}, '.format(sleep), datetime.datetime.now())
     time.sleep(sleep)
-    print('loop {} done: '.format(sleep), datetime.datetime.now())
+    print('loop {} down, '.format(sleep), datetime.datetime.now())
 
 
-def thread_loop(index, sleep_list):
-    # 添加多线程
+def thread_loop(sleep_list):
     start_time = datetime.datetime.now()
+    # 计算多线程总数量
     loops = range(len(sleep_list))
     threads = []
 
     # insert all threads to threads list
     for i in sleep_list:
-        t = threading.Thread(target=sleep_test, args=(i,))
+        t = threading.Thread(target=unit_test, args=(i,))
         threads.append(t)
 
     # start all threads
@@ -31,20 +30,13 @@ def thread_loop(index, sleep_list):
         threads[i].join()
 
     end_time = datetime.datetime.now()
-    print('thread {} down, total {} minutes！'.format(index, (end_time - start_time).seconds / 60))
+    print('所有线程结束，一共消耗{}秒钟'.format((end_time - start_time).seconds / 60))
 
 
-def main(sleep_list=None):
-    for index, sleep in enumerate(sleep_list):
-        # 添加多进程
-        p = multiprocessing.Process(target=thread_loop, args=(index, sleep))
-        p.start()
-        print('process {} start'.format(index + 1))
+def main():
+    sleep_list = [2, 4, 1]
+    thread_loop(sleep_list=sleep_list)
 
 
 if __name__ == '__main__':
-    sleep_list = [
-        [4, 3, 2],
-        [7, 6, 5]
-    ]
-    main(sleep_list=sleep_list)
+    main()
