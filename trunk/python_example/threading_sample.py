@@ -5,17 +5,22 @@ import time
 
 def unit_test(sleep):
     # 执行测试
+    # locks.acquire()
     print('start loop {}, '.format(sleep), datetime.datetime.now())
     time.sleep(sleep)
     print('loop {} down, '.format(sleep), datetime.datetime.now())
+    # locks.release()
 
 
 def thread_loop(sleep_list):
-    start_time = datetime.datetime.now()
+    global locks
+    locks = threading.Lock()
+
     # 计算多线程总数量
     loops = range(len(sleep_list))
     threads = []
 
+    start_time = datetime.datetime.now()
     # insert all threads to threads list
     for i in sleep_list:
         t = threading.Thread(target=unit_test, args=(i,))
