@@ -11,7 +11,7 @@ def unit_test(sleep):
     # locks.release()   释放锁 -- 如果不释放锁，后续的线程会一直被阻塞不能进入
 
 
-def thread_loop(sleep_list):
+def thread_run(sleep_list):
     global locks
     locks = threading.Lock()
 
@@ -39,7 +39,7 @@ def thread_loop(sleep_list):
 
 def main():
     sleep_list = [2, 4, 1]
-    thread_loop(sleep_list=sleep_list)
+    thread_run(sleep_list=sleep_list)
 
 
 if __name__ == '__main__':
