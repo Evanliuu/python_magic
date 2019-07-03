@@ -67,19 +67,19 @@ class Redis_DB(object):
         self.host = host
         self.port = port
         # 连接redis数据库
-        self.redis = StrictRedis(host=self.host, port=self.port, db=0, password='')
+        self.client = StrictRedis(host=self.host, port=self.port, db=0, password='')
 
     def write_data(self, key, value):
-        self.redis.set(key, value)
+        self.client.set(key, value)
 
     def get_data(self, key):
-        value = self.redis.get(key)
+        value = self.client.get(key)
         return value
 
     def get_all_data(self):
         all_keys = []
-        if self.redis.keys():
-            for i in self.redis.keys():
+        if self.client.keys():
+            for i in self.client.keys():
                 key = i.decode('ascii')
                 value = self.get_data(i).decode('ascii')
                 all_keys.append({key: value})
@@ -89,7 +89,7 @@ class Redis_DB(object):
         return all_keys
 
     def delete_data(self, key):
-        self.redis.delete(key)
+        self.client.delete(key)
         print('delete the key: {}'.format(key))
 
 
