@@ -9,7 +9,7 @@ class WindowsConnect(object):
     """
     def __init__(self, addr=None, port=None):
         self.addr = addr
-        self.port = port or 6666
+        self.port = port
         self.proxy = ServerProxy('http://%s:%s/' % (self.addr, self.port), allow_none=True)
 
     def get_windows_host(self):
@@ -31,6 +31,7 @@ class Gui(object):
         tk.Label(self.root, text='Connect ip: ').grid(row=0, column=1, sticky=tk.W)
         self.input1 = tk.StringVar()
         self.entry1 = tk.Entry(self.root, textvariable=self.input1).grid(row=0, column=2, padx=45)
+        self.input1.set('6666')
 
         tk.Label(self.root, text='Connect port: ').grid(row=1, column=1, sticky=tk.W)
         self.input2 = tk.StringVar()
