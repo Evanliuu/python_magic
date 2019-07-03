@@ -66,7 +66,7 @@ class Redis_DB(object):
     def __init__(self, host='localhost', port=6379):
         self.host = host
         self.port = port
-        # 连接本地redis数据库
+        # 连接redis数据库
         self.redis = StrictRedis(host=self.host, port=self.port, db=0, password='')
 
     def write_data(self, key, value):
