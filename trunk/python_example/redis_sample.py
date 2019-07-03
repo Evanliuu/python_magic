@@ -3,7 +3,7 @@ from redis import StrictRedis
 # 打开cmd输入 redis-cli.exe 即可进入redis命令行
 
 """键值相关命令：
-1. keys *                   取出当前所有的key
+1. keys *                   查看当前所有的key
 2. exists name              查看数据库是否有name这个key
 3. del name                 删除key name
 4. expire confirm 100       设置confirm这个key100秒过期
