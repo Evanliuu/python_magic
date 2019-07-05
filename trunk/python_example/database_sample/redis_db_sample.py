@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from redis import StrictRedis
 
 # 打开cmd输入 redis-cli.exe 即可进入redis命令行

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pymongo import MongoClient
 
 
@@ -38,7 +39,7 @@ class Mongo_db(object):
         :param expect_dict: 传入需要添加的字典
         :return:
         """
-        print('在{}中添加{}'.format(collection, expect_dict))
+        print('在{}中添加{}'.format(collection_name, expect_dict))
         # collection.insert_many([expect_dict1, expect_dict2])  # 插入多行数据
         collection.insert_one(expect_dict)  # 插入一行数据
         print('添加数据结果：{}\n'.format(expect_dict))
@@ -51,7 +52,7 @@ class Mongo_db(object):
         :param expect_dict: 传入需要查询的字典
         :return:
         """
-        print('在{}中查询{}'.format(collection, expect_dict))
+        print('在{}中查询{}'.format(collection_name, expect_dict))
         # result = collection.find_one({'age': {'$lt': 20}})  # 返回结果小于20的数据
         # result = collection.find_one({'age': {'$regex': '2\d'}})  # 返回结果等于20~29的整形
         result = collection.find_one(expect_dict)  # 返回第一个匹配结果
@@ -64,26 +65,27 @@ class Mongo_db(object):
         :param collection: 传入需要查找的集合名称
         :return:
         """
-        print('开始查询{}所有数据:'.format(collection))
         if expect_dict:
-            result = collection.find(expect_dict)  # 返回一个生成器（集合内所有的数据）
+            print('开始查询{}中所有的{}'.format(collection_name, expect_dict))
+            result = collection.find(expect_dict)  # 返回一个生成器（集合内所有满足条件的数据）
         else:
+            print('开始查询{}内所有数据:'.format(collection_name))
             result = collection.find()  # 返回一个生成器（集合内所有的数据）
         result_total = [i for i in result]
         print('查询结果：{}\n共查询到{}个数据\n'.format(result_total, len(result_total)))
 
     @staticmethod
-    def update_data(collection, before_dict={}, after_dict={}):
+    def update_data(collection, expect_dict={}, change_foramt={}):
         """
         更新指定的数据
         :param collection: 传入需要更新的集合名称
-        :param before_dict: 传入更新前的字典
-        :param after_dict: 传入更新后的字典格式
+        :param old_dict: 传入需要更新的字典
+        :param dict_foramt: 传入需要更新的字典格式
         :return:
         """
-        print('在{}中把{}更新为{}'.format(collection, before_dict, after_dict))
+        print('在{}中把{}更新，格式为{}'.format(collection_name, expect_dict, change_foramt))
         # result = collection.update_many(before_dict, after_dict)  # 更新所有匹配的数据
-        result = collection.update_one(before_dict, after_dict)  # 更新一个数据
+        result = collection.update_one(expect_dict, change_foramt)  # 更新一个数据
         print('共更新{}个数据\n'.format(result.matched_count))
 
     @staticmethod
@@ -94,7 +96,7 @@ class Mongo_db(object):
         :param expect_dict: 传入需要删除的字典
         :return:
         """
-        print('在{}中删除{}:'.format(collection, expect_dict))
+        print('在{}中删除{}:'.format(collection_name, expect_dict))
         # collection.remove(expect_dict)  # 删除一个数据（删除后的数据无法恢复）
         # collection.delete_many(expect_dict)  # 删除所有匹配的数据
         result = collection.delete_one(expect_dict)  # 删除一个数据
@@ -108,7 +110,7 @@ class Mongo_db(object):
         :param expect_dict: 传入需要查询的字典
         :return:
         """
-        print('在{}中查询{}个数：'.format(collection, expect_dict))
+        print('在{}中查询{}个数：'.format(collection_name, expect_dict))
         result = collection.count_documents(expect_dict)
         print('共查询到{}个数据\n'.format(result))
 
@@ -117,22 +119,27 @@ if __name__ == '__main__':
     mongodb = Mongo_db()
     # 指定数据库
     db = mongodb.client.test
+    db_name = eval(str(db).split()[-1][:-1])
+    print('创建数据库：{}'.format(db_name))
     # 指定集合
     collection = db.students
+    collection_name = eval(str(collection).split()[-1][:-1])
+    print('创建集合：{}\n'.format(collection_name))
+
     # 写入数据
     test_data = {'age': 20}
     mongodb.write_data(collection, test_data)
     mongodb.get_data(collection, test_data)
     # 更新数据
     test_data = {'age': 20}
-    update_data = {'age': 23}
     update_data_format = {"$inc": {'age': 3}}
     mongodb.update_data(collection, test_data, update_data_format)
-    mongodb.get_data(collection, update_data)
+    mongodb.get_all_data(collection)
     # 查询数据
+    update_data = {'age': 23}
     mongodb.data_count(collection, test_data)
     mongodb.data_count(collection, update_data)
     # 删除数据
-    mongodb.get_all_data(collection, update_data)
+    mongodb.get_all_data(collection)
     mongodb.delete_data(collection, update_data)
     mongodb.get_all_data(collection)
