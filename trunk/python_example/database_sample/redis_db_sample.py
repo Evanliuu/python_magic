@@ -68,7 +68,7 @@ class Redis_DB(object):
         self.port = port
         # 连接redis数据库
         self.client = StrictRedis(host=self.host, port=self.port, db=0, password='')
-        print('登录redis数据库成功！')
+        print('连接redis数据库成功！')
 
     def write_data(self, key, value):
         self.client.set(key, value)
