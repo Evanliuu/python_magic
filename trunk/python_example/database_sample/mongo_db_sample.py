@@ -21,6 +21,24 @@ from pymongo import MongoClient
 16.  result.skip(m).limit(n):  将查找结果的取值显示为,跳过m条数据,显示n条数据, 即只显示m+1~m+1+n的数据
 """
 
+"""Mongodb数据更新指令：(指令必须使用双引号)
+1: $inc增加值
+    db.test.update({'id':2},{"$inc":{'id':2}})  
+    db.test.update({'id':6},{$inc:{id:2}})  # 在mongodb交互环境中的写法
+
+2: $set设置字段值
+    db.test.update({'id':6},{"$set":{'id':2}})
+    db.test.update({'id':6},{$set:{id:2}})  # 在mongodb交互环境中的写法
+    
+3: $unset删除某字段
+    db.test.update({'id':6},{"$unset":{'id':6}})
+    db.test.update({'id':6},{$unset:{id:6}})  # 在mongodb交互环境中的写法
+    
+4: $rename重命名某字段
+    db.test.update({'id':1},{"$rename":{'id':'userid'}})
+    db.test.update({id:10},{$rename:{id:'userid'}})  # 在mongodb交互环境中的写法
+"""
+
 
 class Mongo_db(object):
 
