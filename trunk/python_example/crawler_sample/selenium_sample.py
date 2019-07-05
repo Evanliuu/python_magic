@@ -35,16 +35,18 @@ from selenium.webdriver.support.wait import WebDriverWait
 """
 
 """expected_conditions 17个判断条件函数--------------------------------------------------------
-以下两个条件类验证title，验证传入的参数title是否等于或包含于driver.title 
+以下两个条件类验证title，验证传入的参数title是否等于或包含于driver.title
 1. title_is 
 2. title_contains
 
-以下两个条件验证元素是否出现，传入的参数都是元组类型的locator，如(By.ID, ‘kw’) 
-顾名思义，一个只要一个符合条件的元素加载出来就通过；另一个必须所有符合条件的元素都加载出来才行 
+以下两个条件验证元素是否出现，传入的参数都是元组类型的locator，如(By.ID, ‘kw’)
+顾名思义，一个只要一个符合条件的元素加载出来就通过；另一个必须所有符合条件的元素都加载出来才行
 3. presence_of_element_located 
 4. presence_of_all_elements_located
 
-以下三个条件验证元素是否可见，前两个传入参数是元组类型的locator，第三个传入WebElement 
+以下三个条件验证元素是否可见
+前两个传入参数是元组类型的locator
+第三个传入WebElement 
 第一个和第三个其实质是一样的 
 5. visibility_of_element_located 
 6. invisibility_of_element_located 
@@ -63,10 +65,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 以下条件判断元素是否可点击，传入locator 
 12. element_to_be_clickable
 
-以下四个条件判断元素是否被选中，第一个条件传入WebElement对象，第二个传入locator元组 
-第三个传入WebElement对象以及状态，相等返回True，否则返回False 
-第四个传入locator以及状态，相等返回True，否则返回False 
-13. 13. element_to_be_selected 
+以下四个条件判断元素是否被选中，
+第一个条件传入WebElement对象，
+第二个传入locator元组,
+第三个传入WebElement对象以及状态，相等返回True，否则返回False,
+第四个传入locator以及状态，相等返回True，否则返回False
+13. element_to_be_selected 
 14. element_located_to_be_selected 
 15. element_selection_state_to_be 
 16. element_located_selection_state_to_be
