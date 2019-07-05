@@ -3,31 +3,31 @@ from redis import StrictRedis
 # 打开cmd输入 redis-cli.exe 即可进入redis命令行
 
 """Redis数据类型:
-1.  <set key value>
+1. <set key value>
     类型	:   String(字符串)	
     简介:   二进制安全	
     特性	:   可以包含任何数据,比如jpg图片或者序列化的对象,一个键最大能存储512M
     场景:   /
 
-2.  <hset major_key key value>
+2. <hset major_key key value>
     类型	:   Hash(字典)
     简介:   键值对集合,即编程语言中的Map类型
     特性	:   适合存储对象,并且可以像数据库中update一个属性一样只修改某一项属性值(Memcached中需要取出整个字符串反序列化成对象修改完再序列化存回去)
     场景:   存储、读取、修改用户属性
 
-3.  <头部：lpush key value1 value2 ... 末尾：rpush key value1 value2 ...> 可添加一个或多个值
+3. <头部：lpush key value1 value2 ... 末尾：rpush key value1 value2 ...> 可添加一个或多个值
     类型	:   List(列表)
     简介:   链表(双向链表)
     特性	:   增删快,提供了操作某一段元素的API
     场景:   1.最新消息排行等功能(比如朋友圈的时间线) 2.消息队列
 
-4.  <sadd key member1 member2 ...> 可添加一个或多个值
+4. <sadd key member1 member2 ...> 可添加一个或多个值
     类型	:   Set(集合)
     简介:   哈希表实现,元素不重复
     特性	:   1.添加、删除,查找的复杂度都是O(1) 2.为集合提供了求交集、并集、差集等操作
     场景:   1.共同好友 2.利用唯一性,统计访问网站的所有独立ip 3,好用推荐时,根据tag求交集,大于某个阈值就可以推荐
 
-5.  <zadd key score1 member1 score2 member2 ...> 可添加一个或多个值
+5. <zadd key score1 member1 score2 member2 ...> 可添加一个或多个值
     类型	:   Sorted Set(有序集合)
     简介:   将Set中的元素增加一个权重参数score,元素按score有序排列
     特性	:   数据插入集合时,已经进行天然排序
@@ -49,15 +49,15 @@ from redis import StrictRedis
 """
 
 """服务器相关命令:
-1. ping                     PING返回响应是否连接成功
-2. echo                     在命令行打印一些内容
-3. select                   0~15 编号的数据库
-4. quit                    /exit 退出客户端
-5. dbsize                   返回当前数据库中所有key的数量
-6. info                     返回redis的相关信息
-7. config get dir/*         实时传储收到的请求
-8. flushdb                  删除当前选择数据库中的所有key
-9. flushall                 删除所有数据库中的数据库
+1.  ping                     PING返回响应是否连接成功
+2.  echo                     在命令行打印一些内容
+3.  select                   0~15 编号的数据库
+4.  quit                    /exit 退出客户端
+5.  dbsize                   返回当前数据库中所有key的数量
+6.  info                     返回redis的相关信息
+7.  config get dir/*         实时传储收到的请求
+8.  flushdb                  删除当前选择数据库中的所有key
+9.  flushall                 删除所有数据库中的数据库
 """
 
 
