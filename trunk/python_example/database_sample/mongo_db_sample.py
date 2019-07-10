@@ -97,8 +97,8 @@ class Mongo_db(object):
         """
         更新指定的数据
         :param collection: 传入需要更新的集合名称
-        :param old_dict: 传入需要更新的字典
-        :param dict_foramt: 传入需要更新的字典格式
+        :param expect_dict: 传入需要更新的字典
+        :param change_foramt: 传入需要更新的字典格式
         :return:
         """
         print('在{}中把{}更新，格式为{}'.format(collection_name, expect_dict, change_foramt))
