@@ -28,7 +28,7 @@ def file_transfer(machine, username='gen-apollo', password='Ad@pCr01!', file_pat
 def main(machines):
     """
 
-    :param list machines: 提供要传输的服务器名列表
+    :param list machines: 提供需要传输的服务器列表
     :return:
     """
     loops = range(len(machines))
@@ -50,8 +50,6 @@ def main(machines):
 
 if __name__ == '__main__':
     machines = [
-        'fxcavp375',
-        'fxcavp376',
-        'fxcavp377',
+        'fxcavp363',
     ]
     main(machines)
