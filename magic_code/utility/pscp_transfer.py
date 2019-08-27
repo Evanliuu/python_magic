@@ -2,9 +2,9 @@ import os
 import threading
 
 
-def file_transfer(machine, username='gen-apollo', password='Ad@pCr01!', file_path=r'C:\Users\evaliu\Desktop\123.txt'):
-    """
-
+def file_transfer(machine, username='sample', password='sample', file_path=r'C:\Users\evaliu\Desktop\123.txt'):
+    r"""
+    pscp命令：pscp C:\Users\evaliu\Desktop\123.txt evanliu@10.1.1.1:/tftpboot
     :param machine: 传输的服务器名
     :param username: 连接服务器的用户名
     :param password: 连接服务器的密码
