@@ -1,18 +1,19 @@
 def func(value=None):
-    def decorator(expect):
+    def decorator(func):
         def wrapper(*args, **kwargs):
-            result = []
-            # user use of value
+            result = list()
+            # 添加调用函数的实参
             result.append(*args, **kwargs)
-            # from function return
-            result.append(expect(*args, **kwargs))
+            # 添加调用函数的返回值
+            result.append(func(*args, **kwargs))
+            # 添加装饰器的实参
             result.append(value)
             return result
         return wrapper
     return decorator
 
 
-@func('Hello World')
+@func('Hello World!')
 def function(*args):
     return 'hi {}'.format(args)
 
