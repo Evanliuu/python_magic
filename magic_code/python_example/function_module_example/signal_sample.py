@@ -6,9 +6,9 @@ import datetime
 def signal_decorator(time_out=None):
     def decorator(func):
         def wrapper(*args, **kwargs):
+            # Workaround
             def my_handle(*args):
                 print('time out!')
-                exit()
 
             # TODO signal.SIGALRM 只能在Linux端使用
             signal.signal(signal.SIGALRM, my_handle)
