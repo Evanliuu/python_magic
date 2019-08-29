@@ -4,6 +4,7 @@ import getpass
 
 def run():
     try:
+        # TODO pxssh功能只能在Linux端使用
         s = pxssh.pxssh()
         hostname = input('hostname: ')
         username = input('username: ')
