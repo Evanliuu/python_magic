@@ -135,7 +135,7 @@ class Machine_handle(object):
 
     def __init__(self, user_info=None, machine_list=None):
         """
-
+        This feature is used to scan configuration mappings for all machines
         :param user_info: Fill out a legitimate Apollo account
         :param machine_list: Fill in the list of machines to scan
 
