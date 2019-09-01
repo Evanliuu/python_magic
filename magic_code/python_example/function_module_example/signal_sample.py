@@ -6,7 +6,7 @@ import datetime
 def signal_decorator(time_out=None):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            # Workaround
+            # callback function
             def my_handle(*args):
                 print('time out!')
 
