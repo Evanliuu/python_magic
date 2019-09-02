@@ -1,15 +1,16 @@
-# This python version is 2.7
-import json
+#!/usr/local/bin/python2.7
+import sys
+sys.path.append('/opt/cisco/constellation')
 import time
 import os
 import re
-from pexpect import pxssh
 import threading
 import datetime
 import Tkinter as tk
 import tkMessageBox
 import csv
 from apollo.libs import lib
+from pexpect import pxssh
 
 
 class Gui(object):
@@ -152,6 +153,8 @@ class Machine_handle(object):
         self.machine_list = machine_list
         self.result_info = []
         self.connection_error_info = []
+        self.result_csv_name = 'machine_mapping_scan_result'
+        self.connection_error_csv_name = 'scan_error_result'
 
     def machine_config_path_check(self, machine_list=None):
         machine = machine_list[2]
@@ -178,7 +181,7 @@ class Machine_handle(object):
                 s.login(machine_name, self.username, self.password)
 
                 # Check the machine config mapping
-                for line in config_mapping_check_cmd:
+                for index, line in enumerate(config_mapping_check_cmd):
                     cmd = line[0]
                     expect_value = line[1]
                     # Run check command
@@ -188,25 +191,24 @@ class Machine_handle(object):
                     s.prompt()
 
                     # Check to see if there are more configuration mappings
-                    config_mappings = re.findall('\w+_config.py -> .+?\.py', s.before)
-                    if len(config_mappings) > 1:
-                        result = '{}:\n'.format(cmd) + ',\n'.join(config_mappings)
+                    config_mappings = re.findall(r'\w+\.?\w+ -> .+', s.before)
+                    if config_mappings:
+                        result = '{}: {}\n'.format(index + 1, cmd) + '[ ' + ',\n'.join(config_mappings) + ' ]'
                     else:
-                        result = '{}: Null'.format(cmd)
+                        result = '{}: {}\nNot found any configuration mapping'.format(index + 1, cmd)
 
-                    if 'Multiple_machine_mapping' in collection_info:
-                        collection_info['Multiple_machine_mapping'] = \
-                            collection_info['Multiple_machine_mapping'] + ',\n' + result
+                    if 'Total_config_mapping' in collection_info:
+                        collection_info['Total_config_mapping'] = \
+                            collection_info['Total_config_mapping'] + '\n' + result
                     else:
-                        collection_info['Multiple_machine_mapping'] = result
+                        collection_info['Total_config_mapping'] = result
 
                     # Check that the configuration mapping is correct
                     if expect_value not in s.before:
-                        error_config_mapping_list.append(expect_value)
+                        error_config_mapping_list.append('{}: {}\nNot found: {}'.format(index + 1, cmd, expect_value))
 
                 if error_config_mapping_list:
-                    collection_info['Mapping_check_result'] = ',\n'.join(
-                        ['Not found {}: {}'.format(i + 1, r) for i, r in enumerate(error_config_mapping_list)])
+                    collection_info['Mapping_check_result'] = '\n'.join(error_config_mapping_list)
                 else:
                     collection_info['Mapping_check_result'] = 'Pass'
 
@@ -286,24 +288,37 @@ class Machine_handle(object):
             print('*' * 50)
 
             # Write all the information into the CSV table
-            csv_header = ['Product_line', 'Mapping_check_result', 'Multiple_machine_mapping',
+            csv_header = ['Product_line', 'Mapping_check_result', 'Total_config_mapping',
                           'Packet_version', 'Apollo_version', ]
-            self.write_csv_file(self.result_info, file_name='machine_mapping_scan_result',
+            self.write_csv_file(self.result_info, file_name=self.result_csv_name,
                                 csv_header=csv_header)
 
         # Write the connection error information into the CSV table
         if self.connection_error_info:
             csv_header = ['Product_line', 'Error_message']
             if self.connection_error_info:
-                self.write_csv_file(self.connection_error_info, file_name='scan_error_result',
+                self.write_csv_file(self.connection_error_info, file_name=self.connection_error_csv_name,
                                     csv_header=csv_header)
 
 
 def send_mail(email, attachments):
-    lib.sendmail(to=email, subject='Scan machines mapping summary',
-                 body='all the scan machines result is in the attachment, Please review, Thanks!',
-                 attachments=attachments)
-    print('send email to {} mailbox successful!'.format(email))
+    if os.path.exists(attachments):
+        lib.sendmail(to=email, subject='Machine scan result',
+                     body='all the scan machines result is in the attachment, Please review, Thanks!',
+                     attachments=attachments)
+        print('send email to {} mailbox successful!'.format(email))
+    else:
+        print('The csv file [{}] is not found, please check!'.format(attachments))
+
+
+def delete_local_csv_file():
+    result_csv_name = 'machine_mapping_scan_result.csv'
+    if os.path.exists(result_csv_name):
+        os.remove(result_csv_name)
+
+    connection_error_csv_name = 'scan_error_result.csv'
+    if os.path.exists(connection_error_csv_name):
+        os.remove(connection_error_csv_name)
 
 
 if __name__ == '__main__':
@@ -311,6 +326,8 @@ if __name__ == '__main__':
     gui = Gui(station_path=station_path)
     gui.source.mainloop()
 
-    # TODO Send mail to cisco mailbox
+    # TODO Send email to cisco mailbox
     # send_mail(email='evaliu', attachments='machine_mapping_scan_result.csv')
     # send_mail(email='evaliu', attachments='scan_error_result.csv')
+    # TODO delete the local csv file
+    # delete_local_csv_file()
