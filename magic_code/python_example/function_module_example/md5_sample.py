@@ -7,9 +7,10 @@ def get_file_md5(path):
 
     diff_check = hashlib.md5()
     diff_check.update(data.encode())
-    return diff_check.hexdigest()
+    md5_code = diff_check.hexdigest()
+    return md5_code
 
 
 if __name__ == '__main__':
-    md5_code = get_file_md5(path=r'C:\Users\evaliu\Desktop\sample.txt')
-    print(md5_code)
+    md5_str = get_file_md5(path=r'C:\Users\evaliu\Desktop\sample.txt')
+    print(md5_str)
