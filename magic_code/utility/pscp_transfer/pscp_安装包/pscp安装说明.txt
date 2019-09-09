@@ -1,0 +1,5 @@
+1. 先点击 putty.msi 安装
+2. 安装完putty后再双击pscp.exe （中间会一闪而过不用理会）
+3. 打开cmd控制台输入：pscp
+如出现Putty Secure Copy client，则代表安装成功
+如果显示报错不是内部命令，请检查环境变量设置
