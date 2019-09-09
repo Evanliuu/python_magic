@@ -2,6 +2,11 @@ import hashlib
 
 
 def get_file_md5(path):
+    """
+    打开文件读取MD5值
+    :param path: 文件的绝对路径
+    :return: str
+    """
     with open(path, 'r') as file:
         data = file.read()
 

@@ -6,67 +6,25 @@ import os
 import re
 import threading
 import datetime
-import Tkinter as tk
-import tkMessageBox
 import csv
 from apollo.libs import lib
 from pexpect import pxssh
 
 
-class Gui(object):
+class Machine_scan_tool(object):
 
-    def __init__(self, station_path=None):
-        self.root_path = os.getcwd()
+    def __init__(self, user_info=tuple(), station_path=''):
+        """
+        This feature is used to scan configuration mappings for all machines
+        :param user_info: Fill out a legitimate Apollo account
+        :param station_path: Fill in the machine storage path to be scanned
+        """
+        self.username, self.password = user_info
         self.station_path = station_path
-        self.username = self.password = None
-        self.root = None
-        self.source = tk.Tk()
-        self.source.title('Login user')
-
-        tk.Label(self.source, text='Please enter your username: ').grid(row=0, column=0)
-        tk.Label(self.source, text='Please enter your password: ').grid(row=1, column=0)
-
-        self.user_input1 = tk.StringVar()
-        tk.Entry(self.root, textvariable=self.user_input1).grid(row=0, column=1)
-        self.user_input2 = tk.StringVar()
-        tk.Entry(self.root, textvariable=self.user_input2, show='*').grid(row=1, column=1)
-
-        tk.Button(self.source, text='Clear', command=self.clear_user_input, bg='DodgerBlue').grid(row=2, column=0)
-        tk.Button(self.source, text='Login', command=self.login_user, bg='GreenYellow').grid(row=2, column=1)
-
-        self.set_gui_center(root=self.source)
-
-    def clear_user_input(self):
-        for i in [self.user_input1, self.user_input2]:
-            i.set('')
-
-    def login_user(self):
-        self.username = self.user_input1.get()
-        self.password = self.user_input2.get()
-
-        if self.username and self.password:
-            # quit source window
-            self.source.destroy()
-            # create new gui window for machine config path scan
-            self.create_new_gui_window()
-        else:
-            tkMessageBox.showwarning('Warning', 'User name and password cannot be empty!')
-
-    def create_new_gui_window(self):
-        self.root = tk.Tk()
-        self.root.title('Machine config mapping scanning')
-
-        tk.Label(self.root, text='Please enter your machine list:').grid(row=0, column=0)
-        self.text1 = tk.Text(self.root, width=40, height=5)
-        self.text1.grid(row=0, column=1)
-        tk.Button(self.root, text='Use default machine list', command=self.read_machine_list, bg='Turquoise').grid(
-            row=0, column=2)
-
-        tk.Button(self.root, text='Clear', command=self.clear_text_information, bg='DodgerBlue').grid(row=1, column=0)
-        tk.Button(self.root, text='Start', command=self.start_scan, bg='GreenYellow').grid(row=1, column=1)
-        tk.Button(self.root, text='Quit', command=self.root.quit, bg='red', fg='white').grid(row=1, column=2)
-
-        self.set_gui_center(root=self.root)
+        self.result_info = []
+        self.connection_error_info = []
+        self.result_csv_name = 'machine_mapping_scan_result'
+        self.connection_error_csv_name = 'scan_error_result'
 
     def read_machine_list(self):
         machine_list = []
@@ -76,10 +34,7 @@ class Gui(object):
             # Save each machine information
             if machine:
                 machine_list.append(machine)
-
-        # Displayed in the text1 control
-        self.text1.delete(1.0, tk.END)
-        self.text1.insert(tk.END, machine_list)
+        return machine_list
 
     def start_search(self, listdir=None):
         for machine_file in listdir:
@@ -103,58 +58,6 @@ class Gui(object):
         with open(os.path.join(self.station_path, str(machine_file)), 'r') as rf:
             lines = rf.read()
             return lines
-
-    def clear_text_information(self):
-        self.text1.delete(1.0, tk.END)
-
-    @staticmethod
-    def set_gui_center(root=None):
-        root.update_idletasks()
-        x = (root.winfo_screenwidth() - root.winfo_reqwidth()) / 2
-        y = (root.winfo_screenwidth() - root.winfo_reqwidth()) / 2
-        root.geometry('+%d+%d' % (x, y))
-
-    def start_scan(self):
-        user_info = (self.username, self.password)
-        machine_list = self.text1.get(1.0, tk.END)
-
-        try:
-            # Check that the machine list is in the correct format
-            machine_list = eval(machine_list)
-            handle = Machine_handle(user_info=user_info, machine_list=machine_list)
-            tkMessageBox.showinfo('info', 'Start scanning all the machines\nPlease press OK to continue!')
-
-            # Run machine config path check
-            handle.main()
-            tkMessageBox.showinfo('info', 'The scan is complete\npress OK to end...')
-            self.clear_text_information()
-        except Exception:
-            tkMessageBox.showwarning('Warning', 'The machine list is empty or incorrectly formed\nPlease re-enter!')
-
-
-class Machine_handle(object):
-
-    def __init__(self, user_info=None, machine_list=None):
-        """
-        This feature is used to scan configuration mappings for all machines
-        :param user_info: Fill out a legitimate Apollo account
-        :param machine_list: Fill in the list of machines to scan
-
-        Manually build the machine list type: [['Product_line', 'Station_name', 'Apollo_server_name'], [...], [...]]
-        example:
-            [
-                ['Barbados', 'SYSFA', 'fxcavp288'],
-                ['Barbados', 'PCBDL', 'fxcavp362'],
-                ['Zephyr', 'PCBPB', 'fxcavp457'],
-                ['Antigua', 'PCBST', 'fxcavp216'],
-            ]
-        """
-        self.username, self.password = user_info
-        self.machine_list = machine_list
-        self.result_info = []
-        self.connection_error_info = []
-        self.result_csv_name = 'machine_mapping_scan_result'
-        self.connection_error_csv_name = 'scan_error_result'
 
     def machine_config_path_check(self, machine_list=None):
         machine = machine_list[2]
@@ -259,7 +162,8 @@ class Machine_handle(object):
                 write.writerow(each_data)
 
     def main(self):
-        machine_list = self.machine_list
+        # all machine list is in the station path
+        machine_list = self.read_machine_list()
 
         threads = []
         loops = range(len(machine_list))
@@ -300,34 +204,36 @@ class Machine_handle(object):
                 self.write_csv_file(self.connection_error_info, file_name=self.connection_error_csv_name,
                                     csv_header=csv_header)
 
+    @staticmethod
+    def send_mail(email, attachments):
+        if os.path.exists(attachments):
+            lib.sendmail(to=email, subject='Machine scan result',
+                         body='all the scan machines result is in the attachment, Please review, Thanks!',
+                         attachments=attachments)
+            print('send email to {} mailbox successful!'.format(email))
+        else:
+            print('The csv file [{}] is not found, please check!'.format(attachments))
 
-def send_mail(email, attachments):
-    if os.path.exists(attachments):
-        lib.sendmail(to=email, subject='Machine scan result',
-                     body='all the scan machines result is in the attachment, Please review, Thanks!',
-                     attachments=attachments)
-        print('send email to {} mailbox successful!'.format(email))
-    else:
-        print('The csv file [{}] is not found, please check!'.format(attachments))
+    def delete_local_csv_file(self):
+        result_csv_name = '{}.csv'.format(self.result_csv_name)
+        if os.path.exists(result_csv_name):
+            os.remove(result_csv_name)
 
-
-def delete_local_csv_file():
-    result_csv_name = 'machine_mapping_scan_result.csv'
-    if os.path.exists(result_csv_name):
-        os.remove(result_csv_name)
-
-    connection_error_csv_name = 'scan_error_result.csv'
-    if os.path.exists(connection_error_csv_name):
-        os.remove(connection_error_csv_name)
+        connection_error_csv_name = '{}.csv'.format(self.connection_error_csv_name)
+        if os.path.exists(connection_error_csv_name):
+            os.remove(connection_error_csv_name)
 
 
 if __name__ == '__main__':
     station_path = '/opt/cisco/scripts/prod/wnbu/trunk/trunk/stations/foc'
-    gui = Gui(station_path=station_path)
-    gui.source.mainloop()
+    user_info = ('evanliu', 'Cisco123!')
 
-    # TODO Send email to cisco mailbox
-    # send_mail(email='evaliu', attachments='machine_mapping_scan_result.csv')
-    # send_mail(email='evaliu', attachments='scan_error_result.csv')
-    # TODO delete the local csv file
-    # delete_local_csv_file()
+    handle = Machine_scan_tool(user_info=user_info, station_path=station_path)
+    handle.main()
+    # TODO Send email to Cisco mailbox
+    email_list = ['evaliu', 'jusu', 'kevli2']
+    for mail in email_list:
+        handle.send_mail(email=mail, attachments='{}.csv'.format(handle.result_csv_name))
+        handle.send_mail(email=mail, attachments='{}.csv'.format(handle.connection_error_csv_name))
+    # Delete the local csv file
+    handle.delete_local_csv_file()
