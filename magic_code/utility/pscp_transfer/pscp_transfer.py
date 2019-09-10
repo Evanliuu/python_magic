@@ -2,40 +2,39 @@ import os
 import threading
 
 
-def file_transfer(machine, username='username', password='password', file_path=r'C:\Users\evaliu\Desktop\123.txt'):
-    r"""
-    pscp命令：pscp C:\Users\evaliu\Desktop\123.txt evanliu@10.1.1.1:/tftpboot
-    :param machine: 传输的服务器名
-    :param username: 连接服务器的用户名
-    :param password: 连接服务器的密码
-    :param file_path: 需要传输的文件路径
+def file_transfer(machine, user_info=('username', 'password'),
+                  file_path=r'C:\Users\evaliu\Desktop\123.txt', target_path='/tftpboot/'):
+    """
+    此功能使用PSCP命令将本地文件传输到远程的Linux服务器上
+    :param machine: 目标服务器
+    :param user_info: 目标服务器登陆账户和密码
+    :param file_path: 传输的文件路径
+    :param target_path: 目标服务器的存放路径
     :return:
     """
-    # 切换到pscp.exe的存放路径下
-    os.chdir(r'C:\Program Files\PuTTY')
+    username = user_info[0]
+    password = user_info[1]
 
-    # 执行pscp文件传输命令: 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y
-    cmd1 = r'echo y|pscp {0} {1}@{2}:/tftpboot/' \
-        .format(file_path, username, machine)
-    os.system(cmd1)
+    # TODO 执行PSCP文件传输命令: 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y
+    # cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, machine, target_path)
+    # os.system(cmd1)
 
-    # 执行pscp文件传输命令: 第二次连接直接输入密码
-    cmd2 = r'echo {0}|pscp {1} {2}@{3}:/tftpboot/'\
-        .format(password, file_path, username, machine)
+    # 执行PSCP文件传输命令: 第二次连接直接输入密码
+    cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, machine, target_path)
     os.system(cmd2)
 
 
-def main(machines):
+def main(machine_list):
     """
 
-    :param list machines: 提供需要传输的服务器列表
+    :param list machine_list: 填入目标服务器列表
     :return:
     """
-    loops = range(len(machines))
+    loops = range(len(machine_list))
     threads = []
 
     # 启用多线程传输文件
-    for machine in machines:
+    for machine in machine_list:
         print('Now start transferring files to {} server...'.format(machine))
         t = threading.Thread(target=file_transfer, args=(machine,))
         threads.append(t)
@@ -49,7 +48,7 @@ def main(machines):
 
 
 if __name__ == '__main__':
-    machines = [
-        'fxcavp363',
+    machine_list = [
+        'fxcavp831',
     ]
-    main(machines)
+    main(machine_list)
