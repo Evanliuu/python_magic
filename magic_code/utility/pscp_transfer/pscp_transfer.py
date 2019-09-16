@@ -2,10 +2,10 @@ import os
 import threading
 
 
-def file_transfer(machine, user_info=('username', 'password'),
-                  file_path=r'C:\Users\evaliu\Desktop\123.txt', target_path='/tftpboot/', transfer_to_local=True):
+def file_transfer(machine, user_info=('username', 'password'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
+                  target_path='/tftpboot/', transfer_to_local=True):
     """
-    此功能使用PSCP命令对远程服务器进行文件传输
+    此功能使用PSCP命令与远程服务器进行文件传输
     :param machine: 远程服务器名称
     :param user_info: 远程服务器登陆账户名和密码
     :param file_path: 被传输的文件路径
@@ -16,18 +16,8 @@ def file_transfer(machine, user_info=('username', 'password'),
     username = user_info[0]
     password = user_info[1]
 
-    # 将本地的文件传输到远程服务器
-    if transfer_to_local:
-        # TODO 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y   (第一次连接指定的服务器要打开，后续不用)
-        # cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, machine, target_path)
-        # os.system(cmd1)
-
-        # 输入密码开始传输文件
-        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, machine, target_path)
-        os.system(cmd2)
-
     # 将远程服务器的文件传输到本地
-    else:
+    if transfer_to_local:
         # TODO 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y   (第一次连接指定的服务器要打开，后续不用)
         # cmd1 = r'echo y|pscp {}@{}:{} {}'.format(username, machine, file_path, target_path)
         # os.system(cmd1)
@@ -36,11 +26,21 @@ def file_transfer(machine, user_info=('username', 'password'),
         cmd2 = r'echo {}|pscp {}@{}:{} {}'.format(password, username, machine, file_path, target_path)
         os.system(cmd2)
 
+    # 将本地的文件传输到远程服务器
+    else:
+        # TODO 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y   (第一次连接指定的服务器要打开，后续不用)
+        # cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, machine, target_path)
+        # os.system(cmd1)
+
+        # 输入密码开始传输文件
+        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, machine, target_path)
+        os.system(cmd2)
+
 
 def main(machine_list):
     """
 
-    :param list machine_list: 填入目标服务器列表
+    :param list machine_list: 填入远程服务器列表
     :return:
     """
     loops = range(len(machine_list))
