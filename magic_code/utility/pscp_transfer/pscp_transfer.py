@@ -3,25 +3,38 @@ import threading
 
 
 def file_transfer(machine, user_info=('username', 'password'),
-                  file_path=r'C:\Users\evaliu\Desktop\123.txt', target_path='/tftpboot/'):
+                  file_path=r'C:\Users\evaliu\Desktop\123.txt', target_path='/tftpboot/', transfer_to_local=True):
     """
-    此功能使用PSCP命令将本地文件传输到远程的Linux服务器上
-    :param machine: 目标服务器
-    :param user_info: 目标服务器登陆账户和密码
-    :param file_path: 传输的文件路径
-    :param target_path: 目标服务器的存放路径
+    此功能使用PSCP命令对远程服务器进行文件传输
+    :param machine: 远程服务器名称
+    :param user_info: 远程服务器登陆账户名和密码
+    :param file_path: 被传输的文件路径
+    :param target_path: 传输文件的放置路径
+    :param transfer_to_local: 如果为True则是从远程服务器传输文件到本地，False则是从本地传输文件到远程服务器
     :return:
     """
     username = user_info[0]
     password = user_info[1]
 
-    # TODO 执行PSCP文件传输命令: 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y
-    # cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, machine, target_path)
-    # os.system(cmd1)
+    # 将本地的文件传输到远程服务器
+    if transfer_to_local:
+        # TODO 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y   (第一次连接指定的服务器要打开，后续不用)
+        # cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, machine, target_path)
+        # os.system(cmd1)
 
-    # 执行PSCP文件传输命令: 第二次连接直接输入密码
-    cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, machine, target_path)
-    os.system(cmd2)
+        # 输入密码开始传输文件
+        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, machine, target_path)
+        os.system(cmd2)
+
+    # 将远程服务器的文件传输到本地
+    else:
+        # TODO 第一次连接会询问"Store key in cache? (y/n)"，此时要输入y   (第一次连接指定的服务器要打开，后续不用)
+        # cmd1 = r'echo y|pscp {}@{}:{} {}'.format(username, machine, file_path, target_path)
+        # os.system(cmd1)
+
+        # 输入密码开始传输文件
+        cmd2 = r'echo {}|pscp {}@{}:{} {}'.format(password, username, machine, file_path, target_path)
+        os.system(cmd2)
 
 
 def main(machine_list):
