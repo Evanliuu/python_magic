@@ -248,7 +248,7 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
-    station_path = '/home/evanliu/Desktop/gitbucket_code/magic_code/magic_code/stations/foc'
+    station_path = '/home/evanliu/Desktop/gitbucket_code/magic_world/magic_world/stations/foc'
     base_url = 'http://cmrc.cisco.com'
     start_date = '5/25/2019'
     end_date = '5/31/2019'
