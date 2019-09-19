@@ -3,7 +3,7 @@ import threading
 
 
 def file_transfer(machine, user_info=('username', 'password'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
-                  target_path='/tftpboot/', transfer_to_local=True):
+                  target_path='/tftpboot/', transfer_to_local=False):
     """
     此功能使用PSCP命令与远程服务器进行文件传输
     :param machine: 远程服务器名称
