@@ -1,12 +1,15 @@
+1.
 # 使用vbs调用bat文件可以隐藏cmd框
 Set obj = CreateObject("Wscript.Shell")
 obj.run "cmd /c C:\Users\evan\Desktop\test.bat", vbhide
 
+2.
 # 使用vbs关闭指定的任务进程
 msgbox "确认关闭？"
 Set obj = CreateObject("Wscript.Shell")
 obj.run "taskkill /im wscript.exe /f", 0
 
+3.
 # 使用vbs循环模拟点击键盘
 msgbox "确认打开？"
 Set obj = CreateObject("Wscript.Shell")

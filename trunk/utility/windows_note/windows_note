@@ -1,0 +1,18 @@
+1. 安装 pyinstaller（编译成exe文件）
+命令：
+    pip3 install pyinstaller
+2. 安装完成后，开始使用。进入要编译的py文件所在目录
+    pyinstaller ./py文件名  #效果是有一堆的文件在dist文件夹下
+    如果要编译成一个文件：
+    pyinstaller --console --onefile ./py文件名  #在dist文件夹下只生成一个exe文件。
+初次运行，可能会出现 failed to create process, 这是pip3的bug，路径的空格不能正常识别
+解决：
+    进入C:\Program Files\python\3.5\Scripts，可以看到有一个pyinstaller-script.py和pyinstaller.exe
+    文本编辑器打开pyinstaller-script.py.第一行的代码申明是这样的
+    #!c:\program files\python\3.5\python3.exe
+    加一个引号变成：#!"c:\program files\python\3.5\python3.exe"
+重新运行编译命令，即可。
+3. exe编译失败：
+UnicodeDecodeError:"gbk" codec can't decode byte 0xaa in position 160:illegal multibyte sequence
+解决：
+文件名改成英文
