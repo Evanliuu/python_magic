@@ -2,7 +2,7 @@ import os
 import threading
 
 
-def file_transfer(machine, user_info=('username', 'password'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
+def file_transfer(machine, user_info=('account', 'password'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
                   target_path='/tftpboot/', transfer_to_local=False, first_connection=False):
     """
     此功能使用PSCP命令与远程服务器进行文件传输
@@ -63,6 +63,6 @@ def main(machine_list):
 
 if __name__ == '__main__':
     machine_list = [
-        'fxcavp831',
+        'fxcavp832',
     ]
     main(machine_list)

@@ -1,3 +1,4 @@
+**************************************************************************************************
 1. 安装 pyinstaller（编译成exe文件）
 命令：
     pip3 install pyinstaller
@@ -16,3 +17,4 @@
 UnicodeDecodeError:"gbk" codec can't decode byte 0xaa in position 160:illegal multibyte sequence
 解决：
 文件名改成英文
+**************************************************************************************************
