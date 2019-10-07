@@ -1,0 +1,6 @@
+显示所有任务进程：
+tasklist
+
+关闭指定的任务进程：
+taskkill /im python.exe /f
+taskkill /pid 11111
