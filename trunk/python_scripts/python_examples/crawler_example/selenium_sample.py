@@ -80,13 +80,35 @@ from selenium.webdriver.support.wait import WebDriverWait
 -----------------------------------------------------------------------------------------------
 """
 
+"""
+--淘宝爬虫--运行前必须要做的事情:
+如果直接使用webdriver，不做任何修改的话，淘宝可以断定启动的浏览器是“机器人”，而不是“死的机器”。
+如果想让淘宝错误地认为启动的浏览器是"死的机器"，那么就需要修改webdriver。
+我使用的是chromedriver，"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"是修改chromedriver的代码，
+直接在Terminal执行即可。执行完在运行脚本，则可以成功登录。
+这里我解释一下"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"，
+这段代码其实就是全局修改/usr/local/bin/chromedriver中的cdc_为dog_，"/usr/local/bin/chromedriver"是chromedriver所在的文件路径。
+"""
+
 
 class Browser(object):
 
     def __init__(self, url=''):
         self.url = url
-        self.drive = webdriver.Chrome()
-        self.waiting = None
+        """
+        chrome_options = webdriver.ChromeOptions()
+        # 不加载图片，加快访问速度
+        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        # 设置为开发者模式，避免被识别
+        chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        self.web_driver = webdriver.Chrome(options=chrome_options)
+        """
+        # 选择浏览器驱动
+        self.driver = webdriver.Chrome()
+        # 显示等待10秒
+        self.waiting = WebDriverWait(self.driver, 10)
+        # 隐示等待10秒
+        self.driver.implicitly_wait(10)
 
     def switch_to_windows(self, to_parent_windows=False):
         """
@@ -94,14 +116,14 @@ class Browser(object):
         :param to_parent_windows: 回到主窗口 if True
         :return:
         """
-        total = self.drive.window_handles
+        total = self.driver.window_handles
         if to_parent_windows:
-            self.drive.switch_to.window(total[0])
+            self.driver.switch_to.window(total[0])
         else:
-            current_windows = self.drive.current_window_handle
+            current_windows = self.driver.current_window_handle
             for window in total:
                 if window != current_windows:
-                    self.drive.switch_to.window(window)
+                    self.driver.switch_to.window(window)
 
     def switch_to_frame(self, index=0, to_parent_frame=False, to_default_frame=False):
         """
@@ -112,11 +134,11 @@ class Browser(object):
         :return:
         """
         if to_parent_frame:
-            self.drive.switch_to.parent_frame()
+            self.driver.switch_to.parent_frame()
         elif to_default_frame:
-            self.drive.switch_to.default_content()
+            self.driver.switch_to.default_content()
         else:
-            self.drive.switch_to.frame(index)
+            self.driver.switch_to.frame(index)
 
     def open_new_windows(self, url=''):
         """
@@ -125,33 +147,30 @@ class Browser(object):
         :return:
         """
         js = "window.open({})".format(url)
-        self.drive.execute_script(js)
+        self.driver.execute_script(js)
         time.sleep(2)
 
     def close_current_windows(self):
-        if self.drive:
-            self.drive.close()
+        if self.driver:
+            self.driver.close()
 
     def quit_browser(self):
-        if self.drive:
-            self.drive.quit()
+        if self.driver:
+            self.driver.quit()
 
-    def open_url(self):
+    def open_url(self, url=None):
         """
         Set the page timeout and execute the default URL
         :return:
         """
-        # 显示等待10秒
-        self.waiting = WebDriverWait(self.drive, 10)
-        # 隐示等待10秒
-        self.drive.implicitly_wait(10)
-        # 打开url
-        self.drive.get(self.url)
+        # 打开网页
+        url = url or self.url
+        self.driver.get(url)
 
     def main(self):
         self.open_url()
         # TODO 普通定位
-        # enter = self.drive.find_element_by_xpath('//*[@id="kw"]')
+        # enter = self.driver.find_element_by_xpath('//*[@id="kw"]')
         # 通过验证元素是否出现定位
         enter = self.waiting.until(EC.presence_of_element_located((By.XPATH, '//*[@id="kw"]')))
         # 模拟输入文本
@@ -159,13 +178,13 @@ class Browser(object):
         # 执行输入
         enter.send_keys(Keys.ENTER)
         # 得到网页html
-        html = self.drive.page_source
-        print('find html:\n', html)
+        html = self.driver.page_source
+        print('found html:\n', html)
         time.sleep(5)
         # 退出浏览器
         self.quit_browser()
 
 
 if __name__ == '__main__':
-    browser = Browser(url='http://baidu.com')
+    browser = Browser(url='https://baidu.com')
     browser.main()
