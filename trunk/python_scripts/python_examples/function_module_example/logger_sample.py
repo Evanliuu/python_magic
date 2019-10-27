@@ -1,5 +1,5 @@
 """
-python中日志一共分成5个级别，从低到高分别是：DEBUG、INFO、WARNING、ERROR、CRITICAL (所有的设定默认级别都是 WARNING)
+日志一共分为5个级别，从低到高分别是：DEBUG、INFO、WARNING、ERROR、CRITICAL (所有的设定默认级别都是 WARNING)
 1.DEBUG：详细的信息，通常只出现在诊断问题上；
 2.INFO：确认一切按预期运行；
 3.WARNING：一个迹象表明，一些意想不到的事情发生了，或表明一些问题在不久的将来会发生(例如：磁盘空间低...等等)
@@ -39,7 +39,7 @@ def logger_sample(format_info='%(asctime)s - %(filename)s[line:%(lineno)d] - %(l
     :return:
     """
     logging.basicConfig(level=level_info, format=format_info, filename=record_file_path, filemode=record_file_mode)
-    # use logging
+    # Use logging
     logging.debug('This is a loggging debug message')
     logging.info('This is a loggging info message')
     logging.warning('This is loggging a warning message')
@@ -57,7 +57,7 @@ def logger_full(record_file_path, record_file_mode,
     :return:
     """
     # 第一步，创建一个logger
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(__name__)  # __name__是以当前的模块名做为对象名，默认是RootLogger
     logger.setLevel(logging.DEBUG)  # Log等级总开关，（设置级别后，不管是输出到文件还是控制台都要大于等于该级别才会被记录）
 
     # 第二步，创建一个handler，用于写入日志文件
@@ -72,12 +72,18 @@ def logger_full(record_file_path, record_file_mode,
     ch.setFormatter(logging.Formatter(format_info))  # 定义handler的输出格式
     logger.addHandler(ch)  # 将logger添加到handler里面
 
-    # use logging
+    # Use logging
     logger.debug('This is a logger debug message')
     logger.info('This is a logger info message')
     logger.warning('This is a logger warning message')
     logger.error('This is a logger error message')
     logger.critical('This is a logger critical message')
+
+    # logging异常处理
+    try:
+        raise ValueError('Value error')
+    except Exception as ex:
+        logger.exception(ex)  # 异常信息会被添加到日志消息中
 
 
 if __name__ == '__main__':

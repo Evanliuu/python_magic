@@ -33,6 +33,6 @@ def example2(*args):
 
 if __name__ == '__main__':
     print('二层装饰器结果：')
-    print(example1('Evan1'))
+    print(example1('This is example1'))
     print('三层装饰器结果：')
-    print(example2('Evan2'))
+    print(example2('This is example2'))

@@ -3,51 +3,62 @@ import xlwt
 import os
 
 
-def excel_write(information=None):
-    # 创建一个新的Excel文档
+def excel_write(write_info, table_name='excel_example.xls'):
+    """
+    写入Excel表格
+    :param write_info: 要写入CSV表格的数据
+    :param table_name: CSV表格名称
+    :return:
+    """
+    # 创建一个Excel文档对象
     ex_wt = xlwt.Workbook()
     # 添加一个新的工作表
     sheet1 = ex_wt.add_sheet('first_page', cell_overwrite_ok=True)
 
-    # 计算数据的总行数
-    rows_range = range(len(information))
-    for row in rows_range:
-        each_data = information[row]
-
-        if isinstance(each_data, (list, tuple)):
-            # 循环写入每条数据
-            for column in range(len(each_data)):
-                sheet1.write(row, column, each_data[column])
+    for row_index, each_row in enumerate(write_info):
+        if isinstance(each_row, (list, tuple)):
+            # 如果是列表或者元组，循环写入每条数据
+            for column_index, each_column in enumerate(each_row):
+                sheet1.write(row_index, column_index, each_column)
         else:
             # 写入一条数据
-            sheet1.write(row, 0, each_data)
+            sheet1.write(row_index, 0, each_row)
+    ex_wt.save(table_name)
 
-    ex_wt.save('excel_example.xls')
 
-
-def excel_read(file_name='', sheet_index=0):
+def excel_read(file_name=None, sheet_index=0):
+    """
+    读取Excel表格
+    :param file_name: 要读取的CSV表格名称
+    :param sheet_index: 表格的页面索引值，第一页为0，以此类推
+    :return:
+    """
     def read_local_excel():
+        # 读取当前路径下的Excel表格，如果有则返回那个Excel表格的名称
         files = os.listdir(os.getcwd())
         for file in files:
             if '.xls' in file:
                 local_excel = file
                 return local_excel
         else:
-            print('No excel documents were found locally！')
             return None
+
     file_name = file_name or read_local_excel()
+    if not file_name:
+        print('The excel document was not found, Please check!')
+        return
 
     # 打开Excel文档
     ex_rd = xlrd.open_workbook(filename=file_name)
-    # 读取Excel的表格（index：1）读取第一张表格
+    # 读取Excel的表格（sheet_index=0 读取第一张表格）
     sheet = ex_rd.sheet_by_index(sheet_index)
 
-    # 读取表格的总行数
-    total_rows = range(sheet.nrows)
-    for i in total_rows:
-        # 循环读取表格内每一行的数据
+    result = []
+    for i in range(sheet.nrows):
+        # 循环读取表格每行数据
         row_data = sheet.row_values(i)
-        print(row_data)
+        result.append(row_data)
+    return result
 
 
 if __name__ == '__main__':
@@ -56,5 +67,7 @@ if __name__ == '__main__':
         ['evan', '66'],
         'writer finish'
     ]
-    excel_write(information=message)
-    excel_read()
+    # 写入Excel表
+    excel_write(write_info=message)
+    # 读取Excel表
+    print(excel_read())

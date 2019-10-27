@@ -1,6 +1,5 @@
-import tkinter as tk
-
-""" Tkinter16个核心窗口部件：
+"""
+Tkinter16个核心窗口部件：
 Button：一个简单的按钮，用来执行一个命令或别的操作。
 Canvas：组织图形。这个部件可以用来绘制图表和图，创建图形编辑器，实现定制窗口部件。
 Checkbutton：代表一个变量，它有两个不同的值。点击这个按钮将会在这两个值间切换。
@@ -17,23 +16,24 @@ Scrollbar：为配合使用canvas, entry, listbox, and text窗口部件的标准
 Text：格式化文本显示。允许你用不同的样式和属性来显示和编辑文本。同时支持内嵌图象和窗口。
 Toplevel：一个容器窗口部件，作为一个单独的、最上面的窗口显示。
 messageBox：消息框，用于显示你应用程序的消息框。(Python2中为tkMessagebox)
+
+grid参数使用方法:
+column = 列数 [number - use cell identified with given column (starting with 0)]
+columnspan = 跨列数 [number - this widget will span several columns]
+in = master - use master to contain this widget
+in_ = master - see 'in' option description
+ipadx = 单元格左右间距 [amount - add internal padding in x direction]
+ipady = 单元格上下间距 [amount - add internal padding in y direction]
+padx = 单元格内部元素与单元格的左右间距 [amount - add padding in x direction]
+pady = 单元格内部元素与单元格的上下间距 [amount - add padding in y direction]
+row = 行数 [number - use cell identified with given row (starting with 0)]
+rowspan = 跨行数 [number - this widget will span several rows]
+sticky = 空间位置 [NSWE - if cell is larger on which sides will this]
 """
+import tkinter as tk
 
 
-class Gui(object):
-    """ grid参数使用方法:
-    column = 列数 [number - use cell identified with given column (starting with 0)]
-    columnspan = 跨列数 [number - this widget will span several columns]
-    in = master - use master to contain this widget
-    in_ = master - see 'in' option description
-    ipadx = 单元格左右间距 [amount - add internal padding in x direction]
-    ipady = 单元格上下间距 [amount - add internal padding in y direction]
-    padx = 单元格内部元素与单元格的左右间距 [amount - add padding in x direction]
-    pady = 单元格内部元素与单元格的上下间距 [amount - add padding in y direction]
-    row = 行数 [number - use cell identified with given row (starting with 0)]
-    rowspan = 跨行数 [number - this widget will span several rows]
-    sticky = 空间位置 [NSWE - if cell is larger on which sides will this]
-    """
+class GuiSample(object):
 
     def __init__(self):
         self.root = tk.Tk()
@@ -72,5 +72,5 @@ class Gui(object):
 
 
 if __name__ == '__main__':
-    gui = Gui()
-    gui.root.mainloop()
+    guiSample = GuiSample()
+    guiSample.root.mainloop()

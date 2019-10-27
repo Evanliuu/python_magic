@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-from redis import StrictRedis
-
-# 打开cmd输入 redis-cli.exe 即可进入redis命令行
-
-"""Redis数据类型:
+"""
+Redis数据类型:
 1. <set key value>
     类型	:   String(字符串)	
     简介:   二进制安全	
@@ -33,9 +29,8 @@ from redis import StrictRedis
     简介:   将Set中的元素增加一个权重参数score,元素按score有序排列
     特性	:   数据插入集合时,已经进行天然排序
     场景:   	1.排行榜 2.带权重的消息队列
-"""
 
-"""键值相关命令：
+键值相关命令：
 1.  keys *                   查看当前所有的key
 2.  exists name              查看数据库是否有name这个key
 3.  del name                 删除key name
@@ -47,9 +42,8 @@ from redis import StrictRedis
 9.  randomkey                随机返回数据库里面的一个key
 10. rename key2 key3         重命名key2 为key3
 11. type key2                返回key的数据类型
-"""
 
-"""服务器相关命令:
+服务器相关命令:
 1.  ping                     PING返回响应是否连接成功
 2.  echo                     在命令行打印一些内容
 3.  select                   0~15 编号的数据库
@@ -61,8 +55,13 @@ from redis import StrictRedis
 9.  flushall                 删除所有数据库中的数据库
 """
 
+# -*- coding: utf-8 -*-
+from redis import StrictRedis
 
-class Redis_DB(object):
+# 打开cmd输入 redis-cli.exe 即可进入redis命令行
+
+
+class RedisHandle(object):
 
     def __init__(self, host='localhost', port=6379):
         self.host = host
@@ -96,8 +95,8 @@ class Redis_DB(object):
 
 
 if __name__ == '__main__':
-    redis_db = Redis_DB()
-    redis_db.write_data('name', 'evan')
-    redis_db.get_all_data()
-    redis_db.delete_data('name')
-    redis_db.get_all_data()
+    redisDb = RedisHandle()
+    redisDb.write_data('name', 'evan')
+    redisDb.get_all_data()
+    redisDb.delete_data('name')
+    redisDb.get_all_data()

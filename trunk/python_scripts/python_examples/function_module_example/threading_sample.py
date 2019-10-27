@@ -3,7 +3,15 @@ import datetime
 import time
 
 
+locks = None
+
+
 def unit_test(sleep):
+    """
+
+    :param sleep: 等待的时间
+    :return:
+    """
     # locks.acquire()   获取锁 -- 获取锁之后，其他的线程在此等待
     print('start loop {}, '.format(sleep), datetime.datetime.now())
     time.sleep(sleep)
@@ -12,6 +20,11 @@ def unit_test(sleep):
 
 
 def thread_run(sleep_list):
+    """
+
+    :param sleep_list: 列表
+    :return:
+    """
     global locks
     locks = threading.Lock()
 

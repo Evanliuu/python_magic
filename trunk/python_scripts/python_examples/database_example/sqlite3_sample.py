@@ -3,7 +3,7 @@ import sqlite3
 
 class Mysql(object):
     """
-    不需要连接真实的Mysql数据库，在本地创建一个虚拟的Mysql文件
+    在本地创建一个虚拟的Mysql文件
     """
     def __init__(self, db_path=r'C:\pycharm_user\evan', db_name='sql_lite3'):
         self.db_name = db_name

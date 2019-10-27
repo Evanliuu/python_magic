@@ -1,3 +1,4 @@
+#!/usr/local/bin/python2.7
 import signal
 import time
 import datetime
@@ -8,6 +9,7 @@ def signal_decorator(time_out=None):
         def wrapper(*args, **kwargs):
             # callback function
             def my_handle(*args):
+                print('args: {}'.format(args))
                 print('time out!')
 
             # TODO signal.SIGALRM 只能在Linux端使用

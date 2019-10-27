@@ -9,9 +9,14 @@ import random
 from urllib.parse import urljoin
 
 
-class Movie_download(object):
+class MovieDownload(object):
 
     def __init__(self, source_url=None, queue_count=30):
+        """
+
+        :param source_url: m3u8格式的url
+        :param queue_count: ts文件同时下载个数
+        """
         self.source_url = {}
         for each_url in source_url:
             if 'm3u8' in each_url:
@@ -23,7 +28,7 @@ class Movie_download(object):
                     base_url = base_url + '/'
                 self.source_url[each_url] = base_url
             else:
-                raise ValueError('这个url [{}] 不是m3u8的格式，请检查url的正确性！'.format(each_url))
+                raise ValueError('这个url [{}] 不是m3u8的格式，请检查！'.format(each_url))
         self.directory_name = 'm3u8_movies'
         self.failed_ts_url = {}
         self.queue_count = queue_count
@@ -168,5 +173,5 @@ if __name__ == '__main__':
     # ts文件同时下载数量
     queue_count = 100
 
-    movie_download = Movie_download(source_url=source_url, queue_count=queue_count)
+    movie_download = MovieDownload(source_url=source_url, queue_count=queue_count)
     movie_download.main()
