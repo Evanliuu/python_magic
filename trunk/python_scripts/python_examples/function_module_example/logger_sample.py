@@ -58,7 +58,7 @@ def logger_full(record_file_path, record_file_mode,
     """
     # 第一步，创建一个logger
     logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)  # Log等级总开关，（设置级别后，不管是输出到文件还是控制台都要高于该级别才会被记录）
+    logger.setLevel(logging.DEBUG)  # Log等级总开关，（设置级别后，不管是输出到文件还是控制台都要大于等于该级别才会被记录）
 
     # 第二步，创建一个handler，用于写入日志文件
     fh = logging.FileHandler(record_file_path, mode=record_file_mode)
