@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class Mysql(object):
+class SqliteDB(object):
     """
     在本地创建一个虚拟的Mysql文件
     """
@@ -37,7 +37,7 @@ class Mysql(object):
 
 
 if __name__ == '__main__':
-    mysql = Mysql()
+    mysql = SqliteDB()
     try:
         mysql.create_table()
         mysql.cur.execute('INSERT INTO users VALUES(100, 200)')
