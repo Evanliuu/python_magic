@@ -1,0 +1,7 @@
+python32位：
+pip install wordcloud-1.5.0-cp37-cp37m-win32.whl
+pip install matplotlib
+
+python64位：
+wordcloud-1.5.0-cp37-cp37m-win_amd64.whl
+pip install matplotlib
