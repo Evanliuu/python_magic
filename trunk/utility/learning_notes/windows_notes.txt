@@ -1,10 +1,18 @@
+CMD：
 <<显示所有任务进程>>
     tasklist
 
 <<关闭指定的任务进程>>
-    taskkill /im python.exe /f
-    taskkill /pid 11111
+    1.taskkill /im python.exe /f  # 根据进程名选择删除
+    2.taskkill /pid 11111  # 根据进程ID选择删除
 
+<<pip升级命令>>
+    1.使用python -m pip install --upgrade pip
+    2.使用python -m pip install -U --force-reinstall pip
+    3.使用pip install --user --upgrade pip
+
+===================================================================
+VBS：
 <<使用vbs调用bat文件可以隐藏cmd框>>
     Set obj = CreateObject("Wscript.Shell")
     obj.run "cmd /c C:\Users\evan\Desktop\test.bat", vbhide
