@@ -1,27 +1,30 @@
-# -*-coding:utf-8-*-
+# -*- coding:utf-8 -*-
 import pyodbc
 import time
 import logging
 import os
 import json
 
-RECORD_FILE_PATH = './read_access_table_result.txt'
-FORMAT_INFO = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
 
-# logging init
+RECORD_LOG_FILE_PATH = './read_access_table_logs.txt'
+LOG_FORMAT_INFO = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
+CPP_DATA_FILE = 'cpp_automated_data.json'
+APOLLO_TARGET_PATH = '/tftpboot/'
+APOLLO_ACCOUNT = 'gen-apollo'
+APOLLO_PASSWORD = 'Ad@pCr01!'
+
+# logging module initialize
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
 # Set the ability to write files
-fh = logging.FileHandler(RECORD_FILE_PATH, mode='a')
+fh = logging.FileHandler(RECORD_LOG_FILE_PATH, mode='a')
 fh.setLevel(logging.DEBUG)
-fh.setFormatter(logging.Formatter(FORMAT_INFO))
+fh.setFormatter(logging.Formatter(LOG_FORMAT_INFO))
 logger.addHandler(fh)
-
 # Set the ability to print log messages
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
-ch.setFormatter(logging.Formatter(FORMAT_INFO))
+ch.setFormatter(logging.Formatter(LOG_FORMAT_INFO))
 logger.addHandler(ch)
 
 
@@ -32,31 +35,26 @@ class AccessHandle(object):
         self.table_name = table_name
 
     @staticmethod
-    def transfer_file_to_apollo(machine, user_info=('gen-apollo', 'Ad@pCr01!'),
-                                file_path=r'win_machine_info.json', target_path='/tftpboot/',
-                                first_connection=False):
+    def transfer_file_to_apollo(machine, local_file_path, target_path, first_connection=False):
         """
-        The feature use the PSCP command for file transfer to the apollo server
-        :param machine: Apollo server name
-        :param user_info: Connect account and password
-        :param file_path: Local file path
-        :param target_path: Remote apollo server file path
+        The feature use the PSCP command for file transfer to the remote apollo server
+        :param machine: Fill in the remote apollo server name
+        :param local_file_path: Fill in the path of the local file to be transferred
+        :param target_path: Fill in the placement file path for the Apollo server
         :param first_connection: The server needs to be set to True for the first connection
         :return:
         """
-        username = user_info[0]
-        password = user_info[1]
         if first_connection:
-            cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, machine, target_path)
+            cmd1 = r'echo y|pscp {} {}@{}:{}'.format(local_file_path, APOLLO_ACCOUNT, machine, target_path)
             os.system(cmd1)
         # Transfer the local file to the Apollo server
-        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, machine, target_path)
+        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(APOLLO_PASSWORD, local_file_path, APOLLO_ACCOUNT, machine, target_path)
         os.system(cmd2)
-        logger.debug('Transfer file to apollo successful')
+        logger.debug('Transfer file to apollo server successful')
 
     @staticmethod
     def write_json_file(msg):
-        with open('win_machine_info.json', 'w', encoding='utf-8') as wf:
+        with open('{}'.format(CPP_DATA_FILE), 'w', encoding='utf-8') as wf:
             wf.write(json.dumps(msg, ensure_ascii=False, indent=2) + '\n')
         logger.debug('Write json file successful')
 
@@ -102,11 +100,14 @@ def main(access_table_path, table_name):
         try:
             received = handle.read_access_table()
             if received:
-                logger.info('Received table information: {}'.format(received))
+                logger.info('Received table information:\n{}'.format(received))
+
+                # Write the automated data transfer to json file
                 handle.write_json_file(msg=received)
+                # Transfer the json file to the corresponding apollo server
                 handle.transfer_file_to_apollo(machine=received['machine'],
-                                               file_path='win_machine_info.json',
-                                               target_path='/tftpboot/win_machine_info.json',
+                                               local_file_path=CPP_DATA_FILE,
+                                               target_path=APOLLO_TARGET_PATH,
                                                first_connection=True)
                 time.sleep(1)
             else:
