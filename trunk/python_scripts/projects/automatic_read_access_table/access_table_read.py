@@ -38,20 +38,22 @@ class AccessHandle(object):
         self.table_name = table_name
 
     @staticmethod
-    def transfer_file_to_apollo(machine, local_file_path, target_path, first_connection=False):
+    def transfer_file_to_apollo(remote_machine, local_file_path, target_path, first_connection=False):
         """
         The feature use the PSCP command for file transfer to the remote apollo server
-        :param machine: Fill in the remote apollo server name
+        :param remote_machine: Fill in the remote apollo server name
         :param local_file_path: Fill in the path of the local file to be transferred
         :param target_path: Fill in the placement file path for the Apollo server
         :param first_connection: The server needs to be set to True for the first connection
         :return:
         """
         if first_connection:
-            cmd1 = r'echo y|pscp {} {}@{}:{}'.format(local_file_path, APOLLO_ACCOUNT, machine, target_path)
+            cmd1 = r'echo y|pscp {} {}@{}:{}'.format(local_file_path, APOLLO_ACCOUNT,
+                                                     remote_machine, target_path)
             os.system(cmd1)
         # Transfer the local file to the Apollo server
-        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(APOLLO_PASSWORD, local_file_path, APOLLO_ACCOUNT, machine, target_path)
+        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(APOLLO_PASSWORD, local_file_path, APOLLO_ACCOUNT,
+                                                  remote_machine, target_path)
         os.system(cmd2)
         logger.debug('Transfer file to apollo server successful')
 
@@ -113,7 +115,7 @@ def main(access_table_path, table_name):
                 # Write the automated data transfer to json file
                 handle.write_json_file(content=received)
                 # Transfer the json file to the corresponding apollo server
-                handle.transfer_file_to_apollo(machine=received['machine'],
+                handle.transfer_file_to_apollo(remote_machine=received['machine'],
                                                local_file_path=CPP_DATA_FILE,
                                                target_path=APOLLO_TARGET_PATH,
                                                first_connection=True)
