@@ -6,9 +6,12 @@ import os
 import json
 
 
+# Logging parameter
 RECORD_LOG_FILE_PATH = './read_access_table_logs.txt'
 LOG_FORMAT_INFO = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
+# CPP parameter
 CPP_DATA_FILE = 'cpp_automated_data.json'
+# Apollo parameter
 APOLLO_TARGET_PATH = '/tftpboot/'
 APOLLO_ACCOUNT = 'gen-apollo'
 APOLLO_PASSWORD = 'Ad@pCr01!'
@@ -53,9 +56,14 @@ class AccessHandle(object):
         logger.debug('Transfer file to apollo server successful')
 
     @staticmethod
-    def write_json_file(msg):
+    def write_json_file(content):
+        """
+        Write json file
+        :param content: Fill in the information to be written
+        :return:
+        """
         with open('{}'.format(CPP_DATA_FILE), 'w', encoding='utf-8') as wf:
-            wf.write(json.dumps(msg, ensure_ascii=False, indent=2) + '\n')
+            wf.write(json.dumps(content, ensure_ascii=False, indent=2) + '\n')
         logger.debug('Write json file successful')
 
     def read_access_table(self):
@@ -77,7 +85,7 @@ class AccessHandle(object):
             cpp_data['sn'] = result[0][2]
             cpp_data['pn'] = result[0][3]
 
-            # Delete the first row
+            # Delete that row
             crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.table_name, cpp_data['machine']))
             # Submit changes
             crsr.commit()
@@ -103,7 +111,7 @@ def main(access_table_path, table_name):
                 logger.info('Received table information:\n{}'.format(received))
 
                 # Write the automated data transfer to json file
-                handle.write_json_file(msg=received)
+                handle.write_json_file(content=received)
                 # Transfer the json file to the corresponding apollo server
                 handle.transfer_file_to_apollo(machine=received['machine'],
                                                local_file_path=CPP_DATA_FILE,
