@@ -55,7 +55,7 @@ class AccessHandle(object):
         cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(APOLLO_PASSWORD, local_file_path, APOLLO_ACCOUNT,
                                                   remote_machine, target_path)
         os.system(cmd2)
-        logger.debug('Transfer file to apollo server successful')
+        logger.debug('Transfer file to apollo server （{}） successful'.format(remote_machine))
 
     @staticmethod
     def write_json_file(content):
