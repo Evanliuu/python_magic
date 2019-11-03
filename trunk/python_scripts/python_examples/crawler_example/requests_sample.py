@@ -1,3 +1,29 @@
+""" Request反反爬虫解决方案：
+1:
+使用随机请求头:
+    from fake_useragent import UserAgent
+    ua = UserAgent(use_cache_server=False)
+    headers = {'User-Agent': ua.random}
+2:
+使用带请求参数的request，添加referer等：
+    GET: params = {"wd": 'python'}
+    POST: data = {"wd": 'python'}
+3:
+使用代理突破限制IP访问频率，或者减少访问频率（加延时）:
+    proxies = {
+        "http": "http://10.10.1.10:3128",
+        "https": "http://10.10.1.10:1080",
+    }
+4:
+使用Session保持会话状态：
+    s = requests.Session()
+    response = s.get(url)
+5:
+登陆网站时需要输入账户密码则调用auth参数传入即可:
+    from requests.auth import HTTPBasicAuth
+    response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
+"""
+
 import random
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException
@@ -9,62 +35,40 @@ POST = 'post'
 
 class Crawler(object):
 
-    def __init__(self, base_url=None):
-        self.base_url = base_url
+    def __init__(self, url=None):
+        self.source_url = url
 
     @staticmethod
     def random_headers():
         ua_list = [
             # Chrome UA
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+            ' Chrome/73.0.3683.75 Safari/537.36',
             # IE UA
             'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
             # Microsoft Edge UA
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+            ' Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
         ]
         ua = random.choice(ua_list)
-        headers = {'User-Agent': ua}
-        return headers
+        return ua
 
-    def get_web_page(self, url=None, purpose=GET):
-        """ Request example：
-        1:
-        使用随机请求头:
-            from fake_useragent import UserAgent
-            ua = UserAgent(use_cache_server=False)
-            headers = {'User-Agent': ua.random}
-            or
-            headers = self.random_headers()
-        2:
-        使用带请求参数的request：
-            GET: params = {"wd": 'python'}
-            POST: data = {"wd": 'python'}
-        3:
-        使用代理突破限制IP访问频率:
-            proxies = {
-                "http": "http://10.10.1.10:3128",
-                "https": "http://10.10.1.10:1080",
-            }
-        4:
-        使用Session保持会话状态：
-            s = requests.Session()
-            response = s.get(url)
-        5:
-        登陆网站时需要输入账户密码则调用auth参数传入即可:
-            from requests.auth import HTTPBasicAuth
-            response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
+    def get_web_page(self, request_url=None, purpose=GET):
         """
-        url = url or self.base_url
+        请求网页数据并返回响应结果
+        :param request_url: 请求的URL
+        :param purpose: 请求的协议
+        :return:
+        """
+        request_url = request_url or self.source_url
         headers = {
-            # 使用谷歌浏览器请求头
-            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'
+            "User-Agent": self.random_headers(),
         }
         try:
             if purpose == GET:
-                response = requests.get(url, headers=headers, timeout=60)
+                response = requests.get(request_url, headers=headers, timeout=60)
             else:
-                response = requests.post(url, headers=headers, timeout=60)
+                response = requests.post(request_url, headers=headers, timeout=60)
 
             if response.status_code == 200:
                 return response
@@ -76,14 +80,15 @@ class Crawler(object):
                 # response.history # 访问的历史记录 [type: list]
             else:
                 return None
+
         except ReadTimeout:  # 访问超时错误
-            print('the url ({}) Time out'.format(url))
+            print('The url ({}) Time out'.format(request_url))
             return None
         except ConnectionError:  # 网络连接中断错误
-            print('the url ({}) Connect error'.format(url))
+            print('The url ({}) Connect error'.format(request_url))
             return None
         except RequestException:  # 父类错误
-            print('the url ({}) Error'.format(url))
+            print('The url ({}) Error'.format(request_url))
             return None
 
     @staticmethod
@@ -93,13 +98,12 @@ class Crawler(object):
         # print(like)
 
         # 获取网页内容
-        source = crawler.get_web_page(purpose=GET)
-        if source:
-            with open('beautiful.jpg', 'wb') as file:
-                file.write(source.content)
+        response = crawler.get_web_page(purpose=GET)
+        if response:
+            print('Response:\n{}'.format(response.text))
 
 
 if __name__ == '__main__':
-    base_url = 'http://img.netbian.com/file/2019/0418/92a06dd21f1a38d97c930ce3e11b4123.jpg'
-    crawler = Crawler(base_url=base_url)
+    resource_url = 'https://www.baidu.com'
+    crawler = Crawler(url=resource_url)
     crawler.main()
