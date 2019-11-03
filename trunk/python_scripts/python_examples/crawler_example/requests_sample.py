@@ -80,16 +80,9 @@ class Crawler(object):
                 # response.history # 访问的历史记录 [type: list]
             else:
                 return None
+        except Exception as ex:
+            print('Get web page error: {}'.format(ex))
 
-        except ReadTimeout:  # 访问超时错误
-            print('The url ({}) Time out'.format(request_url))
-            return None
-        except ConnectionError:  # 网络连接中断错误
-            print('The url ({}) Connect error'.format(request_url))
-            return None
-        except RequestException:  # 父类错误
-            print('The url ({}) Error'.format(request_url))
-            return None
 
     @staticmethod
     def main():
