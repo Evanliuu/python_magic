@@ -83,7 +83,6 @@ class Crawler(object):
         except Exception as ex:
             print('Get web page error: {}'.format(ex))
 
-
     @staticmethod
     def main():
         # 中文转换字节码
