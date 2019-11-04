@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import requests
-from urllib.parse import urljoin
 import threading
 import re
 import json
 import os
 import datetime
 import time
+
+from urllib.parse import urljoin
 
 __author__ = 'Evan'
 
