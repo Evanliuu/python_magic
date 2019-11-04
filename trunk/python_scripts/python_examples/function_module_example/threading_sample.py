@@ -8,7 +8,7 @@ locks = None
 
 def unit_test(sleep):
     """
-
+    多线程单元测试
     :param sleep: 等待的时间
     :return:
     """
@@ -21,8 +21,8 @@ def unit_test(sleep):
 
 def thread_run(sleep_list):
     """
-
-    :param sleep_list: 列表
+    运行多线程
+    :param sleep_list: 延时时间列表
     :return:
     """
     global locks

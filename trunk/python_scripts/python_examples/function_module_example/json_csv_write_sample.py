@@ -25,7 +25,7 @@ def read_write_json_data(msg, file_name='json_file', do_read=False):
 
 def write_csv_data(msg, file_name='csv_file', headers=None, do_read=False):
     """
-
+    写入csv表格
     :param msg: 要写入CSV表格的数据
     :param file_name: 文件名称
     :param headers: CSV表格的第一行表头
