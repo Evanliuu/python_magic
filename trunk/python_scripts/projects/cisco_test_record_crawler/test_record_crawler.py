@@ -18,8 +18,8 @@ class Crawler(object):
         self.source_path = os.path.join(os.getcwd(), 'test_record_result')
 
         self.station_path = station_path
-        self.start_date= start_date
-        self.end_date= end_date
+        self.start_date = start_date
+        self.end_date = end_date
         self.username = 'evanliu'
         self.password = '**********'
         self.auth_value = None
