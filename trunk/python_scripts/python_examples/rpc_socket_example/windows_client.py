@@ -31,11 +31,11 @@ class Gui(object):
         tk.Label(self.root, text='Connect ip: ').grid(row=0, column=1, sticky=tk.W)
         self.input1 = tk.StringVar()
         self.entry1 = tk.Entry(self.root, textvariable=self.input1).grid(row=0, column=2, padx=45)
-        self.input1.set('6666')
 
         tk.Label(self.root, text='Connect port: ').grid(row=1, column=1, sticky=tk.W)
         self.input2 = tk.StringVar()
         self.entry2 = tk.Entry(self.root, textvariable=self.input2).grid(row=1, column=2, padx=45)
+        self.input2.set('6666')
 
         tk.Label(self.root, text='Received: ').grid(row=3, column=1, sticky=tk.W)
         self.text = tk.Text(self.root)

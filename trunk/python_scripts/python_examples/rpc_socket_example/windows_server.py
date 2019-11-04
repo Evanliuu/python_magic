@@ -6,7 +6,7 @@ from xmlrpc.server import SimpleXMLRPCServer
 from tkinter import messagebox
 
 
-class Function(object):
+class ServiceFunction(object):
     """
     This class holds server-side execution functions
     """
@@ -16,9 +16,9 @@ class Function(object):
         Gets the host name of the local computer
         :return: get hostname to client side
         """
-        result = os.popen('ipconfig -all')
+        result = os.popen('ipconfig /all')
         read_info = result.readlines()[3]
-        host = re.search(': (\w+)', read_info)
+        host = re.search(r': (\w+)', read_info)
         if host:
             host = host.groups()[0]
         else:
@@ -58,9 +58,9 @@ class Gui(object):
         :return:
         """
         result = os.popen('ipconfig')
-        windows_ip = re.search('\d+\.\d+\.\d+\.\d+', result.read())
+        windows_ip = re.search(r'IPv4.+? : (\d+\.\d+\.\d+\.\d+)', result.read())
         if windows_ip:
-            windows_ip = windows_ip.group()
+            windows_ip = windows_ip.groups()[0]
         else:
             windows_ip = 'Please enter your ip'
         return windows_ip
@@ -81,7 +81,8 @@ class Gui(object):
             server = SimpleXMLRPCServer((self.input1.get(), int(self.input2.get())))
             messagebox.showinfo('Information', 'Server {} Listening on port {}...'.
                                 format(self.input1.get(), int(self.input2.get())))
-            server.register_instance(Function())
+            # server.register_function(function)
+            server.register_instance(ServiceFunction())
             server.serve_forever()
         except Exception as ex:
             messagebox.showerror('Error', 'Start server error...\nerror msg: {}'.format(ex))
