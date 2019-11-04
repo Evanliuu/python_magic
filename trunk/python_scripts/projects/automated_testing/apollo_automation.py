@@ -6,6 +6,7 @@ import os
 import json
 import re
 import threading
+
 from xmlrpc.server import SimpleXMLRPCServer
 
 __author__ = 'Evan'
@@ -38,6 +39,7 @@ class ApolloAutomation(object):
         self.table_name = table_name
         # CPP parameter
         self.cpp_data_file = 'cpp_automated_data.json'
+        self.apollo_test_result_directory = 'apollo_test_result'
         # Apollo parameter
         self.apollo_target_path = '/tftpboot/'
         self.apollo_account = 'gen-apollo'
@@ -64,7 +66,7 @@ class ApolloAutomation(object):
 
     def write_json_file(self, content):
         """
-        Write json file
+        Write the json file
         :param content: Fill in the information to be written
         :return:
         """
@@ -79,81 +81,86 @@ class ApolloAutomation(object):
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
         crsr = cnxn.cursor()
-        # Query all data in the table
-        result = [data for data in crsr.execute("SELECT * from {}".format(self.table_name))]
-        if result:
-            cpp_data = dict()
-            # result[0] is the first row data
-            cpp_data['machine'] = result[0][0]
-            cpp_data['cell'] = result[0][1]
-            cpp_data['sn'] = result[0][2]
-            cpp_data['pn'] = result[0][3]
-            # Delete the captured row data
-            crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.table_name, cpp_data['machine']))
-            # Submit changes
-            crsr.commit()
+        try:
+            # Query all data in the table
+            data_list = [data for data in crsr.execute("SELECT * from {}".format(self.table_name))]
+            if data_list:
+                cpp_data = dict()
+                # result[0] is the first row data
+                cpp_data['machine'] = data_list[0][0]
+                cpp_data['cell'] = data_list[0][1]
+                cpp_data['sn'] = data_list[0][2]
+                cpp_data['pn'] = data_list[0][3]
+                # Delete the captured row data
+                crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.table_name, cpp_data['machine']))
+                # Submit changes
+                crsr.commit()
+                result = cpp_data
+            else:
+                result = None
+        finally:
             crsr.close()
             cnxn.close()
-            return cpp_data
-        else:
-            return None
+        return result
 
-    def update_access_table(self, machine, status, container):
+    def update_access_table(self, machine, container, test_status):
         """
-        Connect to Microsoft's access table and modify the data
-        :param status: Fill in the machine's immediate state
+        Connect to Microsoft's access table and update the data
         :param machine: Enter the name of the machine whose state you want to modify
         :param container: Fill in the machine's container number
+        :param test_status: Fill in the machine's test status
         :return:
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
         crsr = cnxn.cursor()
-        # Updates the state of the specified server and container
-        crsr.execute("UPDATE {} SET status={} WHERE machine={} and cell={}".format(self.table_name, status,
-                                                                                   machine, container))
-        # Submit changes
-        crsr.commit()
-        crsr.close()
-        cnxn.close()
+        try:
+            # Updates the state of the specified server and container
+            crsr.execute("UPDATE {} SET status='{}' WHERE machine='{}' and cell='{}'".format
+                         (self.table_name, test_status, machine, container))
+            # Submit changes
+            crsr.commit()
+        finally:
+            crsr.close()
+            cnxn.close()
         logger.debug('The container {} status of the {} server was successfully set to {},'
-                     ' Number of modifications: {}'.format(container, machine, status, crsr.rowcount))
+                     ' Number of modifications: {}'.format(container, machine, test_status, crsr.rowcount))
 
     @staticmethod
     def read_local_ip_address():
         # Read the local IP address
-        rsp = os.popen('ipconfig')
-        result = re.search(r'IPv4 Address.+? : (10.1.1.\d+)', rsp.read())
+        configurations = os.popen('ipconfig')
+        result = re.search(r'IPv4.+? : (10.1.1.\d+)', configurations.read())
         if result:
-            logger.debug('Read the local ip address: {}'.format(result.groups()[0]))
             ip_address = result.groups()[0]
+            logger.debug('Read the local ip address: {}'.format(ip_address))
             return ip_address
         else:
             raise ValueError('Read the local ip address error, Please check!')
 
-    @staticmethod
-    def write_test_result(apollo_test_result=''):
+    def write_test_result(self, apollo_test_result=''):
         """
         Write the test results transferred from the Apollo server into the local apollo_test_result directory
         :param apollo_test_result: Fill in the apollo test result
         :return:
         """
-        record_apollo_test_status_path = os.path.join(os.getcwd(), 'apollo_test_result')
-        if not os.path.exists(record_apollo_test_status_path):
-            os.mkdir('apollo_test_result')
+        apollo_test_result_path = os.path.join(os.getcwd(), self.apollo_test_result_directory)
+        if not os.path.exists(apollo_test_result_path):
+            os.mkdir(self.apollo_test_result_directory)
 
-        os.chdir(record_apollo_test_status_path)
+        os.chdir(apollo_test_result_path)
         with open('{}'.format(apollo_test_result), 'w') as wf:
             wf.write('{}'.format(apollo_test_result))
         logger.debug('Write apollo test result successful, test result:\n{}'.format(apollo_test_result))
 
-    @staticmethod
-    def setup_socket_server(ip_address, port=9010):
+    def setup_socket_server(self, ip_address='', port=9010):
         """
         register a function to respond to XML-RPC requests and start XML-RPC server
         :param ip_address: Fill in the server ip address
         :param port: Fill in the server port
         :return:
         """
+        # If the ip_address parameter is null, read the local IP address for use
+        ip_address = ip_address or self.read_local_ip_address()
         try:
             # Start the xml-rpc socket service
             server = SimpleXMLRPCServer((ip_address, port))
@@ -187,16 +194,47 @@ class ApolloAutomation(object):
                 logger.exception(ex)
                 time.sleep(1)
 
+    def update_test_results(self):
+        """
+        Accept the returned data from the apollo server and update it to the access data table
+        :return:
+        """
+        while True:
+            try:
+                # TODO need more function
+                received = self.read_access_table()
+                if received:
+                    self.update_access_table(machine='', container='', test_status='')
+                    time.sleep(1)
+                else:
+                    time.sleep(1)
+            except Exception as ex:
+                logger.exception(ex)
+                time.sleep(1)
+
 
 def main(access_table_path, table_name):
     """
-    Connect to the access table to search for data and transfer it to the Apollo server, and return test results
+    Connect to the access table to search for data and transfer it to the Apollo server, and update test results
     :param access_table_path: Fill in the access table path
     :param table_name: Fill in the Access table name
     :return:
     """
     handle = ApolloAutomation(access_table_path=access_table_path, table_name=table_name)
-    handle.send_data_to_apollo()
+    threads = []
+
+    # multi-threaded setup
+    send_data_to_apollo = threading.Thread(target=handle.send_data_to_apollo, args=())
+    setup_socket_server = threading.Thread(target=handle.setup_socket_server, args=())
+    update_test_results = threading.Thread(target=handle.update_test_results, args=())
+
+    # Add multi-threaded to threads list
+    for t in [send_data_to_apollo, setup_socket_server, update_test_results]:
+        threads.append(t)
+
+    # start all threads
+    for thread in threads:
+        thread.start()
 
 
 if __name__ == '__main__':

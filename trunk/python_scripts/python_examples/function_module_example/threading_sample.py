@@ -27,24 +27,21 @@ def thread_run(sleep_list):
     """
     global locks
     locks = threading.Lock()
-
-    # 计算多线程总数量
-    loops = range(len(sleep_list))
     threads = []
-
     start_time = datetime.datetime.now()
+
     # insert all threads to threads list
     for i in sleep_list:
         t = threading.Thread(target=unit_test, args=(i,))
         threads.append(t)
 
     # start all threads
-    for i in loops:
-        threads[i].start()
+    for thread in threads:
+        thread.start()
 
     # waiting all thread close
-    for i in loops:
-        threads[i].join()
+    for thread in threads:
+        thread.join()
 
     end_time = datetime.datetime.now()
     print('所有线程结束，一共消耗{}秒钟'.format((end_time - start_time).seconds))
