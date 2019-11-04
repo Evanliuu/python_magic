@@ -23,8 +23,10 @@ def access_handle(db_path=''):
 
     # 创建新表 users
     crsr.execute('CREATE TABLE users (login VARCHAR(8), userid INT, projid INT)')
+
     # 给表中插入新数据
     crsr.execute("INSERT INTO users VALUES('Linda', 211, 151)")
+
     # 更新数据
     crsr.execute("UPDATE users SET projid=1 WHERE login='Linda' and userid=211")
     print(crsr.rowcount)  # 想知道数据被修改和删除时，到底影响了多少条记录，这个时候你可以使用cursor.rowcount的返回值
