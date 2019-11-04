@@ -6,6 +6,8 @@ import os
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
+__author__ = 'Evan'
+
 
 class Crawler(object):
 

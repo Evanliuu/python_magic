@@ -12,6 +12,8 @@ import csv
 from apollo.libs import lib
 from pexpect import pxssh
 
+__author__ = 'Evan'
+
 
 class Gui(object):
 
@@ -121,7 +123,7 @@ class Gui(object):
         try:
             # Check that the machine list is in the correct format
             machine_list = eval(machine_list)
-            handle = Machine_handle(user_info=user_info, machine_list=machine_list)
+            handle = MachineHandle(user_info=user_info, machine_list=machine_list)
             tkMessageBox.showinfo('info', 'Start scanning all the machines\nPlease press OK to continue!')
 
             # Run machine config path check
@@ -132,7 +134,7 @@ class Gui(object):
             tkMessageBox.showwarning('Warning', 'The machine list is empty or incorrectly formed\nPlease re-enter!')
 
 
-class Machine_handle(object):
+class MachineHandle(object):
 
     def __init__(self, user_info=None, machine_list=None):
         """
@@ -223,7 +225,7 @@ class Machine_handle(object):
                 s.sendline(check_cmd)
                 s.prompt()
                 received = s.before
-                line = re.search('Version: (\d+\.\d+\.\d+)', received)
+                line = re.search(r'Version: (\d+\.\d+\.\d+)', received)
                 if line:
                     collection_info['Packet_version'] = line.groups()[0]
                 else:
@@ -234,7 +236,7 @@ class Machine_handle(object):
                 s.sendline(check_cmd)
                 s.prompt()
                 received = s.before
-                line = re.search('Apollo-\d+-\d+', received)
+                line = re.search(r'Apollo-\d+-\d+', received)
                 if line:
                     collection_info['Apollo_version'] = line.group()
                 else:

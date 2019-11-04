@@ -10,10 +10,12 @@ import csv
 from apollo.libs import lib
 from pexpect import pxssh
 
+__author__ = 'Evan'
 
-class Machine_scan_tool(object):
 
-    def __init__(self, user_info=tuple(), station_path=''):
+class MachineScanTool(object):
+
+    def __init__(self, user_info=(), station_path=''):
         """
         This feature is used to scan configuration mappings for all machines
         :param user_info: Fill out a legitimate Apollo account
@@ -41,9 +43,9 @@ class Machine_scan_tool(object):
             if 'fx' in machine_file:
                 lines = self.open_machine_file(machine_file)
 
-                product_line = re.search("PRODUCT_LINE = '(\w+)'", lines)
-                test_area = re.search("TEST_AREA = '(\w+)'", lines)
-                stations = re.match('(\w+)\.py', machine_file)
+                product_line = re.search(r"PRODUCT_LINE = '(\w+)'", lines)
+                test_area = re.search(r"TEST_AREA = '(\w+)'", lines)
+                stations = re.match(r'(\w+)\.py', machine_file)
 
                 if product_line and test_area and stations:
                     product = product_line.groups()[0]
@@ -120,7 +122,7 @@ class Machine_scan_tool(object):
                 s.sendline(check_cmd)
                 s.prompt()
                 received = s.before
-                line = re.search('Version: (\d+\.\d+\.\d+)', received)
+                line = re.search(r'Version: (\d+\.\d+\.\d+)', received)
                 if line:
                     collection_info['Packet_version'] = line.groups()[0]
                 else:
@@ -131,7 +133,7 @@ class Machine_scan_tool(object):
                 s.sendline(check_cmd)
                 s.prompt()
                 received = s.before
-                line = re.search('Apollo-\d+-\d+', received)
+                line = re.search(r'Apollo-\d+-\d+', received)
                 if line:
                     collection_info['Apollo_version'] = line.group()
                 else:
@@ -226,9 +228,9 @@ class Machine_scan_tool(object):
 
 if __name__ == '__main__':
     station_path = '/opt/cisco/scripts/prod/wnbu/trunk/trunk/stations/foc'
-    user_info = ('evanliu', 'Cisco123!')
+    user_info = ('evanliu', '******')
 
-    handle = Machine_scan_tool(user_info=user_info, station_path=station_path)
+    handle = MachineScanTool(user_info=user_info, station_path=station_path)
     handle.main()
     # TODO Send email to Cisco mailbox
     email_list = ['evaliu', 'jusu', 'kevli2']

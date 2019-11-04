@@ -8,6 +8,8 @@ import os
 import datetime
 import time
 
+__author__ = 'Evan'
+
 
 class Crawler(object):
 

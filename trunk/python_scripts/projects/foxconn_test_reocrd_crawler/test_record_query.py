@@ -14,6 +14,8 @@ import tkinter as Tkinter
 import tkinter.messagebox as tkMessageBox
 from tkinter.ttk import Combobox
 
+__author__ = 'Evan'
+
 
 class Spider(object):
 
