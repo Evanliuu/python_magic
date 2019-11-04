@@ -82,6 +82,7 @@ class Crawler(object):
                 return None
         except Exception as ex:
             print('Get web page error: {}'.format(ex))
+            return None
 
     @staticmethod
     def main():
