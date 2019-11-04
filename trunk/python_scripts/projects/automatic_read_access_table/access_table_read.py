@@ -55,7 +55,7 @@ class AccessHandle(object):
         cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(APOLLO_PASSWORD, local_file_path, APOLLO_ACCOUNT,
                                                   remote_machine, target_path)
         os.system(cmd2)
-        logger.debug('Transfer file to apollo server （{}） successful'.format(remote_machine))
+        logger.debug('Transfer file to apollo server ({}) successful'.format(remote_machine))
 
     @staticmethod
     def write_json_file(content):
@@ -75,19 +75,16 @@ class AccessHandle(object):
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
         crsr = cnxn.cursor()
-        logger.debug('Connect to --> {} successful'.format(self.access_table_path))
-
         # Query all data in the table
         result = [data for data in crsr.execute("SELECT * from {}".format(self.table_name))]
         if result:
             cpp_data = dict()
-            # result[0] is the first line
+            # result[0] is the first row data
             cpp_data['machine'] = result[0][0]
             cpp_data['cell'] = result[0][1]
             cpp_data['sn'] = result[0][2]
             cpp_data['pn'] = result[0][3]
-
-            # Delete that row
+            # Delete the captured row data
             crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.table_name, cpp_data['machine']))
             # Submit changes
             crsr.commit()
@@ -110,8 +107,7 @@ def main(access_table_path, table_name):
         try:
             received = handle.read_access_table()
             if received:
-                logger.info('Received table information:\n{}'.format(received))
-
+                logger.info('Received the table ({}) information:\n{}'.format(table_name, received))
                 # Write the automated data transfer to json file
                 handle.write_json_file(content=received)
                 # Transfer the json file to the corresponding apollo server
@@ -121,8 +117,6 @@ def main(access_table_path, table_name):
                                                first_connection=True)
                 time.sleep(1)
             else:
-                logger.warning('No data was found in the table ({}) under the ({}) path'.format(table_name,
-                                                                                                access_table_path))
                 time.sleep(1)
         except Exception as ex:
             logger.exception(ex)
@@ -130,4 +124,6 @@ def main(access_table_path, table_name):
 
 
 if __name__ == '__main__':
-    main(access_table_path=r'C:\Users\evaliu\Desktop\template.mdb', table_name='tbl_CCDScanData')
+    tablePath = r'D:\Application\RobotWebService\RobotWebService\template.mdb'
+    tableName = 'tbl_CCDScanData'
+    main(access_table_path=tablePath, table_name=tableName)
