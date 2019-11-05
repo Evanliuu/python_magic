@@ -19,7 +19,7 @@ LOG_FORMAT_INFO = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: 
 # logging module initialize
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-# Set the ability to write files
+# Set the ability to write files (If logs do not need to be saved locally, mask it)
 fh = logging.FileHandler(RECORD_LOG_FILE_PATH, mode='a')
 fh.setLevel(logging.DEBUG)
 fh.setFormatter(logging.Formatter(LOG_FORMAT_INFO))
