@@ -103,11 +103,11 @@ class ApolloAutomation(object):
             cnxn.close()
         return result
 
-    def update_access_table(self, machine, container, test_status):
+    def update_access_table(self, machine, cell, test_status):
         """
         Connect to Microsoft's access table and update the data
-        :param machine: Enter the name of the machine whose state you want to modify
-        :param container: Fill in the machine's container number
+        :param machine: Enter the name of the machine whose state you want to update
+        :param cell: Fill in the machine's container number
         :param test_status: Fill in the machine's test status
         :return:
         """
@@ -115,21 +115,21 @@ class ApolloAutomation(object):
         crsr = cnxn.cursor()
         try:
             # Updates the state of the specified server and container
-            crsr.execute("UPDATE {} SET status='{}' WHERE machine='{}' and cell='{}'".format
-                         (self.table_name, test_status, machine, container))
+            crsr.execute("UPDATE {} SET passfail='{}' WHERE machine='{}' and cell='{}'".format
+                         (self.table_name, test_status, machine, cell))
             # Submit changes
             crsr.commit()
         finally:
             crsr.close()
             cnxn.close()
-        logger.debug('The container {} status of the {} server was successfully set to {},'
-                     ' Number of modifications: {}'.format(container, machine, test_status, crsr.rowcount))
+        logger.debug('Set the cell {} status of the {} server to {}, Number of modifications: {}'
+                     .format(cell, machine, test_status, crsr.rowcount))
 
     @staticmethod
     def read_local_ip_address():
         # Read the local IP address
-        configurations = os.popen('ipconfig')
-        result = re.search(r'IPv4.+? : (10.1.1.\d+)', configurations.read())
+        ip_config = os.popen('ipconfig')
+        result = re.search(r'IPv4.+? : (10.79.\d+.\d+)', ip_config.read())
         if result:
             ip_address = result.groups()[0]
             logger.debug('Read the local ip address: {}'.format(ip_address))
@@ -137,7 +137,7 @@ class ApolloAutomation(object):
         else:
             raise ValueError('Read the local ip address error, Please check!')
 
-    def write_test_result(self, apollo_test_result=''):
+    def write_test_result_to_windows(self, apollo_test_result):
         """
         Write the test results transferred from the Apollo server into the local apollo_test_result directory
         :param apollo_test_result: Fill in the apollo test result
@@ -145,10 +145,10 @@ class ApolloAutomation(object):
         """
         apollo_test_result_path = os.path.join(os.getcwd(), self.apollo_test_result_directory)
         if not os.path.exists(apollo_test_result_path):
-            os.mkdir(self.apollo_test_result_directory)
-
+            raise FileNotFoundError('Not found the Apollo_test_result directory in windows, Please check!')
         os.chdir(apollo_test_result_path)
-        with open('{}'.format(apollo_test_result), 'w') as wf:
+
+        with open('{}.txt'.format(apollo_test_result), 'w') as wf:
             wf.write('{}'.format(apollo_test_result))
         logger.debug('Write apollo test result successful, test result:\n{}'.format(apollo_test_result))
 
@@ -196,15 +196,34 @@ class ApolloAutomation(object):
 
     def update_test_results(self):
         """
-        Accept the returned data from the apollo server and update it to the access data table
+        Loop through the files under the local apollo_test_result path
+        and update the data in the files to the access data table, if any
         :return:
         """
         while True:
             try:
-                # TODO need more function
-                received = self.read_access_table()
-                if received:
-                    self.update_access_table(machine='', container='', test_status='')
+                apollo_test_result_path = os.path.join(os.getcwd(), self.apollo_test_result_directory)
+                if not os.path.exists(apollo_test_result_path):
+                    os.mkdir(self.apollo_test_result_directory)
+
+                # Read the test result information from the apollo_test_result path
+                test_result_list = os.listdir(apollo_test_result_path)
+
+                if test_result_list:
+                    logger.debug('Read the apollo_test_result path:\n'.format(test_result_list))
+                    for file in test_result_list:
+                        if re.match('fx.+?.txt', file):
+                            logger.debug('The file that is now fetched is {}'.format(file))
+                            # Start updating the access data table
+                            machine, cell, test_status = file.split('_')
+                            self.update_access_table(machine=machine, cell=cell, test_status=test_status)
+
+                            # Delete test result files whose status has been updated
+                            updated_file = os.path.join(apollo_test_result_path, file)
+                            if os.path.exists(updated_file):
+                                os.remove(updated_file)
+                            logger.debug('Delete {} successful'.format(updated_file))
+                            time.sleep(1)
                     time.sleep(1)
                 else:
                     time.sleep(1)
@@ -215,7 +234,8 @@ class ApolloAutomation(object):
 
 def main(access_table_path, table_name):
     """
-    Connect to the access table to search for data and transfer it to the Apollo server, and update test results
+    Connect to the access data table to read the data and send it to the Apollo server,
+    and receive the data from the Apollo server to update it to the access data table
     :param access_table_path: Fill in the access table path
     :param table_name: Fill in the Access table name
     :return:
@@ -223,12 +243,12 @@ def main(access_table_path, table_name):
     handle = ApolloAutomation(access_table_path=access_table_path, table_name=table_name)
     threads = []
 
-    # multi-threaded setup
+    # multi threaded setup
     send_data_to_apollo = threading.Thread(target=handle.send_data_to_apollo, args=())
     setup_socket_server = threading.Thread(target=handle.setup_socket_server, args=())
     update_test_results = threading.Thread(target=handle.update_test_results, args=())
 
-    # Add multi-threaded to threads list
+    # Add multi threaded to threads list
     for t in [send_data_to_apollo, setup_socket_server, update_test_results]:
         threads.append(t)
 
