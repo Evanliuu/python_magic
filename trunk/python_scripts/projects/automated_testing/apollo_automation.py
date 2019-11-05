@@ -32,18 +32,25 @@ logger.addHandler(ch)
 
 
 class ApolloAutomation(object):
+    # CPP parameters
+    cpp_data_file = 'cpp_automated_data.json'
+    apollo_test_result_directory = 'apollo_test_result'
+    apollo_test_result_path = os.path.join(os.getcwd(), apollo_test_result_directory)
+    # Apollo parameters
+    apollo_target_path = '/tftpboot/'
+    apollo_account = 'gen-apollo'
+    apollo_password = 'Ad@pCr01!'
 
-    def __init__(self, access_table_path='', table_name=''):
-        # Access table parameter
+    def __init__(self, access_table_path='', table_names=None):
+        """
+        Access table parameter initialization
+        :param str access_table_path: Fill in the access table path
+        :param tuple table_names: Fill in the Access table names
+        """
+        # Access table parameters
         self.access_table_path = access_table_path
-        self.table_name = table_name
-        # CPP parameter
-        self.cpp_data_file = 'cpp_automated_data.json'
-        self.apollo_test_result_directory = 'apollo_test_result'
-        # Apollo parameter
-        self.apollo_target_path = '/tftpboot/'
-        self.apollo_account = 'gen-apollo'
-        self.apollo_password = 'Ad@pCr01!'
+        if table_names:
+            self.ccd_scan_table_name, self.link_position_table_name = table_names
 
     def transfer_file_to_apollo(self, remote_machine, local_file_path, target_path, first_connection=False):
         """
@@ -83,7 +90,7 @@ class ApolloAutomation(object):
         crsr = cnxn.cursor()
         try:
             # Query all data in the table
-            data_list = [data for data in crsr.execute("SELECT * from {}".format(self.table_name))]
+            data_list = [data for data in crsr.execute("SELECT * from {}".format(self.ccd_scan_table_name))]
             if data_list:
                 cpp_data = dict()
                 # result[0] is the first row data
@@ -92,7 +99,7 @@ class ApolloAutomation(object):
                 cpp_data['sn'] = data_list[0][2]
                 cpp_data['pn'] = data_list[0][3]
                 # Delete the captured row data
-                crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.table_name, cpp_data['machine']))
+                crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.ccd_scan_table_name, cpp_data['machine']))
                 # Submit changes
                 crsr.commit()
                 result = cpp_data
@@ -116,20 +123,20 @@ class ApolloAutomation(object):
         try:
             # Updates the state of the specified server and container
             crsr.execute("UPDATE {} SET passfail='{}' WHERE machine='{}' and cell='{}'".format
-                         (self.table_name, test_status, machine, cell))
+                         (self.link_position_table_name, test_status, machine, cell))
             # Submit changes
             crsr.commit()
         finally:
             crsr.close()
             cnxn.close()
-        logger.debug('Set the cell {} status of the {} server to {}, Number of modifications: {}'
-                     .format(cell, machine, test_status, crsr.rowcount))
+        logger.debug('Change the (cell {}) status of the ({}) server to "{}" in table ({}), Number of updates: {}'
+                     .format(cell, machine, test_status, self.link_position_table_name, crsr.rowcount))
 
     @staticmethod
     def read_local_ip_address():
         # Read the local IP address
         ip_config = os.popen('ipconfig')
-        result = re.search(r'IPv4.+? : (10.79.\d+.\d+)', ip_config.read())
+        result = re.search(r'IPv4.+? : (10.\d+.\d+.\d+)', ip_config.read())
         if result:
             ip_address = result.groups()[0]
             logger.debug('Read the local ip address: {}'.format(ip_address))
@@ -143,10 +150,9 @@ class ApolloAutomation(object):
         :param apollo_test_result: Fill in the apollo test result
         :return:
         """
-        apollo_test_result_path = os.path.join(os.getcwd(), self.apollo_test_result_directory)
-        if not os.path.exists(apollo_test_result_path):
+        if not os.path.exists(self.apollo_test_result_path):
             raise FileNotFoundError('Not found the Apollo_test_result directory in windows, Please check!')
-        os.chdir(apollo_test_result_path)
+        os.chdir(self.apollo_test_result_path)
 
         with open('{}.txt'.format(apollo_test_result), 'w') as wf:
             wf.write('{}'.format(apollo_test_result))
@@ -179,7 +185,7 @@ class ApolloAutomation(object):
             try:
                 received = self.read_access_table()
                 if received:
-                    logger.info('Received the table ({}) information:\n{}'.format(self.table_name, received))
+                    logger.info('Received the table ({}) information:\n{}'.format(self.ccd_scan_table_name, received))
                     # Write the automated data transfer to json file
                     self.write_json_file(content=received)
                     # Transfer the json file to the corresponding apollo server
@@ -202,24 +208,23 @@ class ApolloAutomation(object):
         """
         while True:
             try:
-                apollo_test_result_path = os.path.join(os.getcwd(), self.apollo_test_result_directory)
-                if not os.path.exists(apollo_test_result_path):
+                if not os.path.exists(self.apollo_test_result_path):
                     os.mkdir(self.apollo_test_result_directory)
 
                 # Read the test result information from the apollo_test_result path
-                test_result_list = os.listdir(apollo_test_result_path)
+                test_result_list = os.listdir(self.apollo_test_result_path)
 
                 if test_result_list:
                     logger.debug('Read the apollo_test_result path:\n'.format(test_result_list))
                     for file in test_result_list:
                         if re.match('fx.+?.txt', file):
-                            logger.debug('The file that is now fetched is {}'.format(file))
+                            logger.info('Captured file: {}'.format(file))
                             # Start updating the access data table
-                            machine, cell, test_status = file.split('_')
+                            machine, cell, test_status = file.split('.txt')[0].split('_')
                             self.update_access_table(machine=machine, cell=cell, test_status=test_status)
 
                             # Delete test result files whose status has been updated
-                            updated_file = os.path.join(apollo_test_result_path, file)
+                            updated_file = os.path.join(self.apollo_test_result_path, file)
                             if os.path.exists(updated_file):
                                 os.remove(updated_file)
                             logger.debug('Delete {} successful'.format(updated_file))
@@ -232,15 +237,15 @@ class ApolloAutomation(object):
                 time.sleep(1)
 
 
-def main(access_table_path, table_name):
+def main(access_table_path, table_names):
     """
     Connect to the access data table to read the data and send it to the Apollo server,
     and receive the data from the Apollo server to update it to the access data table
-    :param access_table_path: Fill in the access table path
-    :param table_name: Fill in the Access table name
+    :param str access_table_path: Fill in the access table path
+    :param tuple table_names: Fill in the Access table names
     :return:
     """
-    handle = ApolloAutomation(access_table_path=access_table_path, table_name=table_name)
+    handle = ApolloAutomation(access_table_path=access_table_path, table_names=table_names)
     threads = []
 
     # multi threaded setup
@@ -259,5 +264,5 @@ def main(access_table_path, table_name):
 
 if __name__ == '__main__':
     tablePath = r'D:\Application\RobotWebService\RobotWebService\template.mdb'
-    tableName = 'tbl_CCDScanData'
-    main(access_table_path=tablePath, table_name=tableName)
+    tableNames = ('tbl_CCDScanData', 'tbl_linkPosition')
+    main(access_table_path=tablePath, table_names=tableNames)
