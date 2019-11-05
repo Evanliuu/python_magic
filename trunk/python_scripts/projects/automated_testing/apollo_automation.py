@@ -116,11 +116,18 @@ class ApolloAutomation(object):
         :param machine: Enter the name of the machine whose state you want to update
         :param cell: Fill in the machine's container number
         :param test_status: Fill in the machine's test status
-        :return:
+        :return: 'PASS' or 'Not data found'
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
         crsr = cnxn.cursor()
         try:
+            check_list = [i for i in crsr.execute("SELECT * from {} WHERE machine='{}' and cell='{}'"
+                                                  .format(self.link_position_table_name, machine, cell))]
+            if not check_list:
+                logger.error('No (Cell {}) data information for {} server was found in the {} access table,'
+                             ' Please check!'.format(cell, machine, self.access_table_path))
+                return 'Not data found'
+
             # Updates the state of the specified server and container
             crsr.execute("UPDATE {} SET passfail='{}' WHERE machine='{}' and cell='{}'".format
                          (self.link_position_table_name, test_status, machine, cell))
@@ -131,6 +138,7 @@ class ApolloAutomation(object):
             cnxn.close()
         logger.debug('Change the (cell {}) status of the ({}) server to "{}" in table ({}), Number of updates: {}'
                      .format(cell, machine, test_status, self.link_position_table_name, crsr.rowcount))
+        return 'PASS'
 
     @staticmethod
     def read_local_ip_address():
@@ -221,13 +229,15 @@ class ApolloAutomation(object):
                             logger.info('Captured file: {}'.format(file))
                             # Start updating the access data table
                             machine, cell, test_status = file.split('.txt')[0].split('_')
-                            self.update_access_table(machine=machine, cell=cell, test_status=test_status)
-
+                            updated_status = self.update_access_table(machine=machine,
+                                                                      cell=cell,
+                                                                      test_status=test_status)
                             # Delete test result files whose status has been updated
-                            updated_file = os.path.join(self.apollo_test_result_path, file)
-                            if os.path.exists(updated_file):
-                                os.remove(updated_file)
-                            logger.debug('Delete {} successful'.format(updated_file))
+                            if updated_status == 'PASS':
+                                updated_file = os.path.join(self.apollo_test_result_path, file)
+                                if os.path.exists(updated_file):
+                                    os.remove(updated_file)
+                                logger.debug('Delete {} successful'.format(updated_file))
                             time.sleep(1)
                     time.sleep(1)
                 else:
