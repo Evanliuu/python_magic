@@ -84,7 +84,7 @@ class ApolloAutomation(object):
 
     def read_access_table(self):
         """
-        Connect to Microsoft's access tables and return data
+        Connect to the access table to read the first row data
         :return: first row data or None
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
@@ -94,7 +94,7 @@ class ApolloAutomation(object):
             data_list = [data for data in crsr.execute("SELECT * from {}".format(self.ccd_scan_table_name))]
             if data_list:
                 cpp_data = dict()
-                # result[0] is the first row data
+                # Fetch the first row data
                 cpp_data['machine'] = data_list[0][0]
                 cpp_data['cell'] = data_list[0][1]
                 cpp_data['sn'] = data_list[0][2]
@@ -161,9 +161,8 @@ class ApolloAutomation(object):
         """
         if not os.path.exists(self.apollo_test_status_path):
             raise FileNotFoundError('Not found the Apollo_test_status directory in windows, Please check!')
-        os.chdir(self.apollo_test_status_path)
 
-        with open('{}.txt'.format(apollo_test_status), 'w') as wf:
+        with open('{}.txt'.format(os.path.join(self.apollo_test_status_path, apollo_test_status)), 'w') as wf:
             wf.write('{}'.format(apollo_test_status))
         logger.debug('Write the apollo test status successful, test status is:\n{}'.format(apollo_test_status))
 
