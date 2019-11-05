@@ -124,8 +124,8 @@ class ApolloAutomation(object):
             check_list = [i for i in crsr.execute("SELECT * from {} WHERE machine='{}' and cell='{}'"
                                                   .format(self.link_position_table_name, machine, cell))]
             if not check_list:
-                logger.error('No (Cell {}) data information for {} server was found in the {} access table,'
-                             ' Please check!'.format(cell, machine, self.access_table_path))
+                logger.error('No (Cell {}) data information for ({}) server was found in the ({}) table,'
+                             ' Please check!'.format(cell, machine, self.link_position_table_name))
                 return 'Not data found'
 
             # Updates the state of the specified server and container
@@ -136,7 +136,7 @@ class ApolloAutomation(object):
         finally:
             crsr.close()
             cnxn.close()
-        logger.debug('Change the (cell {}) status of the ({}) server to "{}" in table ({}), Number of updates: {}'
+        logger.debug('Change the (cell {}) status of the ({}) server to "{}" in the ({}) table, Number of updates: {}'
                      .format(cell, machine, test_status, self.link_position_table_name, crsr.rowcount))
         return 'PASS'
 
@@ -223,7 +223,7 @@ class ApolloAutomation(object):
                 test_result_list = os.listdir(self.apollo_test_result_path)
 
                 if test_result_list:
-                    logger.debug('Read the apollo_test_result path:\n'.format(test_result_list))
+                    logger.debug('Read the apollo_test_result path:\n{}'.format(test_result_list))
                     for file in test_result_list:
                         if re.match('fx.+?.txt', file):
                             logger.info('Captured file: {}'.format(file))
