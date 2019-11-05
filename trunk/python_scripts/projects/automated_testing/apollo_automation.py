@@ -12,7 +12,7 @@ from xmlrpc.server import SimpleXMLRPCServer
 __author__ = 'Evan'
 
 
-# Logging parameter
+# Logging constants
 RECORD_LOG_FILE_PATH = './apollo_automation_logs.txt'
 LOG_FORMAT_INFO = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
 
@@ -32,11 +32,12 @@ logger.addHandler(ch)
 
 
 class ApolloAutomation(object):
-    # CPP parameters
+    # CPP constants
     cpp_data_file = 'cpp_automated_data.json'
-    apollo_test_result_directory = 'apollo_test_result'
-    apollo_test_result_path = os.path.join(os.getcwd(), apollo_test_result_directory)
-    # Apollo parameters
+    cpp_data_path = os.path.join(os.getcwd(), cpp_data_file)
+    apollo_test_status_directory = 'apollo_test_status'
+    apollo_test_status_path = os.path.join(os.getcwd(), apollo_test_status_directory)
+    # Apollo constants
     apollo_target_path = '/tftpboot/'
     apollo_account = 'gen-apollo'
     apollo_password = 'Ad@pCr01!'
@@ -77,7 +78,7 @@ class ApolloAutomation(object):
         :param content: Fill in the information to be written
         :return:
         """
-        with open(self.cpp_data_file, 'w', encoding='utf-8') as wf:
+        with open(self.cpp_data_path, 'w', encoding='utf-8') as wf:
             wf.write(json.dumps(content, ensure_ascii=False, indent=2) + '\n')
         logger.debug('Write json file successful')
 
@@ -152,19 +153,19 @@ class ApolloAutomation(object):
         else:
             raise ValueError('Read the local ip address error, Please check!')
 
-    def write_test_result_to_windows(self, apollo_test_result):
+    def write_test_status_to_windows(self, apollo_test_status):
         """
-        Write the test results transferred from the Apollo server into the local apollo_test_result directory
-        :param apollo_test_result: Fill in the apollo test result
+        Write the test status transferred from the Apollo server into the local apollo_test_status directory
+        :param apollo_test_status: Fill in the apollo test status
         :return:
         """
-        if not os.path.exists(self.apollo_test_result_path):
-            raise FileNotFoundError('Not found the Apollo_test_result directory in windows, Please check!')
-        os.chdir(self.apollo_test_result_path)
+        if not os.path.exists(self.apollo_test_status_path):
+            raise FileNotFoundError('Not found the Apollo_test_status directory in windows, Please check!')
+        os.chdir(self.apollo_test_status_path)
 
-        with open('{}.txt'.format(apollo_test_result), 'w') as wf:
-            wf.write('{}'.format(apollo_test_result))
-        logger.debug('Write apollo test result successful, test result:\n{}'.format(apollo_test_result))
+        with open('{}.txt'.format(apollo_test_status), 'w') as wf:
+            wf.write('{}'.format(apollo_test_status))
+        logger.debug('Write the apollo test status successful, test status is:\n{}'.format(apollo_test_status))
 
     def setup_socket_server(self, ip_address='', port=9010):
         """
@@ -198,7 +199,7 @@ class ApolloAutomation(object):
                     self.write_json_file(content=received)
                     # Transfer the json file to the corresponding apollo server
                     self.transfer_file_to_apollo(remote_machine=received['machine'],
-                                                 local_file_path=self.cpp_data_file,
+                                                 local_file_path=self.cpp_data_path,
                                                  target_path=self.apollo_target_path,
                                                  first_connection=True)
                     time.sleep(1)
@@ -208,23 +209,23 @@ class ApolloAutomation(object):
                 logger.exception(ex)
                 time.sleep(1)
 
-    def update_test_results(self):
+    def update_test_status(self):
         """
-        Loop through the files under the local apollo_test_result path
+        Loop through the files under the local apollo_test_status path
         and update the data in the files to the access data table, if any
         :return:
         """
         while True:
             try:
-                if not os.path.exists(self.apollo_test_result_path):
-                    os.mkdir(self.apollo_test_result_directory)
+                if not os.path.exists(self.apollo_test_status_path):
+                    os.mkdir(self.apollo_test_status_path)
 
-                # Read the test result information from the apollo_test_result path
-                test_result_list = os.listdir(self.apollo_test_result_path)
+                # Read the test status information from the apollo_test_status path
+                test_status_list = os.listdir(self.apollo_test_status_path)
 
-                if test_result_list:
-                    logger.debug('Read the apollo_test_result path:\n{}'.format(test_result_list))
-                    for file in test_result_list:
+                if test_status_list:
+                    logger.debug('Read the apollo_test_status path:\n{}'.format(test_status_list))
+                    for file in test_status_list:
                         if re.match('fx.+?.txt', file):
                             logger.info('Captured file: {}'.format(file))
                             # Start updating the access data table
@@ -232,9 +233,9 @@ class ApolloAutomation(object):
                             updated_status = self.update_access_table(machine=machine,
                                                                       cell=cell,
                                                                       test_status=test_status)
-                            # Delete test result files whose status has been updated
+                            # Delete test status files whose status has been updated
                             if updated_status == 'PASS':
-                                updated_file = os.path.join(self.apollo_test_result_path, file)
+                                updated_file = os.path.join(self.apollo_test_status_path, file)
                                 if os.path.exists(updated_file):
                                     os.remove(updated_file)
                                 logger.debug('Delete {} successful'.format(updated_file))
@@ -261,10 +262,10 @@ def main(access_table_path, table_names):
     # multi threaded setup
     send_data_to_apollo = threading.Thread(target=handle.send_data_to_apollo, args=())
     setup_socket_server = threading.Thread(target=handle.setup_socket_server, args=())
-    update_test_results = threading.Thread(target=handle.update_test_results, args=())
+    update_test_status = threading.Thread(target=handle.update_test_status, args=())
 
     # Add multi threaded to threads list
-    for t in [send_data_to_apollo, setup_socket_server, update_test_results]:
+    for t in [send_data_to_apollo, setup_socket_server, update_test_status]:
         threads.append(t)
 
     # start all threads
