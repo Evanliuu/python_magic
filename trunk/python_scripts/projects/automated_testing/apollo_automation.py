@@ -12,23 +12,10 @@ from xmlrpc.server import SimpleXMLRPCServer
 __author__ = 'Evan'
 
 
-# Logging constants
-RECORD_LOG_FILE_PATH = './apollo_automation_logs.txt'
-LOG_FORMAT_INFO = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
-
 # logging module initialize
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-# Set the ability to write files (If logs do not need to be saved locally, mask it)
-fh = logging.FileHandler(RECORD_LOG_FILE_PATH, mode='a')
-fh.setLevel(logging.DEBUG)
-fh.setFormatter(logging.Formatter(LOG_FORMAT_INFO))
-logger.addHandler(fh)
-# Set the ability to print log messages
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-ch.setFormatter(logging.Formatter(LOG_FORMAT_INFO))
-logger.addHandler(ch)
 
 
 class ApolloAutomation(object):
@@ -202,7 +189,6 @@ class ApolloAutomation(object):
                                                  local_file_path=self.cpp_data_path,
                                                  target_path=self.apollo_target_path,
                                                  first_connection=True)
-                    time.sleep(1)
                 else:
                     time.sleep(1)
             except Exception as ex:
@@ -217,7 +203,6 @@ class ApolloAutomation(object):
         """
         while True:
             try:
-                # TODO Add txt file size check
                 if not os.path.exists(self.apollo_test_status_path):
                     os.mkdir(self.apollo_test_status_path)
                     logger.debug('Create ({}) directory under {} path successfully'
@@ -244,8 +229,6 @@ class ApolloAutomation(object):
                                 if os.path.exists(updated_file):
                                     os.remove(updated_file)
                                 logger.debug('Delete {} successful'.format(updated_file))
-                            time.sleep(1)
-                    time.sleep(1)
                 else:
                     time.sleep(1)
             except Exception as ex:
@@ -265,12 +248,12 @@ def main(access_table_path, table_names):
     threads = []
 
     # multi threaded setup
-    send_data_to_apollo = threading.Thread(target=handle.send_data_to_apollo, args=())
     setup_socket_server = threading.Thread(target=handle.setup_socket_server, args=())
+    send_data_to_apollo = threading.Thread(target=handle.send_data_to_apollo, args=())
     update_test_status = threading.Thread(target=handle.update_test_status, args=())
 
     # Add multi threaded to threads list
-    for t in [send_data_to_apollo, setup_socket_server, update_test_status]:
+    for t in [setup_socket_server, send_data_to_apollo, update_test_status]:
         threads.append(t)
 
     # start all threads
