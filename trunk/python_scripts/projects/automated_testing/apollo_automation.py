@@ -156,7 +156,7 @@ class ApolloAutomation(object):
     def write_test_status_to_windows(self, apollo_test_status):
         """
         Write the test status transferred from the Apollo server into the local apollo_test_status directory
-        :param apollo_test_status: Fill in the apollo test status
+        :param str apollo_test_status: Fill in the apollo test status, The format must be "ApolloServerName_Cell_Status"
         :return:
         """
         if not os.path.exists(self.apollo_test_status_path):
@@ -165,6 +165,7 @@ class ApolloAutomation(object):
         with open('{}.txt'.format(os.path.join(self.apollo_test_status_path, apollo_test_status)), 'w') as wf:
             wf.write('{}'.format(apollo_test_status))
         logger.debug('Write the apollo test status successful, test status is:\n{}'.format(apollo_test_status))
+        return True
 
     def setup_socket_server(self, ip_address='', port=9010):
         """
@@ -216,19 +217,24 @@ class ApolloAutomation(object):
         """
         while True:
             try:
+                # TODO Add txt file size check
                 if not os.path.exists(self.apollo_test_status_path):
                     os.mkdir(self.apollo_test_status_path)
+                    logger.debug('Create ({}) directory under {} path successfully'
+                                 .format(self.apollo_test_status_directory, self.apollo_test_status_path))
 
-                # Read the test status information from the apollo_test_status path
+                # Read the test status information from the apollo_test_status directory
                 test_status_list = os.listdir(self.apollo_test_status_path)
 
                 if test_status_list:
-                    logger.debug('Read the apollo_test_status path:\n{}'.format(test_status_list))
+                    logger.debug('Read the file under path {}:\n{}'.format(self.apollo_test_status_path,
+                                                                           test_status_list))
                     for file in test_status_list:
-                        if re.match('fx.+?.txt', file):
+                        if re.match('fx.+?_.+?_.+?.txt', file):
                             logger.info('Captured file: {}'.format(file))
-                            # Start updating the access data table
+                            # Format to check
                             machine, cell, test_status = file.split('.txt')[0].split('_')
+                            # Start updating the access data table
                             updated_status = self.update_access_table(machine=machine,
                                                                       cell=cell,
                                                                       test_status=test_status)
