@@ -8,7 +8,7 @@ from tkinter import messagebox
 
 class ServiceFunction(object):
     """
-    This class holds server-side execution functions
+    This class holds server-side execution functions, The function must have a return value
     """
     @staticmethod
     def get_windows_host():
