@@ -140,6 +140,14 @@ class ApolloAutomation(object):
         else:
             raise ValueError('Read the local ip address error, Please check!')
 
+    @staticmethod
+    def communication_test():
+        """
+        Apollo communication test
+        :return:
+        """
+        return True
+
     def write_test_status_to_windows(self, apollo_test_status):
         """
         Write the test status transferred from the Apollo server into the local apollo_test_status directory
