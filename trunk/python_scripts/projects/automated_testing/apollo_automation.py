@@ -2,7 +2,7 @@
 The file is located on a Windows central control machine at BPM2 automation station in Barbados
 This program will start three multi-threads:
 1. Start an rpc-socket service that listens for all incoming data from the Apollo server
-2. Read the local access data table to fetch each row of data
+2. Open the local access data table to read each row of data and transfer it to the corresponding Apollo server
 3. Update the received Apollo server data into the access data table
 python version: 3.7
 """
