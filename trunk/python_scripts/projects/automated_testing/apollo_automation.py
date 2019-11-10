@@ -11,20 +11,18 @@ from xmlrpc.server import SimpleXMLRPCServer
 
 __author__ = 'Evan'
 
-
-# logging module initialize
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
 class ApolloAutomation(object):
-    # CPP constants
+    # CPP machine constants
     cpp_data_file = 'cpp_automated_data.json'
     cpp_data_path = os.path.join(os.getcwd(), cpp_data_file)
     apollo_test_status_directory = 'apollo_test_status'
     apollo_test_status_path = os.path.join(os.getcwd(), apollo_test_status_directory)
-    # Apollo constants
+    # Apollo machine constants
     apollo_target_path = '/tftpboot/'
     apollo_account = 'gen-apollo'
     apollo_password = 'Ad@pCr01!'
@@ -35,7 +33,6 @@ class ApolloAutomation(object):
         :param str access_table_path: Fill in the access table path
         :param tuple table_names: Fill in the Access table names
         """
-        # Access table parameters
         self.access_table_path = access_table_path
         if table_names:
             self.ccd_scan_table_name, self.link_position_table_name = table_names
@@ -130,7 +127,6 @@ class ApolloAutomation(object):
 
     @staticmethod
     def read_local_ip_address():
-        # Read the local IP address
         ip_config = os.popen('ipconfig')
         result = re.search(r'IPv4.+? : (10.\d+.\d+.\d+)', ip_config.read())
         if result:
@@ -255,16 +251,16 @@ def main(access_table_path, table_names):
     handle = ApolloAutomation(access_table_path=access_table_path, table_names=table_names)
     threads = []
 
-    # multi threaded setup
+    # Multi-threaded setup
     setup_socket_server = threading.Thread(target=handle.setup_socket_server, args=())
     send_data_to_apollo = threading.Thread(target=handle.send_data_to_apollo, args=())
     update_test_status = threading.Thread(target=handle.update_test_status, args=())
 
-    # Add multi threaded to threads list
+    # Add multi-threaded to threads list
     for t in [setup_socket_server, send_data_to_apollo, update_test_status]:
         threads.append(t)
 
-    # start all threads
+    # Start all threads
     for thread in threads:
         thread.start()
 
