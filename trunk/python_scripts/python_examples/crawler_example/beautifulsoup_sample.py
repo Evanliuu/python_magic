@@ -1,5 +1,5 @@
-from bs4 import BeautifulSoup
 import re
+from bs4 import BeautifulSoup
 
 html_doc = """
 <html><head><title>The Dormouse's story</title></head>
@@ -16,7 +16,7 @@ and they lived at the bottom of a well.</p>
 """
 
 
-def parse_html():
+def parse():
     soup = BeautifulSoup(html_doc, 'lxml')
     # soup.prettify()  # 补全HTML代码
     # print(soup.p)   # 获取标签信息
@@ -34,4 +34,4 @@ def parse_html():
 
 
 if __name__ == '__main__':
-    parse_html()
+    parse()
