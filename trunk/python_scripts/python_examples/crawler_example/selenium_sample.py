@@ -160,6 +160,14 @@ class Spider(object):
         self.driver.execute_script(js)
         time.sleep(1)
 
+    def screen_shot(self, picture_name='example.jpg'):
+        """
+        截取当前网页
+        :param picture_name: 图片名称
+        :return:
+        """
+        self.driver.save_screenshot(picture_name)
+
     def close_current_windows(self):
         # 关闭当前页面
         if self.driver:
