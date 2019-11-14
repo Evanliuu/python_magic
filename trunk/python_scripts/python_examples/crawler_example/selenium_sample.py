@@ -77,8 +77,8 @@ expected_conditions 17个判断条件函数:
 这里我解释一下"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"，
 这段代码其实就是全局修改/usr/local/bin/chromedriver中的cdc_为dog_，"/usr/local/bin/chromedriver"是chromedriver所在的文件路径。
 """
-
 import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -86,7 +86,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-class Browser(object):
+class Spider(object):
 
     def __init__(self, url=''):
         self.url = url
@@ -135,15 +135,30 @@ class Browser(object):
         else:
             self.driver.switch_to.frame(index)
 
-    def open_new_windows(self, url=''):
+    def open_new_windows(self, new_url=''):
         """
         打开一个新的windows窗口
-        :param url: 新的URL
+        :param new_url: 新的URL
         :return:
         """
-        js = "window.open({})".format(url)
+        js = "window.open({})".format(new_url)
         self.driver.execute_script(js)
         time.sleep(2)
+
+    def page_scrolling(self, go_to_bottom=False, rolling_distance=(0, 1000)):
+        """
+        页面滚动
+        :param bool go_to_bottom: 默认为False，如果为True则滚动到当前页面的最底部
+        :param tuple rolling_distance: 滚动距离，默认是向下滚动1000像素
+        :return:
+        """
+        time.sleep(3)
+        if go_to_bottom:
+            js = "window.scrollTo(0, document.body.scrollHeight)"
+        else:
+            js = "window.scrollBy({}, {})".format(rolling_distance[0], rolling_distance[1])
+        self.driver.execute_script(js)
+        time.sleep(1)
 
     def close_current_windows(self):
         # 关闭当前页面
@@ -164,20 +179,20 @@ class Browser(object):
         self.open_url()
         # TODO 普通定位
         # enter = self.driver.find_element_by_xpath('//*[@id="kw"]')
+
         # 通过验证元素是否出现定位
         enter = self.waiting.until(EC.presence_of_element_located((By.XPATH, '//*[@id="kw"]')))
         # 模拟输入文本
         enter.send_keys('python')
         # 执行输入
         enter.send_keys(Keys.ENTER)
+        # 滚动页面
+        self.page_scrolling()
         # 得到网页html
         html = self.driver.page_source
         print('found html:\n', html)
-        time.sleep(5)
-        # 退出浏览器
-        self.quit_browser()
 
 
 if __name__ == '__main__':
-    browser = Browser(url='https://baidu.com')
-    browser.main()
+    spider = Spider(url='https://www.baidu.com')
+    spider.main()
