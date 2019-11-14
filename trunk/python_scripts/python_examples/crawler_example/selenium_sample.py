@@ -192,7 +192,7 @@ class Spider(object):
         enter.send_keys(Keys.ENTER)
         # 滚动页面
         self.page_scrolling()
-        # 得到网页html
+        # 获取网页html
         html = self.driver.page_source
         print('found html:\n', html)
 
