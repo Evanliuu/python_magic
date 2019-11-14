@@ -89,7 +89,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 class Spider(object):
 
     def __init__(self, url=''):
-        self.url = url
+        self.source_url = url
         """
         chrome_options = webdriver.ChromeOptions()
         # 不加载图片，加快访问速度
@@ -147,12 +147,12 @@ class Spider(object):
 
     def page_scrolling(self, go_to_bottom=False, rolling_distance=(0, 1000)):
         """
-        页面滚动
+        页面滚动，如果没有滚动效果，添加延时（页面需要全部加载完毕才能滚动）
         :param bool go_to_bottom: 默认为False，如果为True则滚动到当前页面的最底部
         :param tuple rolling_distance: 滚动距离，默认是向下滚动1000像素
         :return:
         """
-        time.sleep(3)
+        time.sleep(5)
         if go_to_bottom:
             js = "window.scrollTo(0, document.body.scrollHeight)"
         else:
@@ -162,7 +162,7 @@ class Spider(object):
 
     def screen_shot(self, picture_name='example.jpg'):
         """
-        截取当前网页
+        截取当前网页并保存为图片
         :param picture_name: 图片名称
         :return:
         """
@@ -178,13 +178,9 @@ class Spider(object):
         if self.driver:
             self.driver.quit()
 
-    def open_url(self, url=None):
-        # 打开网页
-        url = url or self.url
-        self.driver.get(url)
-
     def main(self):
-        self.open_url()
+        # 打开网页
+        self.driver.get(self.source_url)
         # TODO 普通定位
         # enter = self.driver.find_element_by_xpath('//*[@id="kw"]')
 
