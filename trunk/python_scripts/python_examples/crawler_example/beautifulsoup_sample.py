@@ -29,8 +29,8 @@ and they lived at the bottom of a well.</p>
 
 def parse():
     # 初始化对象
-    soup = BeautifulSoup(html_doc, 'lxml')
-    # soup = BeautifulSoup(open('example.html'), 'lxml')
+    soup = BeautifulSoup(html_doc, 'lxml')  # html文本初始化
+    # soup = BeautifulSoup(open('example.html'), 'lxml')  # html文件初始化
 
     # 补全HTML代码
     soup.prettify()
