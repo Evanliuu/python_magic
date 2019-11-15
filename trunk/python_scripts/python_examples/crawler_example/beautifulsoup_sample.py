@@ -70,10 +70,10 @@ def parse():
     # TODO CSS选择器：#代表id .代表class
     print(soup.select('ul'))  # 获取所有ul标签，返回一个列表
     print(soup.select('ul li'))  # 获取所有ul标签内的li节点，返回一个列表
-    print(soup.select('ul.list'))  # 获取ul标签内class名为list的所有元素，返回一个列表
-    print(soup.select('.list'))  # 获取class名为list的所有元素，返回一个列表
-    print(soup.select('.list.two'))  # 获取class名为list two的所有元素，返回一个列表
-    print(soup.select('#list-1 .element'))  # 获取id为list-1内class名为element的所有元素，返回一个列表
+    print(soup.select('ul.list'))  # 获取ul标签内class为'list'的所有元素，返回一个列表
+    print(soup.select('.list'))  # 获取class为'list'的所有元素，返回一个列表
+    print(soup.select('.list.two'))  # 获取class为'list two'的所有元素，返回一个列表
+    print(soup.select('#list-1 .element'))  # 获取id为'list-1'内class为'element'的所有元素，返回一个列表
 
 
 if __name__ == '__main__':
