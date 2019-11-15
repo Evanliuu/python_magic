@@ -33,7 +33,7 @@ def parse():
     # soup = BeautifulSoup(open('example.html'), 'lxml')  # html文件初始化
 
     # 补全HTML代码
-    soup.prettify()
+    print(soup.prettify())
 
     # 获取标签名称
     print(soup.p)  # 获取整条p标签
