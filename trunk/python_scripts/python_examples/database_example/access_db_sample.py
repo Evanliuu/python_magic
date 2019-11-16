@@ -22,7 +22,7 @@ def access_table_read(db_path):
     crsr.execute("INSERT INTO users VALUES('Linda', 66, 20)")
     # 更新users表中数据
     crsr.execute("UPDATE users SET age=22 WHERE login='Linda' and id=66")  # 多条件选择用and
-    print(crsr.rowcount)  # 查看更新状态
+    print(crsr.rowcount)  # 查看更新个数
     # 查询users表中数据
     print([i for i in crsr.execute("SELECT * from users")])  # 查询所有数据
     print([i for i in crsr.execute("SELECT * from users WHERE login='Linda'")])  # 查询指定数据
