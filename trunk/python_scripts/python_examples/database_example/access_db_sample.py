@@ -28,7 +28,7 @@ def access_table_read(db_path):
     # 删除表users
     crsr.execute("DROP TABLE users")
 
-    # 获取users表中所有数据
+    # 获取users表中的所有数据
     for row_data in crsr.execute("SELECT * from users"):
         print(row_data)
     # 获取数据库中的所有表名
