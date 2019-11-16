@@ -17,23 +17,21 @@ def access_table_read(db_path):
     crsr = cnxn.cursor()
 
     # 创建表users
-    crsr.execute('CREATE TABLE users (login VARCHAR(8), id INT, age INT)')
+    crsr.execute("CREATE TABLE users (login VARCHAR(8), id INT, age INT)")
     # 插入数据到users表
     crsr.execute("INSERT INTO users VALUES('Linda', 66, 20)")
     # 更新users表中数据
     crsr.execute("UPDATE users SET age=22 WHERE login='Linda' and id=66")  # 多条件选择用and
     print(crsr.rowcount)  # 查看更新状态
+    # 查询users表中数据
+    print([i for i in crsr.execute("SELECT * from users")])  # 查询所有数据
+    print([i for i in crsr.execute("SELECT * from users WHERE login='Linda'")])  # 查询指定数据
+    # 查询数据库中的所有表名
+    print([i.name for i in crsr.tables(tableType='TABLE')])
     # 删除users表中数据
     crsr.execute("DELETE FROM users WHERE login='Linda'")
     # 删除表users
     crsr.execute("DROP TABLE users")
-
-    # 获取users表中的所有数据
-    for row_data in crsr.execute("SELECT * from users"):
-        print(row_data)
-    # 获取数据库中的所有表名
-    for table_info in crsr.tables(tableType='TABLE'):
-        print(table_info.table_name)
 
     # 提交数据（只有提交之后，所有的操作才会生效）
     crsr.commit()
