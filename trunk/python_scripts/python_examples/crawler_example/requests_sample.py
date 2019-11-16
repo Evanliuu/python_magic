@@ -23,7 +23,7 @@
     from requests.auth import HTTPBasicAuth
     response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
 """
-
+# -*- coding:utf-8 -*-
 import random
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException

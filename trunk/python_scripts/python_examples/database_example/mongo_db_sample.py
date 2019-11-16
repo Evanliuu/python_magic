@@ -18,12 +18,12 @@ Mongodb条件查询:
 16.  result.skip(m).limit(n):  将查找结果的取值显示为,跳过m条数据,显示n条数据, 即只显示m+1~m+1+n的数据
 
 Mongodb数据更新指令：(指令必须使用双引号)
-1: $inc增加值
-    db.test.update({'id':2},{"$inc":{'id':2}})
+1: $inc增加字段值
+    db.test.update({'id':6},{"$inc":{'id':2}})  # result：id=8
     db.test.update({'id':6},{$inc:{id:2}})  # 在mongodb交互环境中的写法
 
-2: $set设置字段值
-    db.test.update({'id':6},{"$set":{'id':2}})
+2: $set更新字段值
+    db.test.update({'id':6},{"$set":{'id':2}})  result：id=2
     db.test.update({'id':6},{$set:{id:2}})  # 在mongodb交互环境中的写法
 
 3: $unset删除字段
@@ -31,50 +31,59 @@ Mongodb数据更新指令：(指令必须使用双引号)
     db.test.update({'id':6},{$unset:{id:6}})  # 在mongodb交互环境中的写法
 
 4: $rename重命名字段
-    db.test.update({'id':1},{"$rename":{'id':'userid'}})
-    db.test.update({id:10},{$rename:{id:'userid'}})  # 在mongodb交互环境中的写法
+    db.test.update({'id':1},{"$rename":{'id':'name'}})
+    db.test.update({id:10},{$rename:{id:'name'}})  # 在mongodb交互环境中的写法
 """
 # -*- coding:utf-8 -*-
 from pymongo import MongoClient
 
 
 def mongodb_handle(host='localhost', port=27017):
+    """
+    连接mongodb客户端
+    :param host: mongodb host
+    :param port: mongodb access port
+    :return:
+    """
     # 连接mongodb客户端
     client = MongoClient(host=host, port=port)
 
     # 创建数据库example
     database = client.example
     db_name = eval(str(database).split()[-1][:-1])
-    print('创建数据库：{}'.format(db_name))
+    print('创建数据库: {}'.format(db_name))
     # 创建集合sample
     collection = database.sample
-    table_name = eval(str(collection).split()[-1][:-1])
-    print('创建集合：{}'.format(table_name))
+    collection_name = eval(str(collection).split()[-1][:-1])
+    print('创建集合: {}'.format(collection_name))
 
     name = dict(name='Evan')
-    age = dict(stature=20)
+    age = dict(age=20)
     stature = dict(stature=177)
 
     # 插入数据到sample集合
     collection.insert_one(name)  # 插入单行数据
     collection.insert_many([age, stature])  # 插入多行数据
+
     # 更新sample集合中数据
-    update_format = {"$inc": {'age': 6}}  # age + 6，更新age值为26
-    collection.update_many(age, update_format)  # 更新多行数据
-    result = collection.update_one(age, update_format)  # 更新单行数据
-    print(result.matched_count)  # 查看更新个数
+    update_format = {"$set": {'age': 26}}  # 更新age值为26
+    result = collection.update_one(age, update_format)  # 更新单个数据
+    print('更新个数: {}'.format(result.matched_count))  # 查看更新个数
+    collection.update_many(age, update_format)  # 更新多个数据
+
     # 查询sample集合中数据
-    print(collection.find_one(age))  # 返回匹配到的第一个结果
-    print(collection.find_one({'age': {'$lt': 25}}))  # 使用条件查询，返回结果小于25的数据
-    print(collection.find_one({'stature': {'$regex': r'1\d\d'}}))  # 使用正则查询，返回结果等于100~199的整形
+    print(collection.find_one(name))  # 返回匹配到的第一个结果
+    print(collection.find_one({'age': {'$gt': 10}}))  # 使用条件查询，返回结果大于10的age字段
+    print(collection.find_one({'name': {'$regex': 'Ev.+'}}))  # 使用正则查询
     print([i for i in collection.find(name)])  # 返回所有匹配结果
     print([i for i in collection.find()])  # 返回集合中所有数据
-    # 查询数据个数
-    collection.count_documents(name)
+    print('查询name字段个数: {}'.format(collection.count_documents(name)))
+
     # 删除sample集合中数据
     collection.delete_many(stature)  # 删除多行数据
     result = collection.delete_one(stature)  # 删除单行数据
-    print(result.deleted_count)  # 查看删除个数
+    print('删除个数: {}'.format(result.deleted_count))  # 查看删除个数
+
     # 关闭客户端连接
     client.close()
 
