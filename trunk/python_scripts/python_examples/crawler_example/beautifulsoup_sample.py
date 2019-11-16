@@ -67,6 +67,7 @@ def parse():
     print(soup.find_all('a', class_='sister'))  # 获取a标签内class等于'sister'的节点
     print(soup.find_all(name='a'))  # 获取整条a标签信息
     print(soup.find_all(attrs={'class': 'sister'}))  # 获取属性值class为'sister'的节点
+
     # TODO CSS选择器：#代表id .代表class
     print(soup.select('ul'))  # 获取所有ul标签，返回一个列表
     print(soup.select('ul li'))  # 获取所有ul标签内的li节点，返回一个列表
