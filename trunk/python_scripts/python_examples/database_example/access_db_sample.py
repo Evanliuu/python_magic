@@ -1,51 +1,46 @@
-# -*-coding:utf-8-*-
+# -*- coding:utf-8 -*-
 import pyodbc
 
 
-def access_handle(db_path=''):
+def access_table_read(db_path):
     """
-    连接Microsoft的Access数据表
+    连接Microsoft的Access数据表读取数据
     :param db_path: Access数据表的所在路径
     :return:
     """
     # 连接.mdb或者.accdb文件 (连接.accdb文件需要下载"ACE"驱动程序)
-    # cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=%s' % (db_path,))
+    # cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=%s' % db_path)
 
     # 连接.mdb文件
-    cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (db_path,))
-    # 创建一个游标对象
+    cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % db_path)
+    # 获取一个句柄
     crsr = cnxn.cursor()
-    print('Connect --> {} successful'.format(db_path))
 
-    # 打印数据库goods.mdb中的所有表的表名
-    for table_info in crsr.tables(tableType='TABLE'):
-        print('Found table name: {}'.format(table_info.table_name))
-
-    # 创建新表 users
-    crsr.execute('CREATE TABLE users (login VARCHAR(8), userid INT, projid INT)')
-
-    # 给表中插入新数据
-    crsr.execute("INSERT INTO users VALUES('Linda', 211, 151)")
-
-    # 更新数据
-    crsr.execute("UPDATE users SET projid=1 WHERE login='Linda' and userid=211")
-    print(crsr.rowcount)  # 想知道数据被修改和删除时，到底影响了多少条记录，这个时候你可以使用cursor.rowcount的返回值
-
-    # 查询表格内所有数据
-    for row in crsr.execute("SELECT * from users"):
-        print(row)
-
+    # 创建表 users
+    crsr.execute('CREATE TABLE users (login VARCHAR(8), id INT, age INT)')
+    # 给users表中插入数据
+    crsr.execute("INSERT INTO users VALUES('Linda', 66, 20)")
+    # 更新users表中数据
+    crsr.execute("UPDATE users SET age=22 WHERE login='Linda' and id=66")  # 多条件选择用and
+    print(crsr.rowcount)  # 查看更新状态
     # 删除行数据
-    # crsr.execute("DELETE FROM users WHERE login='Linda'")
-
+    crsr.execute("DELETE FROM users WHERE login='Linda'")
     # 删除表users
-    # crsr.execute("DROP TABLE users")
+    crsr.execute("DROP TABLE users")
 
-    # 提交数据（只有提交之后，所有的操作才会对实际的物理表格产生影响）
+    # 获取数据库中的所有表名
+    for table_info in crsr.tables(tableType='TABLE'):
+        print(table_info.table_name)
+    # 获取表格内所有数据
+    for row_data in crsr.execute("SELECT * from users"):
+        print(row_data)
+
+    # 提交数据（只有提交之后，所有的操作才会生效）
     crsr.commit()
+    # 关闭句柄
     crsr.close()
     cnxn.close()
 
 
 if __name__ == '__main__':
-    access_handle(db_path=r'C:\Users\evaliu\Desktop\test.mdb')
+    access_table_read(db_path=r'C:\Users\evaliu\Desktop\test.mdb')
