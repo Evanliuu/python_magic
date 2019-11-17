@@ -1,7 +1,9 @@
+# -*- coding:utf-8 -*-
 import os
 import re
 import tkinter as tk
 import threading
+
 from xmlrpc.server import SimpleXMLRPCServer
 from tkinter import messagebox
 

@@ -1,11 +1,12 @@
+# -*- coding:utf-8 -*-
 import json
 import csv
 import pandas
 
 
-def read_write_json_data(msg, file_name='json_file', do_read=False):
+def write_json_data(msg, file_name='json_file', do_read=False):
     """
-    读取或写入JSON对象
+    写入JSON数据
     :param msg: 要转换为JSON对象的字符串
     :param file_name: 文件名称
     :param do_read: 默认为False，如果设置为True则是读取JSON对象并返回文本字符串
@@ -69,6 +70,6 @@ def write_csv_data(msg, file_name='csv_file', headers=None, do_read=False):
 
 if __name__ == '__main__':
     # write json file
-    read_write_json_data(msg={'name': 'evan'})
+    write_json_data(msg={'name': 'evan'})
     # write csv file
     write_csv_data(msg=[{'name': 'evan', 'id': '66'}, {'name': 'jane', 'id': '99'}], headers=['name', 'id'])

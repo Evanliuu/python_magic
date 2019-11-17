@@ -1,5 +1,4 @@
-"""
-Redis数据类型:
+"""Redis数据类型:
 1. <set key value>
     类型	:   String(字符串)	
     简介:   二进制安全	
@@ -30,7 +29,7 @@ Redis数据类型:
     特性	:   数据插入集合时,已经进行天然排序
     场景:   	1.排行榜 2.带权重的消息队列
 
-键值相关命令：
+键值相关命令:
 1.  keys *                   查看当前所有的key
 2.  exists name              查看数据库是否有name这个key
 3.  del name                 删除key name
@@ -47,15 +46,14 @@ Redis数据类型:
 1.  ping                     PING返回响应是否连接成功
 2.  echo                     在命令行打印一些内容
 3.  select                   0~15 编号的数据库
-4.  quit                    /exit 退出客户端
+4.  quit                     /exit 退出客户端
 5.  dbsize                   返回当前数据库中所有key的数量
 6.  info                     返回redis的相关信息
 7.  config get dir/*         实时传储收到的请求
 8.  flushdb                  删除当前选择数据库中的所有key
 9.  flushall                 删除所有数据库中的数据库
 """
-
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
 from redis import StrictRedis
 
 # 打开cmd输入 redis-cli.exe 即可进入redis命令行

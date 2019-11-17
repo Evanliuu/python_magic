@@ -1,10 +1,11 @@
+# -*- coding:utf-8 -*-
 import hashlib
 
 
 def get_file_md5(path):
     """
     打开文件读取MD5值
-    :param path: 文件的绝对路径
+    :param path: 文件的所在路径
     :return:
     """
     with open(path, 'r') as file:

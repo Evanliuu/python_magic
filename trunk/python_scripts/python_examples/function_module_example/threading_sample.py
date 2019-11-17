@@ -1,7 +1,7 @@
+# -*- coding:utf-8 -*-
 import threading
 import datetime
 import time
-
 
 locks = None
 

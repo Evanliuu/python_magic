@@ -1,5 +1,4 @@
-"""
-Mongodb条件查询:
+"""Mongodb条件查询:
 1.   $gt:                      大于
 2.   $lt:                      小于
 3.   $gte:                     大于等于
@@ -17,7 +16,7 @@ Mongodb条件查询:
 15.  result.sort('age', 1):    将查找之后的结果按照指定的字段进行排序, 1为升序, -1为降序
 16.  result.skip(m).limit(n):  将查找结果的取值显示为,跳过m条数据,显示n条数据, 即只显示m+1~m+1+n的数据
 
-Mongodb数据更新指令：(指令必须使用双引号)
+Mongodb数据更新指令: (指令必须使用双引号)
 1: $inc增加字段值
     db.test.update({'id':6},{"$inc":{'id':2}})  # result：id=8
     db.test.update({'id':6},{$inc:{id:2}})  # 在mongodb交互环境中的写法

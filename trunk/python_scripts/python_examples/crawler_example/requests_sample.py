@@ -1,4 +1,4 @@
-""" Request反反爬虫解决方案：
+""" Request反反爬虫解决方案:
 1:
 使用随机请求头:
     from fake_useragent import UserAgent
@@ -26,7 +26,7 @@
 # -*- coding:utf-8 -*-
 import random
 import requests
-from requests.exceptions import ReadTimeout, ConnectionError, RequestException
+
 from urllib.parse import urljoin, quote
 
 GET = 'get'
@@ -87,8 +87,8 @@ class Crawler(object):
     @staticmethod
     def main():
         # 中文转换字节码
-        # like = quote('你好')
-        # print(like)
+        like = quote('你好')
+        print(like)
 
         # 获取网页内容
         response = crawler.get_web_page(purpose=GET)

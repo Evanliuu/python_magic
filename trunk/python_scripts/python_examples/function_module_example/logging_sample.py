@@ -1,5 +1,4 @@
-"""
-日志一共分为5个级别，从低到高分别是：DEBUG、INFO、WARNING、ERROR、CRITICAL (所有的设定默认级别都是 WARNING)
+"""日志一共分为5个级别，从低到高分别是：DEBUG、INFO、WARNING、ERROR、CRITICAL (所有的设定默认级别都是 WARNING)
 1.DEBUG：详细的信息，通常只出现在诊断问题上；
 2.INFO：确认一切按预期运行；
 3.WARNING：一个迹象表明，一些意想不到的事情发生了，或表明一些问题在不久的将来会发生(例如：磁盘空间低...等等)
@@ -23,8 +22,7 @@
 这个格式可以输出日志的打印时间，模块名[代码所在行数]，日志级别，以及输出的日志内容
 format = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
 """
-
-
+# -*- coding:utf-8 -*-
 import logging
 
 
@@ -88,9 +86,8 @@ def logger_full(record_file_path, record_file_mode,
 
 if __name__ == '__main__':
     # 仅打印日志消息到控制台，不保存
-    # logger_sample()
+    logger_sample()
     # 在当前路径下创建log_sample.txt，保存日志消息到其中，不打印消息到控制台
-    # logger_sample(record_file_path='./log_sample.txt', record_file_mode='w')
-
+    logger_sample(record_file_path='./log_sample.txt', record_file_mode='w')
     # 在当前路径下创建log_sample.txt，保存日志消息到其中，并打印消息到控制台
     logger_full(record_file_path='./log_sample.txt', record_file_mode='w')

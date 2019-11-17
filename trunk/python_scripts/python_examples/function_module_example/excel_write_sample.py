@@ -1,13 +1,13 @@
+# -*- coding:utf-8 -*-
 import xlrd
 import xlwt
-import os
 
 
 def excel_write(write_info, table_name='excel_example.xls'):
     """
     写入Excel表格
-    :param write_info: 要写入CSV表格的数据
-    :param table_name: CSV表格名称
+    :param write_info: 要写入Excel表格的数据
+    :param table_name: Excel表格名称
     :return:
     """
     # 创建一个Excel文档对象
@@ -26,28 +26,13 @@ def excel_write(write_info, table_name='excel_example.xls'):
     ex_wt.save(table_name)
 
 
-def excel_read(file_name=None, sheet_index=0):
+def excel_read(file_name, sheet_index=0):
     """
     读取Excel表格
-    :param file_name: 要读取的CSV表格名称
+    :param file_name: Excel表格名称
     :param sheet_index: 表格的页面索引值，第一页为0，以此类推
     :return:
     """
-    def read_local_excel():
-        # 读取当前路径下的Excel表格，如果有则返回那个Excel表格的名称
-        files = os.listdir(os.getcwd())
-        for file in files:
-            if '.xls' in file:
-                local_excel = file
-                return local_excel
-        else:
-            return None
-
-    file_name = file_name or read_local_excel()
-    if not file_name:
-        print('The excel document was not found, Please check!')
-        return
-
     # 打开Excel文档
     ex_rd = xlrd.open_workbook(filename=file_name)
     # 读取Excel的表格（sheet_index=0 读取第一张表格）
@@ -70,4 +55,4 @@ if __name__ == '__main__':
     # 写入Excel表
     excel_write(write_info=message)
     # 读取Excel表
-    print(excel_read())
+    print(excel_read(file_name='excel_example.xls'))

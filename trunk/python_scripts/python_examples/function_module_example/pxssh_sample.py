@@ -1,8 +1,9 @@
+# -*- coding:utf-8 -*-
 from pexpect import pxssh
 import getpass
 
 
-def run():
+def ssh_handle():
     try:
         # TODO pxssh功能只能在Linux端使用
         s = pxssh.pxssh()
@@ -26,4 +27,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    ssh_handle()

@@ -1,8 +1,10 @@
+# -*- coding:utf-8 -*-
+import numpy as np
+import jieba
+
 from wordcloud import WordCloud
 from matplotlib import pyplot as plt
 from PIL import Image
-import numpy as np
-import jieba
 
 
 def generate_word_cloud(text='Python is a great programming language', image_name='sample.png'):

@@ -1,5 +1,4 @@
-"""
-WebDriver模块12个常用方法:
+"""WebDriver模块12个常用方法:
 1.  set_window_size()	    设置浏览器的大小
 2.  back()	                控制浏览器后退
 3.  forward()	            控制浏览器前进
@@ -77,6 +76,7 @@ expected_conditions 17个判断条件函数:
 这里我解释一下"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"，
 这段代码其实就是全局修改/usr/local/bin/chromedriver中的cdc_为dog_，"/usr/local/bin/chromedriver"是chromedriver所在的文件路径。
 """
+# -*- coding:utf-8 -*-
 import time
 
 from selenium import webdriver
