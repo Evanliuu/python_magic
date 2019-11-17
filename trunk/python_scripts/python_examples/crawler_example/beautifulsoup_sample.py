@@ -61,12 +61,12 @@ def parse():
     print(soup.a.next_siblings)  # 获取a标签后面的所有兄弟节点，返回一个生成器
 
     # 方法选择器: find() 和 find_all() 使用方法完全相同，前者返回匹配到的第一个结果，后者返回一个包含所有匹配结果的列表
-    print(soup.find_all(text=re.compile('Lacie'), limit=2))  # 使用正则获取文本包含'Lacie'的节点（limit: 限制匹配个数）
-    print(soup.find_all('a', text='Lacie'))  # 获取a标签内文本等于'Lacie'的节点（完整匹配）
-    print(soup.find_all('a', id='link2'))  # 获取a标签内id等于'link2'的节点
-    print(soup.find_all('a', class_='sister'))  # 获取a标签内class等于'sister'的节点
-    print(soup.find_all(name='a'))  # 获取整条a标签信息
-    print(soup.find_all(attrs={'class': 'sister'}))  # 获取属性值class为'sister'的节点
+    print(soup.find_all(text=re.compile('Lacie'), limit=2))  # 使用正则获取所有文本包含'Lacie'的节点（limit: 限制匹配个数）
+    print(soup.find_all('a', text='Lacie'))  # 获取所有a标签内文本等于'Lacie'的节点（完整匹配）
+    print(soup.find_all('a', id='link2'))  # 获取所有a标签内id等于'link2'的节点
+    print(soup.find_all('a', class_='sister'))  # 获取所有a标签内class等于'sister'的节点
+    print(soup.find_all(name='a'))  # 获取所有a节点
+    print(soup.find_all(attrs={'class': 'sister'}))  # 获取所有属性值class为'sister'的节点
 
     # CSS选择器: #代表id .代表class
     print(soup.select('ul'))  # 获取所有ul标签，返回一个列表
