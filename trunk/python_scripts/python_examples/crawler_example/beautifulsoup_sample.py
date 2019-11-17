@@ -39,8 +39,8 @@ def parse():
     print(soup.p)  # 获取整条p标签
     print(soup.p.name)  # 获取p标签名称
     # 获取标签属性
-    print(soup.p.attrs)  # 获取p标签内的所有属性
-    print(soup.p['class'])  # 获取p标签内的class属性值
+    print(soup.p.attrs)  # 获取p标签内的所有属性，返回一个字典
+    print(soup.p['class'])  # 获取p标签内的class属性值，返回一个列表
     # 获取标签文本
     print(soup.p.string)  # 获取p标签的文本信息，如果p标签内包含了多个子节点并有多个文本时返回None
     print(soup.p.strings)  # 获取p标签内的所有文本信息，返回一个生成器
