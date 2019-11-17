@@ -65,6 +65,7 @@ def parse():
     print(html.xpath('//a[@class="parent"]/text()'))  # 获取所有a节点内class等于'parent'的文本，返回一个列表
     # 属性获取
     print(html.xpath('//ul/@class'))  # 获取所有ul节点内的class值，返回一个列表
+    print(html.xpath('//ul/attribute::*'))  # 获取所有ul节点内的所有属性值，返回一个列表
     # 属性匹配
     print(html.xpath('//ul[@class="list"]'))  # 获取所有class等于'list'的ul节点，返回一个列表
     # 属性多值匹配
@@ -75,19 +76,28 @@ def parse():
     # 获取所有节点
     print(html.xpath('//*'))  # 获取所有节点，返回一个列表
     print(html.xpath('//li'))  # 获取所有的li节点，返回一个列表
-    # 获取父·子节点
-    print(html.xpath('//a[@class="parent"]/..'))  # 获取所有a节点内class等于'parent'的直接父节点，返回一个列表
-    print(html.xpath('//a[@class="parent"]/parent::*'))  # 用法同上
-    print(html.xpath('//ul/li'))  # 获取所有ul节点下的直接li节点，返回一个列表
-    print(html.xpath('//ul//a'))  # 获取所有ul节点下的所有子孙a节点，返回一个列表
+    # 获取父·祖先节点
+    print(html.xpath('//li/parent::*'))  # 获取所有li节点的直接父节点，返回一个列表
+    print(html.xpath('//li/..'))  # 用法同上
+    print(html.xpath('//li/ancestor::*'))  # 获取所有li节点的祖先节点，返回一个列表
+    print(html.xpath('//li/ancestor::ul'))  # 获取所有li节点的ul祖先节点，返回一个列表
+    # 获取子·子孙节点
+    print(html.xpath('//ul/child::*'))  # 获取所有ul节点内的直接子节点，返回一个列表
+    print(html.xpath('//ul/child::li'))  # 获取所有ul节点内的li直接子节点，返回一个列表
+    print(html.xpath('//ul/li'))  # 用法同上
+    print(html.xpath('//ul/descendant::*'))  # 获取所有ul节点内的子孙节点，返回一个列表
+    print(html.xpath('//ul/descendant::a'))  # 获取所有ul节点内的a子孙节点，返回一个列表
+    print(html.xpath('//ul//a'))  # 用法同上
+    # 获取兄弟·后续节点
+    print(html.xpath('//li[1]/following-sibling::*'))  # 获取所有li[1]节点之后的兄弟节点，返回一个列表
+    print(html.xpath('//li[1]/following::*'))  # 获取所有li[1]节点的后续节点，返回一个列表
+    print(html.xpath('//li[1]/following::*[2]'))  # 获取所有li[1]节点后的第二个节点，返回一个列表
 
     # 按序选择（正序位置是从1开始，last()-2 代表倒数第三个位置，因为last()是最后一个）
     print(html.xpath('//ul/li[1]'))  # 获取所有ul节点内的第一个li节点，返回一个列表
     print(html.xpath('//ul/li[last()]'))  # 获取所有ul节点内的最后一个li节点，返回一个列表
     print(html.xpath('//ul/li[last()-2]'))  # 获取所有ul节点内的倒数第三个li节点，返回一个列表
     print(html.xpath('//ul/li[position()<3]'))  # 获取所有ul节点内位置小于3的li节点，返回一个列表
-    # 节点轴选择
-    print(html.xpath('//ul/li[1]'))  # 获取所有ul节点内的第一个li节点，返回一个列表
 
 
 if __name__ == '__main__':

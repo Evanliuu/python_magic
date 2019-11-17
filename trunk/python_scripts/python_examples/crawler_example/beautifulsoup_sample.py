@@ -48,13 +48,13 @@ def parse():
     print(soup.p.text)  # 获取p标签内的所有文本信息，返回一个列表
     print(soup.stripped_strings)  # 去掉空白，保留所有的文本，返回一个生成器
 
-    # 获取父·子节点
+    # 获取父·祖先节点
     print(soup.p.parent)  # 获取p标签的直接父节点
-    print(soup.p.parents)  # 获取p标签的所有父节点，返回一个生成器
-    print(soup.p.contents)  # 获取p标签内的所有直接子节点，返回一个列表
-    print(soup.p.children)  # 获取p标签内的所有直接子节点，返回一个生成器
-    # 获取子孙节点
-    print(soup.p.descendants)  # 获取p标签内的所有子孙节点，返回一个生成器
+    print(soup.p.parents)  # 获取p标签的祖先节点，返回一个生成器
+    # 获取子·子孙节点
+    print(soup.p.contents)  # 获取p标签内的直接子节点，返回一个列表
+    print(soup.p.children)  # 获取p标签内的直接子节点，返回一个生成器
+    print(soup.p.descendants)  # 获取p标签内的子孙节点，返回一个生成器
     # 获取兄弟节点
     print(soup.a.previous_sibling)  # 获取a标签的上一个兄弟节点
     print(soup.a.previous_siblings)  # 获取a标签前面的所有兄弟节点，返回一个生成器
