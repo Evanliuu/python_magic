@@ -62,7 +62,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-class Spider(object):
+class Crawler(object):
 
     def __init__(self, url=''):
         self.source_url = url
@@ -198,5 +198,5 @@ class Spider(object):
 
 
 if __name__ == '__main__':
-    spider = Spider(url='https://www.baidu.com')
-    spider.main()
+    crawler = Crawler(url='https://www.baidu.com')
+    crawler.main()
