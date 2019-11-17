@@ -80,9 +80,9 @@ def mongodb_handle(host='localhost', port=27017):
     print('查询name字段个数: {}'.format(collection.count_documents(name)))
 
     # 删除sample集合中数据
-    collection.delete_many(stature)  # 删除多行数据
     result = collection.delete_one(stature)  # 删除单行数据
     print('删除个数: {}'.format(result.deleted_count))  # 查看删除个数
+    collection.delete_many(stature)  # 删除多行数据
 
     # 关闭客户端连接
     client.close()
