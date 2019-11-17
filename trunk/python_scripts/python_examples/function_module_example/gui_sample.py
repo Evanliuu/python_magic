@@ -1,4 +1,4 @@
-"""Tkinter16个核心窗口部件:
+"""<<Tkinter16个核心窗口部件>>
 Button:             一个简单的按钮，用来执行一个命令或别的操作。
 Canvas:             组织图形。这个部件可以用来绘制图表和图，创建图形编辑器，实现定制窗口部件。
 Checkbutton:        代表一个变量，它有两个不同的值。点击这个按钮将会在这两个值间切换。
@@ -16,7 +16,7 @@ Text:               格式化文本显示。允许你用不同的样式和属性
 Toplevel:           一个容器窗口部件，作为一个单独的、最上面的窗口显示。
 messageBox:         消息框，用于显示你应用程序的消息框。(Python2中为tkMessagebox)
 
-grid参数使用方法:
+<<grid参数使用方法>>
 column:             列数 [number - use cell identified with given column (starting with 0)]
 columnspan:         跨列数 [number - this widget will span several columns]
 in:                 master - use master to contain this widget
