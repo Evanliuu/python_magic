@@ -1,42 +1,13 @@
-"""Request反反爬虫解决方案:
-1:
-使用随机请求头:
-    from fake_useragent import UserAgent
-    ua = UserAgent(use_cache_server=False)
-    headers = {'User-Agent': ua.random}
-2:
-使用带请求参数的request，添加referer等：
-    GET: params = {"wd": 'python'}
-    POST: data = {"wd": 'python'}
-3:
-使用代理突破限制IP访问频率，或者减少访问频率（加延时）:
-    proxies = {
-        "http": "http://10.10.1.10:3128",
-        "https": "http://10.10.1.10:1080",
-    }
-4:
-使用Session保持会话状态：
-    s = requests.Session()
-    response = s.get(url)
-5:
-登陆网站时需要输入账户密码则调用auth参数传入即可:
-    from requests.auth import HTTPBasicAuth
-    response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
-"""
 # -*- coding:utf-8 -*-
 import random
 import requests
 
-from urllib.parse import urljoin, quote
-
-GET = 'get'
-POST = 'post'
-
 
 class Crawler(object):
 
-    def __init__(self, url=None):
+    def __init__(self, url=''):
         self.source_url = url
+        self.session = requests.Session()  # Session初始化
 
     @staticmethod
     def random_headers():
@@ -53,50 +24,41 @@ class Crawler(object):
         ua = random.choice(ua_list)
         return ua
 
-    def get_web_page(self, request_url=None, purpose=GET):
-        """
-        请求网页数据并返回响应结果
-        :param request_url: 请求的URL
-        :param purpose: 请求的协议
-        :return:
-        """
-        request_url = request_url or self.source_url
-        headers = {
-            "User-Agent": self.random_headers(),
-        }
-        try:
-            if purpose == GET:
-                response = requests.get(request_url, headers=headers, timeout=60)
-            else:
-                response = requests.post(request_url, headers=headers, timeout=60)
+    def main(self):
+        # files = {'file': open('favicon.ico', 'rb')}  # 上传的文件
+        data = {'wd': 'python'}  # Post请求参数
+        params = {'wd': 'python'}  # Get请求参数
+        headers = {"User-Agent": self.random_headers()}  # 请求头参数
 
-            if response.status_code == 200:
-                return response
-                # response.text # 网页源码 [type: str]
-                # response.headers # 头部信息 [type: dict]
-                # response.json() # json格式 [type: json]
-                # response.content # 二进制数据 [type: bytes]
-                # response.cookies # 网页cookies [type: dict]
-                # response.history # 访问的历史记录 [type: list]
-            else:
-                return None
-        except Exception as ex:
-            print('Get web page error: {}'.format(ex))
-            return None
+        # 访问页面
+        # requests.post(self.source_url, headers=headers, files=files)  # 文件上传
+        # self.session.get(self.source_url, headers=headers, params=params)  # 使用Session保持会话
+        # requests.get(self.source_url, headers=headers, data=data)  # Post请求
+        response = requests.get(self.source_url, headers=headers, params=params)  # Get请求
 
-    @staticmethod
-    def main():
-        # 中文转换字节码
-        like = quote('你好')
-        print(like)
+        # 获取网页信息
+        print(response.status_code)  # 获取响应状态码，返回一个整形
+        print(response.headers)  # 获取头部信息，返回一个字典
+        print(response.history)  # 获取访问的历史记录，可以查看是否重定向，返回一个列表
+        print(response.cookies)  # 获取网页Cookies，返回一个字典
+        print(response.content)  # 获取二进制格式，返回一个二进制数据
+        print(response.text)  # 获取网页源代码，返回一个字符串
+        # print(response.json())  # 如果响应信息是JSON格式则调用此方法，返回一个字典
 
-        # 获取网页内容
-        response = crawler.get_web_page(purpose=GET)
-        if response:
-            print('Response:\n{}'.format(response.text))
+        # 超时设置
+        requests.get(self.source_url, timeout=60)
+        # 取消SSL证书验证
+        requests.get(self.source_url, verify=False)
+        # 身份认证（打开网页需要身份验证时调用此方法）
+        requests.get('http://localhost:5000', auth=('username', 'password'))
+
+        # TODO 使用代理（需要提供有效的代理IP，使用SOCKS协议需要安装 'requests[socks] 外部库'）
+        # proxies = {"http": "http://10.10.1.10:3128", "https": "http://10.10.1.10:1080"}  # 使用普通格式
+        # proxies = {"http": "http://user:password@10.10.1.10:3128"}  # 使用HTTP Basic Auth格式
+        # proxies = {"http": "socks5://user:password@host:port", "https": "socks5://user:password@host:port"}  # SOCKS
+        # requests.get(self.source_url, proxies=proxies)
 
 
 if __name__ == '__main__':
-    resource_url = 'https://www.baidu.com'
-    crawler = Crawler(url=resource_url)
+    crawler = Crawler(url='https://www.baidu.com')
     crawler.main()
