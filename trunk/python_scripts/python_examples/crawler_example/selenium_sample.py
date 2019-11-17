@@ -1,71 +1,47 @@
-"""WebDriver模块12个常用方法:
-1.  set_window_size()	    设置浏览器的大小
-2.  back()	                控制浏览器后退
-3.  forward()	            控制浏览器前进
-4.  refresh()	            刷新当前页面
-5.  clear()	                清除文本
-6.  send_keys (value)	    模拟按键输入
-7.  click()	                单击元素
-8.  submit()	            用于提交表单
-9.  get_attribute(name)	    获取元素属性值
-10. is_displayed()	        设置该元素是否用户可见
-11. size	                返回元素的尺寸
-12. text	                获取元素的文本
+"""<<WebDriver模块12个常用方法>>
+1.  set_window_size()	                设置浏览器的大小
+2.  back()	                            控制浏览器后退
+3.  forward()	                        控制浏览器前进
+4.  refresh()	                        刷新当前页面
+5.  clear()	                            清除文本
+6.  send_keys (value)	                模拟按键输入
+7.  click()	                            单击元素
+8.  submit()	                        用于提交表单
+9.  get_attribute(name)	                获取元素属性值
+10. is_displayed()	                    设置该元素是否用户可见
+11. size	                            返回元素的尺寸
+12. text	                            获取元素的文本
 
-定位元素的8种方式:
-定位一个元素:                             定位多个元素:                           含义：
-1. find_element_by_id	                find_elements_by_id	                  通过元素id定位
-2. find_element_by_name	                find_elements_by_name	              通过元素name定位
-3. find_element_by_xpath	            find_elements_by_xpath	              通过xpath表达式定位
-4. find_element_by_link_text	        find_elements_by_link_tex	          通过完整超链接定位
-5. find_element_by_partial_link_text	find_elements_by_partial_link_text	  通过部分链接定位
-6. find_element_by_tag_name	            find_elements_by_tag_name	          通过标签定位
-7. find_element_by_class_name	        find_elements_by_class_name	          通过类名进行定位
-8. find_elements_by_css_selector	    find_elements_by_css_selector	      通过css选择器进行定位
+<<定位元素>>
+定位一个元素:                             定位多个元素:                              含义:
+1. find_element_by_id	                 find_elements_by_id	                  通过元素id定位
+2. find_element_by_name	                 find_elements_by_name	                  通过元素name定位
+3. find_element_by_xpath	             find_elements_by_xpath	                  通过xpath表达式定位
+4. find_element_by_link_text	         find_elements_by_link_tex	              通过完整超链接定位
+5. find_element_by_partial_link_text	 find_elements_by_partial_link_text	      通过部分链接定位
+6. find_element_by_tag_name	             find_elements_by_tag_name	              通过标签定位
+7. find_element_by_class_name	         find_elements_by_class_name	          通过类名进行定位
+8. find_elements_by_css_selector	     find_elements_by_css_selector	          通过css选择器进行定位
 
-expected_conditions 17个判断条件函数:
-以下两个条件类验证title，验证传入的参数title是否等于或包含于driver.title
-1. title_is
-2. title_contains
-
-以下两个条件验证元素是否出现，传入的参数都是元组类型的locator，如(By.ID, ‘kw’)
-顾名思义，一个只要一个符合条件的元素加载出来就通过；另一个必须所有符合条件的元素都加载出来才行
-3. presence_of_element_located
-4. presence_of_all_elements_located
-
-以下三个条件验证元素是否可见
-前两个传入参数是元组类型的locator
-第三个传入WebElement
-第一个和第三个其实质是一样的
-5. visibility_of_element_located
-6. invisibility_of_element_located
-7. visibility_of
-
-以下两个条件判断某段文本是否出现在某元素中，一个判断元素的text，一个判断元素的value
-8. text_to_be_present_in_element
-9. text_to_be_present_in_element_value
-
-以下条件判断frame是否可切入，可传入locator元组或者直接传入定位方式：id、name、index或WebElement
-10. frame_to_be_available_and_switch_to_it
-
-以下条件判断是否有alert出现
-11. alert_is_present
-
-以下条件判断元素是否可点击，传入locator
-12. element_to_be_clickable
-
-以下四个条件判断元素是否被选中，
-第一个条件传入WebElement对象，
-第二个传入locator元组,
-第三个传入WebElement对象以及状态，相等返回True，否则返回False,
-第四个传入locator以及状态，相等返回True，否则返回False
-13. element_to_be_selected
-14. element_located_to_be_selected
-15. element_selection_state_to_be
-16. element_located_selection_state_to_be
-
-最后一个条件判断一个元素是否仍在DOM中，传入WebElement对象，可以判断页面是否刷新了
-17. staleness_of
+<<等待条件函数>>
+等待条件:                                            含义:
+1.  title_is                                        标题是某内容
+2.  title_contains                                  标题包含某内容
+3.  presence_of_element_located                     节点加载出来，传入定位元组，如（By.ID, 'p'）
+4.  presence_of_all_elements_located                所有节点加载出来
+5.  visibility_of_element_located                   节点可见，传入定位元组
+6.  visibility_of                                   可见，传入节点对象
+7.  text_to_be_present_in_element                   某个节点文本包含某文字
+8.  text_to_be_present_in_element_value             某个节点值包含某文字
+9.  frame_to_be_available_and_switch_to_it          加载并切换
+10. invisibility_of_element_located                 节点不可见
+11. alert_is_present                                是否出现警告
+12. element_to_be_clickable                         节点可点击
+13. element_to_be_selected                          节点可选择，传入节点对象
+14. element_located_to_be_selected                  节点可选择，传入定位元组
+15. element_selection_state_to_be                   传入节点对象以及状态，相等返回True，否则返回False
+16. element_located_selection_state_to_be           传入定位元组以及状态，相等返回True，否则返回False
+17. staleness_of                                    判断一个节点是否仍在DOM，可判断当前页面是否已经刷新
 
 ======================================================================================
 <<淘宝爬虫注意事项>>
@@ -73,7 +49,7 @@ expected_conditions 17个判断条件函数:
 如果想让淘宝错误地认为启动的浏览器是"死的机器"，那么就需要修改webdriver。
 我使用的是chromedriver，"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"是修改chromedriver的代码，
 直接在Terminal执行即可。执行完在运行脚本，则可以成功登录。
-这里我解释一下"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"，
+这里解释一下"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"，
 这段代码其实就是全局修改/usr/local/bin/chromedriver中的cdc_为dog_，"/usr/local/bin/chromedriver"是chromedriver所在的文件路径。
 """
 # -*- coding:utf-8 -*-
@@ -98,12 +74,10 @@ class Spider(object):
         chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
         self.web_driver = webdriver.Chrome(options=chrome_options)
         """
-        # 选择浏览器驱动
-        self.driver = webdriver.Chrome()
-        # 显示等待10秒
-        self.waiting = WebDriverWait(self.driver, 10)
-        # 隐示等待10秒
-        self.driver.implicitly_wait(10)
+        self.driver = webdriver.Chrome()  # 选择浏览器驱动
+        self.waiting = WebDriverWait(self.driver, 30)  # 设置显示等待30秒
+        self.driver.implicitly_wait(30)  # 设置隐示等待30秒
+        self.actions = webdriver.ActionChains(self.driver)  # 动作链初始化
 
     def switch_to_windows(self, to_parent_windows=False):
         """
@@ -123,7 +97,7 @@ class Spider(object):
     def switch_to_frame(self, index=0, to_parent_frame=False, to_default_frame=False):
         """
         切换到不同的frame框架
-        :param index: expect by frame index value or id or name or webelement
+        :param index: expect by frame index value or id or name or element
         :param to_parent_frame: 默认为False，如果设置为True则切换到上一个frame框架
         :param to_default_frame: 默认为False，如果设置为True则切换到最上层的frame框架
         :return:
@@ -158,15 +132,24 @@ class Spider(object):
         else:
             js = "window.scrollBy({}, {})".format(rolling_distance[0], rolling_distance[1])
         self.driver.execute_script(js)
-        time.sleep(1)
 
     def screen_shot(self, picture_name='example.jpg'):
         """
         截取当前网页并保存为图片
-        :param picture_name: 图片名称
+        :param picture_name: 保存的图片名称
         :return:
         """
         self.driver.save_screenshot(picture_name)
+
+    def action_chain(self, source, target):
+        """
+        执行鼠标拖曳
+        :param source: 拖曳前位置
+        :param target: 拖曳后位置
+        :return:
+        """
+        self.actions.drag_and_drop(source, target)
+        self.actions.perform()
 
     def close_current_windows(self):
         # 关闭当前页面
@@ -179,22 +162,39 @@ class Spider(object):
             self.driver.quit()
 
     def main(self):
-        # 打开网页
+        # 访问页面
         self.driver.get(self.source_url)
-        # TODO 普通定位
-        # enter = self.driver.find_element_by_xpath('//*[@id="kw"]')
 
-        # 通过验证元素是否出现定位
-        enter = self.waiting.until(EC.presence_of_element_located((By.XPATH, '//*[@id="kw"]')))
-        # 模拟输入文本
-        enter.send_keys('python')
-        # 执行输入
-        enter.send_keys(Keys.ENTER)
+        # 定位节点
+        self.driver.find_element_by_xpath('//*[@id="kw"]')  # 通过xpath定位
+        input_box = self.waiting.until(EC.presence_of_element_located((By.XPATH, '//*[@id="kw"]')))  # 通过等待条件定位
+
+        # 获取节点信息
+        print(input_box.get_attribute('class'))  # 获取节点的class属性值
+        print(input_box.id)  # 获取节点的id值
+        print(input_box.text)  # 获取节点的文本值
+        print(input_box.location)  # 获取节点在页面中的相对位置
+        print(input_box.tag_name)  # 获取节点的标签名称
+        print(input_box.size)  # 获取节点的大小
+        # 获取网页信息
+        print(self.driver.current_url)  # 获取当前的URL
+        print(self.driver.get_cookies())  # 获取当前的Cookies
+        print(self.driver.page_source)  # 获取网页源代码
+
+        # 节点交互
+        input_box.clear()  # 清空文本
+        input_box.send_keys('python')  # 输入文本
+        input_box.send_keys(Keys.ENTER)  # 执行输入
+        # 网页交互
+        self.driver.back()  # 网页后退
+        time.sleep(1)
+        self.driver.forward()  # 网页前进
         # 滚动页面
-        self.page_scrolling()
-        # 获取网页html
-        html = self.driver.page_source
-        print('found html:\n', html)
+        self.page_scrolling()  # 执行javascript
+        # 动作链
+        source = self.driver.find_element_by_xpath('//*[@id="result_logo"]/img[1]')
+        target = self.driver.find_element_by_xpath('//*[@id="kw"]')
+        self.action_chain(source=source, target=target)  # 鼠标拖曳
 
 
 if __name__ == '__main__':

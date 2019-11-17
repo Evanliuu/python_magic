@@ -1,4 +1,4 @@
-""" Request反反爬虫解决方案:
+"""Request反反爬虫解决方案:
 1:
 使用随机请求头:
     from fake_useragent import UserAgent
