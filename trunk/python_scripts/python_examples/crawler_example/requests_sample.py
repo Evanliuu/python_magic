@@ -37,6 +37,7 @@ class Crawler(object):
         response = requests.get(self.source_url, headers=headers, params=params)  # Get请求
 
         # 获取网页信息
+        print(response.url)  # 获取当前URL，返回一个字符串
         print(response.status_code)  # 获取响应状态码，返回一个整形
         print(response.headers)  # 获取头部信息，返回一个字典
         print(response.history)  # 获取访问的历史记录，可以查看是否重定向，返回一个列表
@@ -45,6 +46,8 @@ class Crawler(object):
         print(response.text)  # 获取网页源代码，返回一个字符串
         # print(response.json())  # 如果响应信息是JSON格式则调用此方法，返回一个字典
 
+        # 关闭网页重定向
+        requests.get(self.source_url, allow_redirects=False)
         # 超时设置
         requests.get(self.source_url, timeout=60)
         # 取消SSL证书验证
