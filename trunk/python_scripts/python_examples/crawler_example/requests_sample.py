@@ -31,9 +31,9 @@ class Crawler(object):
         headers = {"User-Agent": self.random_headers()}  # 请求头参数
 
         # 访问页面
-        # requests.post(self.source_url, headers=headers, files=files)  # 文件上传
         # self.session.get(self.source_url, headers=headers, params=params)  # 使用Session保持会话
-        # requests.get(self.source_url, headers=headers, data=data)  # Post请求
+        # requests.post(self.source_url, headers=headers, files=files)  # 文件上传
+        # requests.post(self.source_url, headers=headers, data=data)  # Post请求
         response = requests.get(self.source_url, headers=headers, params=params)  # Get请求
 
         # 获取网页信息
