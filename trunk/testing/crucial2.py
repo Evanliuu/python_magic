@@ -21,11 +21,11 @@ logger = logging.getLogger(__name__)
 class CCCSpider(object):
 
     def __init__(self, url=''):
+        self.driver = webdriver.Chrome()  # 初始化driver
+        self.waiting = WebDriverWait(self.driver, 60)  # 设置显示等待60秒
+        self.driver.implicitly_wait(60)  # 设置隐示等待60秒
         self.source_url = url
         self.account = ('evaliu', '66Dashun!!')  # Login account
-        self.driver = webdriver.Chrome()  # 初始化driver
-        self.waiting = WebDriverWait(self.driver, 60)  # 显示等待60秒
-        self.driver.implicitly_wait(60)  # 隐示等待60秒
 
     def switch_to_windows(self, to_parent_windows=False):
         """
@@ -56,16 +56,6 @@ class CCCSpider(object):
             self.driver.switch_to.default_content()
         else:
             self.driver.switch_to.frame(index)
-
-    def open_new_windows(self, new_url=''):
-        """
-        打开一个新的windows窗口
-        :param new_url: 新的URL
-        :return:
-        """
-        js = "window.open({})".format(new_url)
-        self.driver.execute_script(js)
-        time.sleep(2)
 
     def close_current_windows(self):
         # 关闭当前页面
@@ -120,8 +110,8 @@ class CCCSpider(object):
 
     def main(self):
         self.login_ccc()
-        self.test_record_search(sn='FOC23324CB2')
-        self.parse()
+        # self.test_record_search(sn='FOC23324CB2')
+        # self.parse()
 
 
 if __name__ == '__main__':
