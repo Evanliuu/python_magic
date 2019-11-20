@@ -48,11 +48,11 @@ def mongodb_handle(host='localhost', port=27017):
     client = MongoClient(host=host, port=port)
 
     # 创建数据库example
-    database = client.example
+    database = client['example']
     db_name = eval(str(database).split()[-1][:-1])
     print('创建数据库: {}'.format(db_name))
     # 创建集合sample
-    collection = database.sample
+    collection = database['sample']
     collection_name = eval(str(collection).split()[-1][:-1])
     print('创建集合: {}'.format(collection_name))
 
