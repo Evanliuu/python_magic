@@ -10,7 +10,7 @@ class Crawler(object):
         self.session = requests.Session()  # Session初始化
 
     @staticmethod
-    def random_headers():
+    def random_user_agent():
         ua_list = [
             # Chrome UA
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
@@ -26,9 +26,9 @@ class Crawler(object):
 
     def main(self):
         # files = {'file': open('favicon.ico', 'rb')}  # 上传的文件
-        data = {'wd': 'python'}  # Post请求参数
+        # data = {'wd': 'python'}  # Post请求参数
         params = {'wd': 'python'}  # Get请求参数
-        headers = {"User-Agent": self.random_headers()}  # 请求头参数
+        headers = {"User-Agent": self.random_user_agent()}  # 请求头参数
 
         # 访问页面
         # self.session.get(self.source_url, headers=headers, params=params)  # 使用Session保持会话
