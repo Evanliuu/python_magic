@@ -1,11 +1,14 @@
 # -*- coding:utf-8 -*-
 import random
 import requests
+from pymongo import MongoClient
 
 from bs4 import BeautifulSoup
 
 
 class Crawler(object):
+    database = None
+    collection = None
 
     def __init__(self, url=''):
         self.source_url = url
@@ -26,11 +29,33 @@ class Crawler(object):
         ua = random.choice(ua_list)
         return ua
 
+    def login_mongodb(self, database_name, collection_name):
+        """
+        连接Mongodb客户端
+        :param database_name: 数据库名称
+        :param collection_name: 集合名称
+        :return:
+        """
+        client = MongoClient(host='localhost', port=27017)
+        self.database = client[database_name]
+        self.collection = self.database[collection_name]
+        print('Login mongodb successfully, database_name="{}", collection_name="{}"'.format(database_name,
+                                                                                            collection_name))
+
     def main(self):
         resp = requests.get(self.source_url, headers={'User-Agent': self.random_user_agent()})
         if resp.status_code == 200:
             soup = BeautifulSoup(resp.text, 'lxml')
-            print(soup)
+            p = soup.select('p')
+
+            self.login_mongodb(database_name='ZhiHu', collection_name='Feynman learning method')
+            for i, r in enumerate(p):
+                if not r.text:
+                    continue
+                write_info = {'{}'.format(i): r.text}
+                self.collection.insert_one(write_info)
+                print('Write {} ok'.format(write_info))
+
         else:
             print('No data found!')
             print('url: {}'.format(resp.url))
