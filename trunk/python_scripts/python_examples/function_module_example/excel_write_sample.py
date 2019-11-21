@@ -3,17 +3,18 @@ import xlrd
 import xlwt
 
 
-def excel_write(write_info, table_name='excel_example.xls'):
+def write_excel_table(write_info, table_name='excel_example.xls', sheet_name='first_page'):
     """
     写入Excel表格
     :param write_info: 要写入Excel表格的数据
     :param table_name: Excel表格名称
+    :param sheet_name: Excel页面名称
     :return:
     """
     # 创建一个Excel文档对象
     ex_wt = xlwt.Workbook()
     # 添加一个新的工作表
-    sheet1 = ex_wt.add_sheet('first_page', cell_overwrite_ok=True)
+    sheet1 = ex_wt.add_sheet(sheet_name, cell_overwrite_ok=True)
 
     for row_index, each_row in enumerate(write_info):
         if isinstance(each_row, (list, tuple)):
@@ -23,10 +24,11 @@ def excel_write(write_info, table_name='excel_example.xls'):
         else:
             # 写入一条数据
             sheet1.write(row_index, 0, each_row)
+    # 保存数据到表格
     ex_wt.save(table_name)
 
 
-def excel_read(file_name, sheet_index=0):
+def read_excel_table(file_name, sheet_index=0):
     """
     读取Excel表格
     :param file_name: Excel表格名称
@@ -53,6 +55,6 @@ if __name__ == '__main__':
         'writer finish'
     ]
     # 写入Excel表
-    excel_write(write_info=message)
+    write_excel_table(write_info=message)
     # 读取Excel表
-    print(excel_read(file_name='excel_example.xls'))
+    print(read_excel_table(file_name='excel_example.xls'))
