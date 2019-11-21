@@ -6,16 +6,11 @@ class SqliteDB(object):
     """
     在本地创建一个虚拟的Mysql文件
     """
-    def __init__(self, db_path=r'C:\pycharm_user\evan', db_name='sql_lite3'):
-        self.db_name = db_name
-        self.db_path = db_path + '/' + self.db_name
+    def __init__(self, db_path=r'C:\Users\evaliu\Desktop', db_name='sql_lite3'):
+        self.db_path = db_path + '\\' + db_name
         # connect virtual Mysql database
-        self.cxn, self.cur = self._connect()
-
-    def _connect(self):
         self.cxn = sqlite3.connect(self.db_path)
         self.cur = self.cxn.cursor()
-        return self.cxn, self.cur
 
     def create_table(self):
         try:
