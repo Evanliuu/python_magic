@@ -44,6 +44,7 @@ def mysql_handle(host='localhost', user='root', password='', port=27017):
     condition = 'uid > 10'
     sql = "SELECT * FROM {} WHERE {}".format(table, condition)
     cursor.execute(sql)
+    print(cursor.rowcount)  # # 查看匹配个数
     print(cursor.fetchone())  # 获取结果的第一条数据，返回一个元组
     print(cursor.fetchall())  # 获取结果的所有数据，返回一个元组，数据量大时会占用很大内存，所以尽量使用fetchone逐条获取
 

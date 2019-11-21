@@ -76,7 +76,7 @@ def mongodb_handle(host='localhost', port=27017):
     print(collection.find_one({'name': {'$regex': 'Ev.+'}}))  # 使用正则查询
     print([i for i in collection.find(name)])  # 返回所有匹配结果
     print([i for i in collection.find()])  # 返回集合中所有数据
-    print('查询name字段个数: {}'.format(collection.count_documents(name)))
+    print('查询name字段个数: {}'.format(collection.count_documents(name)))  # 查询指定字段个数
 
     # 删除sample集合中数据
     result = collection.delete_one(stature)  # 删除单行数据
