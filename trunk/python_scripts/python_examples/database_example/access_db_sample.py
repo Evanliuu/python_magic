@@ -10,7 +10,6 @@ def access_table_read(db_path):
     """
     # 连接.mdb或者.accdb文件 (连接.accdb文件需要下载"ACE"驱动程序)
     # db = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=%s' % db_path)
-
     db = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % db_path)  # 连接.mdb文件
     cursor = db.cursor()  # 获取一个句柄
 
@@ -35,7 +34,6 @@ def access_table_read(db_path):
 
     # 提交数据（只有提交之后，所有的操作才会生效）
     cursor.commit()
-
     # 关闭句柄
     cursor.close()
     db.close()
