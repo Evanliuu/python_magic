@@ -1,4 +1,5 @@
 """<<WebDriver模块12个常用方法>>
+模块方法:                                含义:
 1.  set_window_size()	                设置浏览器的大小
 2.  back()	                            控制浏览器后退
 3.  forward()	                        控制浏览器前进
