@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 import random
 import requests
-from pymongo import MongoClient
+import xlwt
 
+from pymongo import MongoClient
 from bs4 import BeautifulSoup
 
 
@@ -41,6 +42,28 @@ class Crawler(object):
         self.collection = self.database[collection_name]
         print('Login mongodb successfully, database_name="{}", collection_name="{}"'.format(database_name,
                                                                                             collection_name))
+
+    @staticmethod
+    def write_excel_table(write_info, table_name='excel_example.xls', sheet_name='first_page'):
+        """
+        写入Excel表格
+        :param write_info: 要写入Excel表格的数据
+        :param table_name: Excel表格名称
+        :param sheet_name: Excel页面名称
+        :return:
+        """
+        ex_wt = xlwt.Workbook()
+        sheet1 = ex_wt.add_sheet(sheet_name, cell_overwrite_ok=True)
+
+        for row_index, each_row in enumerate(write_info):
+            if isinstance(each_row, (list, tuple)):
+                # 如果是列表或者元组，循环写入每条数据
+                for column_index, each_column in enumerate(each_row):
+                    sheet1.write(row_index, column_index, each_column)
+            else:
+                # 写入一条数据
+                sheet1.write(row_index, 0, each_row)
+        ex_wt.save(table_name)
 
     def main(self):
         resp = requests.get(self.source_url, headers={'User-Agent': self.random_user_agent()})
