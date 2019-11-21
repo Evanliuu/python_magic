@@ -42,7 +42,7 @@ def mysql_handle(host='localhost', user='root', password='', port=27017):
     # 查询users表中数据
     table = 'users'
     condition = 'uid > 10'
-    sql = "SELECT * FROM {} WHERE {}".format(table, condition)
+    sql = "SELECT * FROM {} WHERE {}".format(table, condition)  # 动态查询数据表中数据
     cursor.execute(sql)
     print(cursor.rowcount)  # # 查看匹配个数
     print(cursor.fetchone())  # 获取结果的第一条数据，返回一个元组
