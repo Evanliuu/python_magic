@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from pexpect import pxssh
 import getpass
+from pexpect import pxssh
 
 
 def ssh_handle():
