@@ -1,11 +1,8 @@
 # -*- coding:utf-8 -*-
 import os
 import re
-import tkinter as tk
-import threading
 
 from xmlrpc.server import SimpleXMLRPCServer
-from tkinter import messagebox
 
 
 class ServiceFunction(object):
@@ -19,93 +16,50 @@ class ServiceFunction(object):
         :return: get hostname to client side
         """
         result = os.popen('ipconfig /all')
-        read_info = result.readlines()[3]
-        host = re.search(r': (\w+)', read_info)
-        if host:
-            host = host.groups()[0]
+        read_info = re.search(r': (\w+)', result.readlines()[3])
+        if read_info:
+            host = read_info.group(1)
         else:
-            host = 'not find windows host'
+            host = 'Not found windows host'
         return host
 
 
-class Gui(object):
-    """
-    This class is used to start the service on the server side
-    """
-    def __init__(self, port=6666):
+class SocketServer(object):
+
+    def __init__(self, ip_address='', port=6666):
+        self.ip_address = ip_address
         self.port = port
-        self.root = tk.Tk()
-        self.root.title('Server interface')
-        self.set_window_center(width=280, height=90)
-
-        tk.Label(self.root, text='Server ip: ').grid(row=0, column=1, sticky=tk.W)
-        self.input1 = tk.StringVar()
-        self.input1.set(self.get_windows_ip())
-        self.entry1 = tk.Entry(self.root, textvariable=self.input1).grid(row=0, column=2, padx=45)
-
-        tk.Label(self.root, text='Server port: ').grid(row=1, column=1, sticky=tk.W)
-        self.input2 = tk.StringVar()
-        self.input2.set(self.port)
-        self.entry2 = tk.Entry(self.root, textvariable=self.input2).grid(row=1, column=2, padx=45)
-
-        tk.Button(self.root, text='Quit', command=self.root.quit, bg='red', fg='white')\
-            .grid(row=2, column=1, pady=5)
-        tk.Button(self.root, text='Start', command=self.handle_windows, bg='blue', fg='white')\
-            .grid(row=2, column=2, pady=5)
 
     @staticmethod
-    def get_windows_ip():
-        """
-        Gets the IP address of the local computer
-        :return:
-        """
-        result = os.popen('ipconfig')
-        windows_ip = re.search(r'IPv4.+? : (\d+\.\d+\.\d+\.\d+)', result.read())
-        if windows_ip:
-            windows_ip = windows_ip.groups()[0]
+    def read_local_ip_address():
+        ip_config = os.popen('ipconfig')
+        result = re.search(r'IPv4.+? : (\d+?\.\d+?\.\d+?\.\d+)', ip_config.read())
+        if result:
+            ip_address = result.group(1)
+            print('Read the local ip address: {}'.format(ip_address))
+            return ip_address
         else:
-            windows_ip = 'Please enter your ip'
-        return windows_ip
+            raise ValueError('Read the local ip address error, Please check!')
 
-    def handle_windows(self):
+    def setup_socket_server(self):
         """
-        Start thread to setup_server function
+        register a function to respond to XML-RPC requests and start XML-RPC server
         :return:
         """
-        threading.Thread(target=self.setup_server()).start()
-
-    def setup_server(self):
-        """
-        Set the server never to stop
-        :return:
-        """
+        # If the ip_address parameter is null, read the local IP address for use
+        ip_address = self.ip_address or self.read_local_ip_address()
         try:
-            server = SimpleXMLRPCServer((self.input1.get(), int(self.input2.get())))
-            messagebox.showinfo('Information', 'Server {} Listening on port {}...'.
-                                format(self.input1.get(), int(self.input2.get())))
-            # server.register_function(function)
-            server.register_instance(ServiceFunction())
-            server.serve_forever()
-        except Exception as ex:
-            messagebox.showerror('Error', 'Start server error...\nerror msg: {}'.format(ex))
-            self.root.quit()
+            # Start the xml-rpc socket service
+            service = SimpleXMLRPCServer((ip_address, self.port))
+            print('Server {} Listening on port {} ...'.format(ip_address, self.port))
 
-    def set_window_center(self, width=300, height=300):
-        """
-        Center the GUI interface
-        :param width: expect width (type： int)
-        :param height: expect height (type： int)
-        :return:
-        """
-        # Gets the width and height of the computer screen
-        ws = self.root.winfo_screenwidth()
-        hs = self.root.winfo_screenheight()
-        # Calculate the X and Y positions
-        x = (ws / 2) - (width / 2)
-        y = (hs / 2) - (height / 2)
-        self.root.geometry('%dx%d+%d+%d' % (width, height, x, y))
+            # service.register_function(function)  # Enable a function service
+            service.register_instance(ServiceFunction())  # Open a class service
+            service.serve_forever()  # performs a permanent run
+        except Exception as ex:
+            raise Exception('Setup socket server error:\n{}'.format(ex))
 
 
 if __name__ == '__main__':
-    gui = Gui(port=6666)
-    gui.root.mainloop()
+    server = SocketServer(port=6666)
+    server.setup_socket_server()
