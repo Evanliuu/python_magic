@@ -52,11 +52,12 @@ def parse():
 
     # 方法选择器: find() 和 find_all() 使用方法完全相同，前者返回匹配到的第一个结果，后者返回一个包含所有匹配结果的列表
     print(soup.find_all(text=re.compile('Lacie'), limit=2))  # 使用正则获取所有文本包含'Lacie'的节点（limit: 限制匹配个数）
-    print(soup.find_all('a', text='Lacie'))  # 获取所有a标签内文本等于'Lacie'的节点（完整匹配）
+    print(soup.find_all('a', text='Lacie'))  # 获取所有a标签内文本等于'Lacie'的节点（文本完整匹配）
     print(soup.find_all('a', id='link2'))  # 获取所有a标签内id等于'link2'的节点
     print(soup.find_all('a', class_='sister'))  # 获取所有a标签内class等于'sister'的节点
+    print(soup.find_all('a', class_='sister', id='link2'))  # 多个搜索条件叠加
     print(soup.find_all(name='a'))  # 获取所有a节点
-    print(soup.find_all(attrs={'class': 'sister'}))  # 获取所有属性值class为'sister'的节点
+    print(soup.find_all(attrs={'class': 'sister'}))  # 获取所有class属性值为'sister'的节点
 
     # CSS选择器: #代表id .代表class
     print(soup.select('p'))  # 获取所有p标签，返回一个列表
