@@ -3,28 +3,17 @@ import re
 from bs4 import BeautifulSoup
 
 html_doc = """
-<html>
-<head><title>The Dormouse's story</title></head>
+<html><head><title>The Dormouse's story</title></head>
 <body>
-<p class="title"><b>The Dormouse's story</b></p>
-<ul class="list" id="list-1">
-<li class="element">Foo</li>
-<li class="element">Bar</li>
-<li class="element">Jay</li>
-</ul>
-<ul class="list two" id="list-2">
-<li class="element">evan</li>
-<li class="element">jane</li>
-<li class="element">summer</li>
-</ul>
+<p class="beautiful title"><b>The Dormouse's story</b></p>
+ 
 <p class="story">Once upon a time there were three little sisters; and their names were
 <a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
-<a href="http://example.com/lacie" class="child" id="link2">Lacie</a> and
-<a href="http://example.com/tillie" class="parent" id="link3">Tillie</a>;
+<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
 and they lived at the bottom of a well.</p>
-<p class="story">End...</p>
-</body>
-</html>
+ 
+<p class="story">...</p>
 """
 
 
@@ -70,12 +59,12 @@ def parse():
     print(soup.find_all(attrs={'class': 'sister'}))  # 获取所有属性值class为'sister'的节点
 
     # CSS选择器: #代表id .代表class
-    print(soup.select('ul'))  # 获取所有ul标签，返回一个列表
-    print(soup.select('ul li'))  # 获取所有ul标签内的li节点，返回一个列表
-    print(soup.select('ul.list'))  # 获取ul标签内class为'list'的所有元素，返回一个列表
-    print(soup.select('.list'))  # 获取class为'list'的所有元素，返回一个列表
-    print(soup.select('.list.two'))  # 获取class为'list two'的所有元素，返回一个列表
-    print(soup.select('#list-1 .element'))  # 获取id为'list-1'内class为'element'的所有元素，返回一个列表
+    print(soup.select('p'))  # 获取所有p标签，返回一个列表
+    print(soup.select('p a'))  # 获取所有p标签内的a节点，返回一个列表
+    print(soup.select('p.story'))  # 获取p标签内class为'story'的所有元素，返回一个列表
+    print(soup.select('.story'))  # 获取class为'story'的所有元素，返回一个列表
+    print(soup.select('.beautiful.title'))  # 获取class为'beautiful title'的所有元素，返回一个列表
+    print(soup.select('#link1'))  # 获取id为'link1'的所有元素，返回一个列表
 
 
 if __name__ == '__main__':
