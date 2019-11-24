@@ -10,8 +10,8 @@ from urllib.parse import unquote
 
 class Crawler(object):
 
-    def __init__(self, url=''):
-        self.source_url = url
+    def __init__(self, root_url=''):
+        self.source_url = root_url
 
     @staticmethod
     def random_user_agent():
@@ -62,10 +62,15 @@ class Crawler(object):
                 for each_data in each_info:
                     sheet1.write(index, 0, each_data)
                     index += 1
-
         ex_wt.save(table_name)
 
     def parse(self, parse_url, note_id):
+        """
+        解析网页数据，抓取title和body
+        :param parse_url: 请求的URL
+        :param note_id: 解析的note_id
+        :return: [title, body] or []
+        """
         resp = requests.get(parse_url, headers={'User-Agent': self.random_user_agent()})
         result = []
         if resp.status_code == 200:
@@ -78,6 +83,11 @@ class Crawler(object):
         return result
 
     def start_search(self, params):
+        """
+        请求AJAX数据，抓取所有页的URL
+        :param params: 请求参数
+        :return: [totalURL] or []
+        """
         resp = requests.get(self.source_url, headers={'User-Agent': self.random_user_agent()}, params=params)
         result = []
         if resp.status_code == 200:
@@ -90,12 +100,12 @@ class Crawler(object):
 
 
 if __name__ == '__main__':
-    crawler = Crawler(url='https://www.douban.com/j/search')
+    crawler = Crawler(root_url='https://www.douban.com/j/search')
 
-    break_limit = 50
-    loops = 1
-    final_list = []
-    start_increment = 5
+    loops = 1  # 循环次数
+    start_increment = 5  # 参数增量
+    break_limit = 50  # 抓取结果总数
+    final_list = []  # 抓取结果列表
 
     while True:
         print('loops: {}'.format(loops))
@@ -112,6 +122,7 @@ if __name__ == '__main__':
             'start': start_increment,
             'cat': 1015
         }
+        # 获取所有页面的URL
         url_list = crawler.start_search(params=data)
         if url_list:
             print('Found url list length: {}'.format(len(url_list)))
@@ -120,14 +131,15 @@ if __name__ == '__main__':
             for url in url_list:
                 note = re.search('note/(.+?)/&amp', unquote(url))
                 if id:
+                    # 解析所有URL
                     contents = crawler.parse(parse_url=url, note_id=note.group(1))
                     if contents:
                         parsed_info.append(contents)
 
             print('parsed_info length: {}'.format(len(parsed_info)))
-            final_list.extend(parsed_info)
+            final_list.extend(parsed_info)  # 保存所有URL解析结果
             print('url list pares done')
 
-        start_increment += 20
+        start_increment += 20  # AJAX数据每次增加20
         loops += 1
         print('current start_increment value: {}\n----------------------------\n'.format(start_increment))
