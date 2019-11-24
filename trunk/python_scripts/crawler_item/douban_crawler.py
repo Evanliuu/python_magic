@@ -117,13 +117,14 @@ if __name__ == '__main__':
             print('Write excel table successful')
             break
 
-        data = {
-            'q': '唇炎',
+        # TODO Request params
+        param = {
+            'q': '开心一下',
             'start': start_increment,
             'cat': 1015
         }
         # 获取所有页面的URL
-        url_list = crawler.start_search(params=data)
+        url_list = crawler.start_search(params=param)
         if url_list:
             print('Found url list length: {}'.format(len(url_list)))
 
