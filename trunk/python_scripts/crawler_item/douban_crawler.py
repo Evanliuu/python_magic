@@ -10,8 +10,8 @@ from urllib.parse import unquote
 
 class Crawler(object):
 
-    def __init__(self, root_url=''):
-        self.source_url = root_url
+    def __init__(self, url=''):
+        self.source_url = url
 
     @staticmethod
     def random_user_agent():
@@ -98,49 +98,51 @@ class Crawler(object):
                         result.append(url_info.group(1))
         return result
 
+    def run(self):
+        loops = 1  # 循环次数
+        start_increment = 5  # 参数增量
+        break_limit = 50  # 抓取结果总数
+        final_list = []  # 抓取结果列表
+
+        while True:
+            print('loops: {}'.format(loops))
+            print('final_list length: {}'.format(len(final_list)))
+
+            # TODO This is the only exit
+            if len(final_list) >= break_limit:
+                self.write_excel_table(write_info=final_list, table_name='DouBan.xls')
+                print('Write excel table successful')
+                break
+
+            # TODO Request params
+            param = {
+                'q': 'python',  # 要搜索的信息填入这里
+                'start': start_increment,
+                'cat': 1015
+            }
+            # 获取所有页面的URL
+            url_list = self.start_search(params=param)
+            if url_list:
+                print('Found url list length: {}'.format(len(url_list)))
+
+                parsed_info = []
+                for url in url_list:
+                    note = re.search('note/(.+?)/&amp', unquote(url))
+                    if id:
+                        # 解析所有URL
+                        contents = self.parse(parse_url=url, note_id=note.group(1))
+                        if contents:
+                            parsed_info.append(contents)
+
+                print('parsed_info length: {}'.format(len(parsed_info)))
+                final_list.extend(parsed_info)  # 保存所有URL解析结果
+                print('url list pares done')
+
+            start_increment += 20  # AJAX数据每次增加20
+            loops += 1
+            print('current start_increment value: {}\n----------------------------\n'.format(start_increment))
+
 
 if __name__ == '__main__':
-    crawler = Crawler(root_url='https://www.douban.com/j/search')
-
-    loops = 1  # 循环次数
-    start_increment = 5  # 参数增量
-    break_limit = 50  # 抓取结果总数
-    final_list = []  # 抓取结果列表
-
-    while True:
-        print('loops: {}'.format(loops))
-        print('final_list length: {}'.format(len(final_list)))
-
-        # TODO This is the only exit
-        if len(final_list) >= break_limit:
-            Crawler.write_excel_table(write_info=final_list, table_name='DouBan.xls')
-            print('Write excel table successful')
-            break
-
-        # TODO Request params
-        param = {
-            'q': '开心一下',
-            'start': start_increment,
-            'cat': 1015
-        }
-        # 获取所有页面的URL
-        url_list = crawler.start_search(params=param)
-        if url_list:
-            print('Found url list length: {}'.format(len(url_list)))
-
-            parsed_info = []
-            for url in url_list:
-                note = re.search('note/(.+?)/&amp', unquote(url))
-                if id:
-                    # 解析所有URL
-                    contents = crawler.parse(parse_url=url, note_id=note.group(1))
-                    if contents:
-                        parsed_info.append(contents)
-
-            print('parsed_info length: {}'.format(len(parsed_info)))
-            final_list.extend(parsed_info)  # 保存所有URL解析结果
-            print('url list pares done')
-
-        start_increment += 20  # AJAX数据每次增加20
-        loops += 1
-        print('current start_increment value: {}\n----------------------------\n'.format(start_increment))
+    crawler = Crawler(url='https://www.douban.com/j/search')
+    crawler.run()
