@@ -128,7 +128,7 @@ class Crawler(object):
                 parsed_info = []
                 for url in url_list:
                     note = re.search('note/(.+?)/&amp', unquote(url))
-                    if id:
+                    if note:
                         # 解析所有URL
                         contents = self.parse(parse_url=url, note_id=note.group(1))
                         if contents:
