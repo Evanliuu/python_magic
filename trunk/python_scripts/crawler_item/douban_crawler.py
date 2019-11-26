@@ -117,7 +117,7 @@ class Crawler(object):
             # TODO Request params
             param = {
                 'q': 'python',  # 要搜索的信息填入这里
-                'start': start_increment,
+                'start': start_increment,  # 偏移参数（每次增加20）
                 'cat': 1015
             }
             # 获取所有页面的URL
