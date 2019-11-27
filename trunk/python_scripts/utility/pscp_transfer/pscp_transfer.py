@@ -2,7 +2,7 @@ import os
 import threading
 
 
-def file_transfer(remote_machine, login_id=('username', 'password'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
+def file_transfer(remote_machine, login_id=('evanliu', 'Cisco234!'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
                   target_path='/tftpboot/', transfer_to_local=False, first_connection=False):
     """
     此功能只能在Windows系统上使用，并且需要在Windows上装好PSCP控件
@@ -62,6 +62,6 @@ def main(machine_info):
 
 if __name__ == '__main__':
     machine_list = [
-        'fxcavp832',
+        'fxcavp363',
     ]
     main(machine_info=machine_list)
