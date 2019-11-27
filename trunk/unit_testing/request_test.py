@@ -68,16 +68,18 @@ class Crawler(object):
     def main(self):
         resp = requests.get(self.source_url, headers={'User-Agent': self.random_user_agent()})
         if resp.status_code == 200:
-            soup = BeautifulSoup(resp.text, 'lxml')
-            p = soup.select('p')
+            print(resp.text)
 
-            self.login_mongodb(database_name='ZhiHu', collection_name='Feynman learning method')
-            for i, r in enumerate(p):
-                if not r.text:
-                    continue
-                write_info = {'{}'.format(i): r.text}
-                self.collection.insert_one(write_info)
-                print('Write {} ok'.format(write_info))
+            # TODO 使用Mongodb存储数据
+            # soup = BeautifulSoup(resp.text, 'lxml')
+            # p = soup.select('p')
+            # self.login_mongodb(database_name='ZhiHu', collection_name='Feynman learning method')
+            # for i, r in enumerate(p):
+            #     if not r.text:
+            #         continue
+            #     write_info = {'{}'.format(i): r.text}
+            #     self.collection.insert_one(write_info)
+            #     print('Write {} ok'.format(write_info))
 
         else:
             print('No data found!')
