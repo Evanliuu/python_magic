@@ -1,4 +1,4 @@
-r"""<<常用的匹配规则>>
+"""常用的匹配规则:
 模式:              描述:
 \w                匹配字母，数字及下划线
 \W                匹配不是字母，数字及下划线的字符
@@ -25,6 +25,7 @@ a|b               匹配a或b
 ()                匹配括号内的表达式，也表示一个组
 
 <<修饰符>>
+模式:              描述:
 re.S              使.匹配包括换行在内的所有字符
 re.I              使匹配对大小写不敏感
 re.M              多行匹配，影响^和$
@@ -65,6 +66,11 @@ def parse():
     # 编译正则表达式，可重复使用
     pattern = re.compile('succeed')
     print(re.findall(pattern, example))
+
+    # 匹配中文字符
+    text = 'abc我爱你def中国'
+    pattern = '[\u4E00-\u9FA5]+'  # 匹配所有的中文字符
+    print(re.findall(pattern, text))
 
 
 if __name__ == '__main__':
