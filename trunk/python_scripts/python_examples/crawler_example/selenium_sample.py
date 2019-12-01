@@ -66,15 +66,25 @@ from selenium.webdriver.support.wait import WebDriverWait
 class Crawler(object):
 
     def __init__(self, url=''):
-        self.source_url = url
         """
+        # Chrome设置加载选项
         chrome_options = webdriver.ChromeOptions()
         # 不加载图片，加快访问速度
         chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
         # 设置为开发者模式，避免被识别
         chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
-        self.web_driver = webdriver.Chrome(options=chrome_options)
+        # 设置无界面模式，需要升级到59版本以上
+        chrome_options.add_argument('--headless')
+        # 启动Chrome
+        self.driver = webdriver.Chrome(options=chrome_options)
+
+        =============================================================
+        # PhantomJS设置缓存和禁用图片加载
+        service_args = ['--load-images=false', '--disk-cache=true']
+        # 启动PhantomJS
+        self.driver = webdriver.PhantomJS(service_args=service_args)
         """
+        self.source_url = url
         self.driver = webdriver.Chrome()  # 选择浏览器驱动
         self.waiting = WebDriverWait(self.driver, 30)  # 设置显示等待30秒
         self.driver.implicitly_wait(30)  # 设置隐示等待30秒
