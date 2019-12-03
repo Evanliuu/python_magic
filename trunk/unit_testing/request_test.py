@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
+import time
 import random
 import requests
 import xlwt
 
 from pymongo import MongoClient
-from bs4 import BeautifulSoup
+from scrapy.selector import Selector
 
 
 class Crawler(object):
@@ -70,17 +71,7 @@ class Crawler(object):
         if resp.status_code == 200:
             print(resp.text)
 
-            # TODO 使用Mongodb存储数据
-            # soup = BeautifulSoup(resp.text, 'lxml')
-            # p = soup.select('p')
-            # self.login_mongodb(database_name='ZhiHu', collection_name='Feynman learning method')
-            # for i, r in enumerate(p):
-            #     if not r.text:
-            #         continue
-            #     write_info = {'{}'.format(i): r.text}
-            #     self.collection.insert_one(write_info)
-            #     print('Write {} ok'.format(write_info))
-
+            # selector = Selector(resp)
         else:
             print('No data found!')
             print('url: {}'.format(resp.url))
