@@ -1,4 +1,5 @@
-"""<<WebDriver模块12个常用方法>>
+"""
+<<WebDriver模块常用方法>>
 模块方法:                                含义:
 1.  set_window_size()	                设置浏览器的大小
 2.  back()	                            控制浏览器后退
@@ -43,15 +44,6 @@
 15. element_selection_state_to_be                   传入节点对象以及状态，相等返回True，否则返回False
 16. element_located_selection_state_to_be           传入定位元组以及状态，相等返回True，否则返回False
 17. staleness_of                                    判断一个节点是否仍在DOM，可判断当前页面是否已经刷新
-
-======================================================================================
-<<淘宝爬虫注意事项>>
-如果直接使用WebDriver，不做任何修改的话，淘宝可以断定启动的浏览器是“机器人”，而不是“死的机器”。
-如果想让淘宝错误地认为启动的浏览器是"死的机器"，那么就需要修改webdriver。
-我使用的是chromedriver，"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"是修改chromedriver的代码，
-直接在Terminal执行即可。执行完在运行脚本，则可以成功登录。
-这里解释一下"perl -pi -e 's/cdc_/dog_/g' /usr/local/bin/chromedriver"，
-这段代码其实就是全局修改/usr/local/bin/chromedriver中的cdc_为dog_，"/usr/local/bin/chromedriver"是chromedriver所在的文件路径。
 """
 # -*- coding:utf-8 -*-
 import time
@@ -68,20 +60,18 @@ class Crawler(object):
     def __init__(self, url=''):
         """
         # Chrome设置加载选项
-        chrome_options = webdriver.ChromeOptions()
         # 不加载图片，加快访问速度
-        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
         # 设置为开发者模式，避免被识别
+        # 设置无界面模式
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
         chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
-        # 设置无界面模式，需要升级到59版本以上
         chrome_options.add_argument('--headless')
-        # 启动Chrome
         self.driver = webdriver.Chrome(options=chrome_options)
 
         =============================================================
         # PhantomJS设置缓存和禁用图片加载
         service_args = ['--load-images=false', '--disk-cache=true']
-        # 启动PhantomJS
         self.driver = webdriver.PhantomJS(service_args=service_args)
         """
         self.source_url = url
