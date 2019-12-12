@@ -44,6 +44,46 @@
 15. element_selection_state_to_be                   传入节点对象以及状态，相等返回True，否则返回False
 16. element_located_selection_state_to_be           传入定位元组以及状态，相等返回True，否则返回False
 17. staleness_of                                    判断一个节点是否仍在DOM，可判断当前页面是否已经刷新
+
+<<Chrome浏览器配置选项>>
+================================================================================================================
+# 实例化配置选项
+chrome_options = webdriver.ChromeOptions()
+
+# 不加载图片，加快访问速度
+chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+
+# 设置为开发者模式，避免被识别
+chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+
+# 设置无界面模式
+chrome_options.add_argument('--headless')
+
+# 设置默认编码为utf-8
+options.add_argument('lang=zh_CN.UTF-8')
+
+# 通过设置user-agent，用来模拟移动设备
+<模拟 Android QQ浏览器>
+options.add_argument('user-agent="MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"')
+<模拟iPhone 6>
+options.add_argument('user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"')
+
+# 设置selenium窗口大小
+browser.set_window_size(configure.windowHeight, configure.windowWidth)  # configure为桌面分辨率实际大小
+
+# 阻止密码保存提示框的弹出
+prefs = {}
+prefs[“credentials_enable_service”] = False
+prefs[“profile.password_manager_enabled”] = False
+options.add_experimental_option(“prefs”, prefs)
+
+# 添加应用扩展程序 （.crx文件）
+extension_path = 'D:/extension/XPath-Helper_v2.0.2.crx'
+chrome_options.add_extension(extension_path)
+
+# 启动配置选项
+self.driver = webdriver.Chrome(options=chrome_options)
+================================================================================================================
 """
 # -*- coding:utf-8 -*-
 import time
@@ -59,10 +99,10 @@ class Crawler(object):
 
     def __init__(self, url=''):
         """
-        # Chrome设置加载选项
-        # 不加载图片，加快访问速度
-        # 设置为开发者模式，避免被识别
-        # 设置无界面模式
+        Chrome常用配置选项:
+        1. 不加载图片，加快访问速度
+        2. 设置为开发者模式，避免被识别
+        3. 设置无界面模式
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
         chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
