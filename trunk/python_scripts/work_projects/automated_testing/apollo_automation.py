@@ -233,7 +233,7 @@ class ApolloAutomation(object):
                     logger.debug('Read the file under path {}:\n{}'.format(self.apollo_test_status_path,
                                                                            test_status_list))
                     for file in test_status_list:
-                        if re.match('fx.+?_.+?_.+?.txt', file):
+                        if re.match(r'fx.+?_.+?_.+?\.txt', file):
                             logger.info('Captured file: {}'.format(file))
                             # Format to check
                             machine, cell, test_status = file.split('.txt')[0].split('_')
