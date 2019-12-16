@@ -76,28 +76,34 @@ class ApolloAutomation(object):
 
     def read_access_table(self):
         """
-        Connect to the access table to read the first row data
-        :return: first row data or None
+        Connect to the access table to read the specified scan information
+        :return: Test container scan information or None
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
         crsr = cnxn.cursor()
         try:
             # Query all data in the table
             data_list = [data for data in crsr.execute("SELECT * from {}".format(self.ccd_scan_table_name))]
+            logger.info('Read the table({}) data:\n{}'.format(self.ccd_scan_table_name, data_list))
+
+            result = None
             if data_list:
                 cpp_data = dict()
-                # Fetch the first row data
-                cpp_data['machine'] = data_list[0][0]
-                cpp_data['cell'] = data_list[0][1]
-                cpp_data['sn'] = data_list[0][2]
-                cpp_data['pn'] = data_list[0][3]
-                # Delete the captured row data
-                crsr.execute("DELETE FROM {} WHERE machine='{}'".format(self.ccd_scan_table_name, cpp_data['machine']))
-                # Submit changes
-                crsr.commit()
-                result = cpp_data
-            else:
-                result = None
+                for item in data_list:
+                    # Match only the Apollo server
+                    condition = re.match('fxcavp.+|fxcapp.+', item[0])
+                    if condition:
+                        cpp_data['machine'] = item[0]
+                        cpp_data['cell'] = item[1]
+                        cpp_data['sn'] = item[2]
+                        cpp_data['pn'] = item[3]
+                        # Delete the captured row data
+                        crsr.execute("DELETE FROM {} WHERE machine='{}' and cell='{}'"
+                                     .format(self.ccd_scan_table_name, cpp_data['machine'], cpp_data['cell']))
+                        # Submit changes
+                        crsr.commit()
+                        result = cpp_data
+                        break
         finally:
             crsr.close()
             cnxn.close()
@@ -109,7 +115,7 @@ class ApolloAutomation(object):
         :param machine: Enter the name of the machine whose state you want to update
         :param cell: Fill in the machine's container number
         :param test_status: Fill in the machine's test status
-        :return: 'PASS' or 'Not data found'
+        :return: 'PASS' or 'No data found'
         """
         cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % (self.access_table_path,))
         crsr = cnxn.cursor()
@@ -119,7 +125,7 @@ class ApolloAutomation(object):
             if not check_list:
                 logger.warning('No (Cell {}) data information for ({}) server was found in the ({}) table,'
                                ' Please check!'.format(cell, machine, self.link_position_table_name))
-                return 'Not data found'
+                return 'No data found'
 
             # Updates the state of the specified server and container
             crsr.execute("UPDATE {} SET passfail='{}' WHERE machine='{}' and cell='{}'".format
@@ -136,7 +142,7 @@ class ApolloAutomation(object):
     @staticmethod
     def read_local_ip_address():
         ip_config = os.popen('ipconfig')
-        result = re.search(r'IPv4.+? : (10.\d+.\d+.\d+)', ip_config.read())
+        result = re.search(r'IPv4.+? : (10\.\d+\.\d+\.\d+)', ip_config.read())
         if result:
             ip_address = result.groups()[0]
             logger.debug('Read the local ip address: {}'.format(ip_address))
