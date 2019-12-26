@@ -14,6 +14,7 @@ import os
 import json
 import re
 import threading
+import shutil
 
 from xmlrpc.server import SimpleXMLRPCServer
 
@@ -28,6 +29,8 @@ class ApolloAutomation(object):
     # CPP machine constants
     cpp_data_file = 'cpp_automated_data.json'
     cpp_data_path = os.path.join(os.getcwd(), cpp_data_file)
+    cpp_data_record_directory = 'cpp_automated_data_history'
+    cpp_data_record_directory_path = os.path.join(os.getcwd(), cpp_data_record_directory)
     apollo_test_status_directory = 'apollo_test_status'
     apollo_test_status_path = os.path.join(os.getcwd(), apollo_test_status_directory)
     # Apollo machine constants
@@ -190,6 +193,21 @@ class ApolloAutomation(object):
         except Exception as ex:
             raise Exception('Setup socket server error:\n{}'.format(ex))
 
+    def record_cpp_data(self, data):
+        """
+        Record the CPP data into the cpp_automated_data_history directory
+        :param data: cpp data
+        :return:
+        """
+        if not os.path.exists(self.cpp_data_record_directory_path):
+            os.mkdir(self.cpp_data_record_directory_path)
+            logger.debug('Create ({}) directory under {} path successfully'
+                         .format(self.cpp_data_record_directory, self.cpp_data_record_directory_path))
+
+        current_time = time.strftime('%Y-%m-%d %H-%M-%S')
+        paste_file = '{} {}_{}.json'.format(current_time, data['machine'], data['cell'])
+        shutil.copy(self.cpp_data_path, os.path.join(self.cpp_data_record_directory_path, paste_file))
+
     def send_data_to_apollo(self):
         """
         While the loop scans the data in the Access table, if any, it will transfer the data to the Apollo server
@@ -207,6 +225,8 @@ class ApolloAutomation(object):
                                                  local_file_path=self.cpp_data_path,
                                                  target_path=self.apollo_target_path,
                                                  first_connection=True)
+                    # Record the cpp data
+                    self.record_cpp_data(data=received)
                 else:
                     time.sleep(1)
             except Exception as ex:
