@@ -22,11 +22,11 @@ VBS：
     Set obj = CreateObject("Wscript.Shell")
     obj.run "taskkill /im wscript.exe /f", 0
 
-<<使用vbs循环模拟点击键盘>>
+<<使用vbs循环模拟点击键盘>> # 1000等于1秒
     msgbox "确认打开？"
     Set obj = CreateObject("Wscript.Shell")
     do while true
-        Wscript.Sleep 1000*120   # 1000等于1秒，此注释在使用时要删除
+        Wscript.Sleep 1000*120
         obj.SendKeys "^{ESC}"
         Wscript.Sleep 50
         obj.SendKeys "^{ESC}"
