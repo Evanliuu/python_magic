@@ -1,13 +1,16 @@
 基本命令：
-dir         查看当前所在目录的文件和文件夹【dir /w 以紧凑方式显示，dir /a 显示并包括隐藏文件】
-cd          进入特定的目录【cd\ 退回根目录，cd.. 退回上一级目录】
-cls         清除屏幕内容
+dir                         查看当前所在目录的文件和文件夹【dir /w 以紧凑方式显示，dir /a 显示并包括隐藏文件】
+cd                          进入指定的目录【cd\ 退回根目录，cd.. 退回上一级目录】
+cls                         清除屏幕内容
+tasklist                    显示所有任务进程
+taskkill /im python.exe /f  根据进程名选择删除
+taskkill /pid 11111         根据进程ID选择删除
 
 创建文件命令：
 md          创建文件夹【md sample 创建名字为sample的文件夹】
 rd          删除文件夹【rd sample 删除名字为sample的文件夹】
-type        显示文件内容，可用于创建空文件【type nul > text.txt 创建一个空的text.txt文件】
-echo        打印消息，可用于创建非空文件【echo hello > text.txt 创建一个包含hello文本的文件】
+type        可用于创建空文件【type nul > text.txt 创建一个空的text.txt文件】
+echo        可用于创建非空文件【echo hello > text.txt 创建一个包含hello文本的文件】
 >           写入格式保存命令结果到文件中【ipconfig >> text.txt 保存ipconfig命令的结果到text.txt文件中，如果文件存在会被覆盖】
 >>          追加格式保存命令结果到文件中【ipconfig >> text.txt 保存ipconfig命令的结果到text.txt文件中，如果没有该文件会自动创建】
 
