@@ -2,20 +2,19 @@ import os
 import threading
 
 
-def file_transfer(remote_machine, login_id=('evanliu', 'Cisco234!'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
-                  target_path='/tftpboot/', transfer_to_local=False, first_connection=False):
+def file_transfer(remote_machine, account=('evanliu', 'Cisco321!'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
+                  target_path='/tftpboot/', transfer_to_local=False, first_connection=True):
     """
     此功能只能在Windows系统上使用，并且需要在Windows上装好PSCP控件
     :param remote_machine: 远程机器名称
-    :param login_id: 登陆远程机器的用户名和密码
+    :param account: 登陆远程机器的用户名和密码
     :param file_path: 被传输的文件路径
     :param target_path: 传输文件的放置路径
     :param transfer_to_local: 如果为True则是从远程服务器传输文件到本地, False则是从本地传输文件到远程服务器
     :param first_connection: 第一次连接会询问"Store key in cache? (y/n)", 此时要输入y (第一次连接指定的服务器要打开，后续不用)
     :return:
     """
-    username, password = login_id
-
+    username, password = account
     # 将远程服务器的文件传输到本地
     if transfer_to_local:
         if first_connection:
@@ -62,6 +61,6 @@ def main(machine_info):
 
 if __name__ == '__main__':
     machine_list = [
-        'fxcavp363',
+        'fxcavp1017',
     ]
     main(machine_info=machine_list)
