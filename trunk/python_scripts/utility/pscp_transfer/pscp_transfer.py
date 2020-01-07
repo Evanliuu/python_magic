@@ -5,6 +5,7 @@ import threading
 def file_transfer(remote_machine, account=('evanliu', 'Cisco321!'), file_path=r'C:\Users\evaliu\Desktop\123.txt',
                   target_path='/tftpboot/', transfer_to_local=False, first_connection=True):
     """
+    这个函数是用来在同一个局域网内传输文件的，
     此功能只能在Windows系统上使用，并且需要在Windows上装好PSCP控件
     :param remote_machine: 远程机器名称
     :param account: 登陆远程机器的用户名和密码
