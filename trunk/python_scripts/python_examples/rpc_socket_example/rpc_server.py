@@ -10,18 +10,17 @@ class ServiceFunction(object):
     This class holds server-side execution functions, The function must have a return value
     """
     @staticmethod
-    def get_windows_host():
+    def get_server_host_name():
         """
-        Gets the host name of the local computer
+        Gets the host name of the RPC server machine
         :return: get hostname to client side
         """
         result = os.popen('ipconfig /all')
-        read_info = re.search(r': (\w+)', result.readlines()[3])
-        if read_info:
-            host = read_info.group(1)
+        host_name = re.search(r'主机名.+?: (\w+)', result.read())
+        if host_name:
+            return host_name.group(1)
         else:
-            host = 'Not found windows host'
-        return host
+            return 'Server host name was not found'
 
 
 class SocketServer(object):
@@ -33,7 +32,7 @@ class SocketServer(object):
     @staticmethod
     def read_local_ip_address():
         ip_config = os.popen('ipconfig')
-        result = re.search(r'IPv4.+? : (\d+?\.\d+?\.\d+?\.\d+)', ip_config.read())
+        result = re.search(r'IPv4.+?: (\d+?\.\d+?\.\d+?\.\d+)', ip_config.read())
         if result:
             ip_address = result.group(1)
             print('Read the local ip address: {}'.format(ip_address))
@@ -54,7 +53,7 @@ class SocketServer(object):
             print('Server {} Listening on port {} ...'.format(ip_address, self.port))
 
             # service.register_function(function)  # Enable a function service
-            service.register_instance(ServiceFunction())  # Open a class service
+            service.register_instance(ServiceFunction())  # Enable a class service
             service.serve_forever()  # performs a permanent run
         except Exception as ex:
             raise Exception('Setup socket server error:\n{}'.format(ex))
