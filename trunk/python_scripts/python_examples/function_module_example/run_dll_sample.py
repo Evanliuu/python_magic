@@ -16,4 +16,4 @@ def run_dll(dll_path, execute_function):
 
 if __name__ == '__main__':
     path = r'C:\Users\evaliu\Desktop\example.dll'
-    run_dll(dll_path=path, execute_function='CPP_CleanUp')
+    run_dll(dll_path=path, execute_function='communication_test')
