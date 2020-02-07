@@ -1,6 +1,8 @@
+"""
+画小猪佩奇
+"""
 # -*- coding:utf-8 -*-
 import turtle as t
-import time
 
 
 def main():
@@ -288,6 +290,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # 画小猪佩奇
     main()
-    time.sleep(10)
