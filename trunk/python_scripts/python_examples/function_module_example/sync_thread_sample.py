@@ -16,43 +16,43 @@ def unit_test(sleep_time):
     :return:
     """
     # locks.acquire()   获取锁 -- 获取锁之后，其他的线程在此等待
-    print('{} --> start sleep_time ({})'.format(datetime.datetime.now(), sleep_time))
-    time.sleep(sleep_time)
-    print('{} --> sleep_time ({}) finish'.format(datetime.datetime.now(), sleep_time))
+
+    with thread_pool:  # 使用线程池控制多线程进入的数量，超过限定数量在此阻塞
+        print('current thread name {}'.format(threading.current_thread().name))  # 当前线程名
+        print('{} --> start sleep_time ({})'.format(datetime.datetime.now(), sleep_time))
+        time.sleep(sleep_time)
+        print('{} --> sleep_time ({}) finish'.format(datetime.datetime.now(), sleep_time))
+
     # locks.release()   释放锁 -- 如果不释放锁，后续的线程会一直被阻塞不能进入
 
 
 def thread_run(sleep_list):
     """
-    交替同步执行多线程
+    执行多线程
     :param sleep_list: 睡眠时间列表
     :return:
     """
-    global locks
-    locks = threading.Lock()
-    threads = []
-    start_time = datetime.datetime.now()
+    global locks, thread_pool
 
-    # Insert all threads to threads list
-    for i in sleep_list:
+    locks = threading.Lock()  # 线程锁
+    thread_pool = threading.Semaphore(value=2)  # 线程池（最大允许2个线程同时进入）
+    threads = []
+
+    for i in sleep_list:  # 配置所有线程
         t = threading.Thread(target=unit_test, args=(i,))
         threads.append(t)
 
-    # Start all threads
-    for thread in threads:
+    for thread in threads:  # 开启所有线程
         thread.start()
 
-    # Waiting all threads finish
-    for thread in threads:
+    for thread in threads:  # 主线程在此阻塞，等待所有线程结束
         thread.join()
 
-    end_time = datetime.datetime.now()
-    print('所有线程结束，一共消耗{}秒钟'.format((end_time - start_time).seconds))
+    print('所有线程执行结束')
 
 
 def main():
-    sleep_list = [2, 4, 1]
-    thread_run(sleep_list=sleep_list)
+    thread_run(sleep_list=[3, 2, 6, 1, 7])
 
 
 if __name__ == '__main__':
