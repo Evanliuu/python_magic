@@ -18,7 +18,7 @@ def unit_test(sleep_time):
     # locks.acquire()   获取锁 -- 获取锁之后，其他的线程在此等待
     print('{} --> start sleep_time ({})'.format(datetime.datetime.now(), sleep_time))
     time.sleep(sleep_time)
-    print('{} --> sleep_time ({}) done'.format(datetime.datetime.now(), sleep_time))
+    print('{} --> sleep_time ({}) finish'.format(datetime.datetime.now(), sleep_time))
     # locks.release()   释放锁 -- 如果不释放锁，后续的线程会一直被阻塞不能进入
 
 
@@ -42,7 +42,7 @@ def thread_run(sleep_list):
     for thread in threads:
         thread.start()
 
-    # Waiting all threads done
+    # Waiting all threads finish
     for thread in threads:
         thread.join()
 
