@@ -1,5 +1,5 @@
 """
-同步多线程
+同步多线程 函数使用例子
 """
 # -*- coding:utf-8 -*-
 import threading
@@ -35,7 +35,7 @@ def thread_run(sleep_list):
     global locks, thread_pool
 
     locks = threading.Lock()  # 线程锁
-    thread_pool = threading.Semaphore(value=2)  # 线程池（最大允许2个线程同时进入）
+    thread_pool = threading.Semaphore(value=2)  # 线程池（设置可同时执行的最大线程数为2）
     threads = []
 
     for i in sleep_list:  # 配置所有线程

@@ -7,10 +7,6 @@ import datetime
 from concurrent.futures import ThreadPoolExecutor
 
 
-pool_max = 2  # 线程池最大数量
-thread_pool = ThreadPoolExecutor(max_workers=pool_max)  # 初始化多线程
-
-
 def unit_test(sleep_time):
     """
     多线程单元测试
@@ -23,12 +19,15 @@ def unit_test(sleep_time):
 
 
 def main():
-    # 异步多线程运行不会阻塞主线程，异步线程队列满了后继续往下运行主线程，等队列释放后又会回到异步线程继续执行
-    for times in [5, 2, 4, 1]:
-        thread_pool.submit(unit_test, times)
+    pool_max = 2  # 线程池最大数量
+    thread_pool = ThreadPoolExecutor(max_workers=pool_max)  # 初始化线程池
+
+    # 异步多线程运行不会阻塞主线程，异步线程队列满了后会继续往下运行主线程，等队列释放后又回到异步线程继续执行
+    for i in [3, 2, 6, 1, 7]:
+        thread_pool.submit(unit_test, i)
+
+    print('我是主线程')
 
 
 if __name__ == '__main__':
-    main()
-    print('ll')
     main()
