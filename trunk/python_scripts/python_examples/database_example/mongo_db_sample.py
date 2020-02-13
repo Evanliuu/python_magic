@@ -36,7 +36,6 @@ Mongodb数据更新指令: (指令必须使用双引号)
 """
 # -*- coding:utf-8 -*-
 import pymongo
-
 from bson.objectid import ObjectId
 
 
@@ -51,49 +50,49 @@ def mongodb_handle(host='localhost', port=27017):
     client = pymongo.MongoClient(host=host, port=port)
 
     # 创建数据库example
-    database = client['example']
+    database = client['example']  # 或者写成 client.example
     db_name = eval(str(database).split()[-1][:-1])
     print('创建数据库: {}'.format(db_name))
 
-    # 创建集合sample
-    collection = database['sample']
-    collection_name = eval(str(collection).split()[-1][:-1])
-    print('创建集合: {}'.format(collection_name))
+    # 创建集合table
+    table = database['table']  # 或者写成 database.table
+    table_name = eval(str(table).split()[-1][:-1])
+    print('创建集合: {}'.format(table_name))
 
     name = dict(name='Evan')
     age = dict(age=20)
     stature = dict(stature=177)
 
-    # 插入数据到sample集合
-    collection.insert_one(name)  # 插入单行数据
-    collection.insert_many([age, stature])  # 插入多行数据
+    # 插入数据到table集合
+    table.insert_one(name)  # 插入单行数据
+    table.insert_many([age, stature])  # 插入多行数据
 
-    # 更新sample集合中数据
+    # 更新table集合中数据
     update_format = {"$set": {'stature': 26}}  # 更新age值为26
-    result = collection.update_one(age, update_format)  # 更新单个数据
+    result = table.update_one(age, update_format)  # 更新单个数据
     print('更新个数: {}'.format(result.matched_count))  # 查看更新个数
-    collection.update_many(age, update_format)  # 更新多个数据
+    table.update_many(age, update_format)  # 更新多个数据
 
-    # 查询sample集合中数据
-    print(collection.find_one({'_id': ObjectId('5dd642b94957a6800e0187c1')}))  # 根据ID查询，返回匹配到的第一个结果
-    print(collection.find_one(name))  # 根据name字段查询，返回匹配到的第一个结果
-    print(collection.find_one({'age': {'$gt': 10}}))  # 使用比较符号查询，返回结果大于10的age字段
-    print(collection.find_one({'name': {'$regex': 'Ev.+'}}))  # 使用功能符号查询
-    print([i for i in collection.find(name)])  # 返回所有的name字段
-    print([i for i in collection.find()])  # 返回集合中所有数据
+    # 查询table集合中数据
+    print(table.find_one({'_id': ObjectId('5dd642b94957a6800e0187c1')}))  # 根据ID查询，返回匹配到的第一个结果
+    print(table.find_one(name))  # 根据name字段查询，返回匹配到的第一个结果
+    print(table.find_one({'age': {'$gt': 10}}))  # 使用比较符号查询，返回结果大于10的age字段
+    print(table.find_one({'name': {'$regex': 'Ev.+'}}))  # 使用功能符号查询
+    print([i for i in table.find(name)])  # 返回所有的name字段
+    print([i for i in table.find()])  # 返回集合中所有数据
     # 计数
-    print('查询name字段个数: {}'.format(collection.count_documents(name)))  # 查询指定字段个数
+    print('查询name字段个数: {}'.format(table.count_documents(name)))  # 查询指定字段个数
     # 字段排序
-    print([collection.find().sort('name', pymongo.DESCENDING)])  # 返回所有数据，并且name字段是以降序排序的
-    print([collection.find().sort('name', pymongo.ASCENDING)])  # 返回所有数据，并且name字段是以升序排序的
+    print([table.find().sort('name', pymongo.DESCENDING)])  # 返回所有数据，并且name字段是以降序排序的
+    print([table.find().sort('name', pymongo.ASCENDING)])  # 返回所有数据，并且name字段是以升序排序的
     # 字段偏移
-    print([collection.find().sort('name', pymongo.ASCENDING).skip(2)])  # 忽略前2个name字段，返回从第三个及以后的name字段
-    print([collection.find().sort('name', pymongo.ASCENDING).skip(2).limit(2)])  # 只保留第三个及以后name字段的2个匹配结果
+    print([table.find().sort('name', pymongo.ASCENDING).skip(2)])  # 忽略前2个name字段，返回从第三个及以后的name字段
+    print([table.find().sort('name', pymongo.ASCENDING).skip(2).limit(2)])  # 只保留第三个及以后name字段的2个匹配结果
 
-    # 删除sample集合中数据
-    result = collection.delete_one(stature)  # 删除单行数据
+    # 删除table集合中数据
+    result = table.delete_one(stature)  # 删除单行数据
     print('删除个数: {}'.format(result.deleted_count))  # 查看删除个数
-    collection.delete_many(stature)  # 删除多行数据
+    table.delete_many(stature)  # 删除多行数据
 
     # 关闭客户端连接
     client.close()
