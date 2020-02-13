@@ -1,3 +1,6 @@
+"""
+同步多线程
+"""
 # -*- coding:utf-8 -*-
 import threading
 import datetime
@@ -6,23 +9,23 @@ import time
 locks = None
 
 
-def unit_test(sleep):
+def unit_test(sleep_time):
     """
     多线程单元测试
-    :param sleep: 等待的时间
+    :param sleep_time: 睡眠时间
     :return:
     """
     # locks.acquire()   获取锁 -- 获取锁之后，其他的线程在此等待
-    print('start loop {}, '.format(sleep), datetime.datetime.now())
-    time.sleep(sleep)
-    print('loop {} down, '.format(sleep), datetime.datetime.now())
+    print('{} --> start sleep_time ({})'.format(datetime.datetime.now(), sleep_time))
+    time.sleep(sleep_time)
+    print('{} --> sleep_time ({}) done'.format(datetime.datetime.now(), sleep_time))
     # locks.release()   释放锁 -- 如果不释放锁，后续的线程会一直被阻塞不能进入
 
 
 def thread_run(sleep_list):
     """
-    运行多线程
-    :param sleep_list: 延时时间列表
+    交替同步执行多线程
+    :param sleep_list: 睡眠时间列表
     :return:
     """
     global locks
@@ -30,16 +33,16 @@ def thread_run(sleep_list):
     threads = []
     start_time = datetime.datetime.now()
 
-    # insert all threads to threads list
+    # Insert all threads to threads list
     for i in sleep_list:
         t = threading.Thread(target=unit_test, args=(i,))
         threads.append(t)
 
-    # start all threads
+    # Start all threads
     for thread in threads:
         thread.start()
 
-    # waiting all thread close
+    # Waiting all threads done
     for thread in threads:
         thread.join()
 
