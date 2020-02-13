@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 pool_max = 2  # 线程池最大数量
-thread_pool = ThreadPoolExecutor(max_workers=pool_max)
+thread_pool = ThreadPoolExecutor(max_workers=pool_max)  # 初始化多线程
 
 
 def unit_test(sleep_time):
