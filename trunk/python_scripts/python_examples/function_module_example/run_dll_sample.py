@@ -1,5 +1,7 @@
 from ctypes import cdll
 
+__author__ = 'Evan'
+
 
 def run_dll(dll_path, execute_function):
     """

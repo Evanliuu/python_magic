@@ -2,6 +2,8 @@
 import csv
 import pandas
 
+__author__ = 'Evan'
+
 
 def write_csv_data(write_info, file_name='csv_file', headers=None):
     """

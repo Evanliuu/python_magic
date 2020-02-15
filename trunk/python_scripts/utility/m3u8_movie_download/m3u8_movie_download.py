@@ -7,8 +7,9 @@ import os
 import threading
 import urllib3
 import random
-
 from urllib.parse import urljoin
+
+__author__ = 'Evan'
 
 
 class MovieDownload(object):

@@ -6,6 +6,8 @@ import threading
 import time
 import datetime
 
+__author__ = 'Evan'
+
 
 class Test(threading.Thread):  # 继承threading.Thread类
 

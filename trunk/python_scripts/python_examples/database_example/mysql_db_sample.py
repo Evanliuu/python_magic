@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import pymysql
 
+__author__ = 'Evan'
+
 
 def mysql_handle(host='localhost', user='root', password='', port=27017):
     """

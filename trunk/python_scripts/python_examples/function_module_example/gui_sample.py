@@ -32,6 +32,8 @@ sticky:             空间位置 [NSWE - if cell is larger on which sides will t
 # -*- coding:utf-8 -*-
 import tkinter as tk
 
+__author__ = 'Evan'
+
 
 class GuiSample(object):
 

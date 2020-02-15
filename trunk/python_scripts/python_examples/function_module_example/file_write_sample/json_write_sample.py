@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import json
 
+__author__ = 'Evan'
+
 
 def write_json_data(write_info, file_name='json_file'):
     """

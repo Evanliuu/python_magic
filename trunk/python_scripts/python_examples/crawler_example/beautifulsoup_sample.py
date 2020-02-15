@@ -2,6 +2,7 @@
 import re
 from bs4 import BeautifulSoup
 
+__author__ = 'Evan'
 html_doc = """
 <html><head><title>The Dormouse's story</title></head>
 <body>

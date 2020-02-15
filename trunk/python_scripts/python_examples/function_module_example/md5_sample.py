@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import hashlib
 
+__author__ = 'Evan'
+
 
 def get_file_md5(path):
     """

@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import sqlite3
 
+__author__ = 'Evan'
+
 
 class SqliteDB(object):
     """

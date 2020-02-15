@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import tkinter as tk
 
 from PIL import Image, ImageTk
@@ -5,6 +6,7 @@ from time import time, sleep
 from random import choice, uniform, randint
 from math import sin, cos, radians
 
+__author__ = 'Evan'
 colors = ['red', 'blue', 'yellow', 'white', 'green', 'orange', 'purple', 'seagreen', 'indigo', 'cornflowerblue']
 
 

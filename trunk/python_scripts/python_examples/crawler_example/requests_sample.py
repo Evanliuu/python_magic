@@ -2,6 +2,8 @@
 import random
 import requests
 
+__author__ = 'Evan'
+
 
 class Crawler(object):
 

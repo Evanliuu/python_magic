@@ -28,6 +28,7 @@ div             除法                    8 div 4
 # -*- coding:utf-8 -*-
 from lxml import etree
 
+__author__ = 'Evan'
 html_doc = """
 <html>
 <head><title>The Dormouse's story</title></head>

@@ -1,67 +1,92 @@
+# -*- coding:utf-8 -*-
 import os
 import threading
 
+__author__ = 'Evan'
 
-def file_transfer(remote_machine, account=('evanliu', 'Cisco321!'), file_path='/tftpboot/step.zip',
-                  target_path=r'C:\Users\evaliu\Desktop\\', transfer_to_local=True, first_connection=True):
+
+def file_transfer(remote_machine, transfer_config, first_connection=True):
     """
-    这个函数是用来在同一个局域网内传输文件的，
-    此功能只能在Windows系统上使用，并且需要在Windows上装好PSCP控件
+    此函数用于在同一个网段内传输文件
+    此函数只能在Windows系统上使用，并且需要在Windows上装好PSCP控件
     :param remote_machine: 远程机器名称
-    :param account: 登陆远程机器的用户名和密码
-    :param file_path: 被传输的文件路径
-    :param target_path: 传输文件的放置路径
-    :param transfer_to_local: 如果为True则是从远程服务器传输文件到本地, False则是从本地传输文件到远程服务器
-    :param first_connection: 第一次连接会询问"Store key in cache? (y/n)", 此时要输入y (第一次连接指定的服务器要打开，后续不用)
+    :param transfer_config: 传输配置信息
+    :param first_connection: 第一次连接没有传输过的机器会询问"Store key in cache? (y/n)", 此时要输入y，否则会传输失败
     :return:
     """
-    username, password = account
-    # 将远程服务器的文件传输到本地
-    if transfer_to_local:
+    username = str(transfer_config['username']) or 'evan'
+    password = str(transfer_config['password']) or 'Cisco321!'
+    transfer_file_path = str(transfer_config['transfer_file_path'])
+    target_file_path = str(transfer_config['target_file_path']) or r'C:\Users\evaliu\Desktop\\'
+    whether_transfer_to_local = False if str(transfer_config['whether_transfer_to_local']).upper() == 'N' else True
+
+    # 将远程机器的文件传输到本地
+    if whether_transfer_to_local:
         if first_connection:
-            cmd1 = r'echo y|pscp {}@{}:{} {}'.format(username, remote_machine, file_path, target_path)
-            os.system(cmd1)
+            # 输入y保存密钥
+            first_cmd_line = r'echo y|pscp {}@{}:{} {}'.format(username, remote_machine, transfer_file_path, target_file_path)
+            os.system(first_cmd_line)
+        cmd_line = r'echo {}|pscp {}@{}:{} {}'.format(password, username,
+                                                      remote_machine, transfer_file_path, target_file_path)
 
-        # 输入密码开始传输文件
-        cmd2 = r'echo {}|pscp {}@{}:{} {}'.format(password, username, remote_machine, file_path, target_path)
-        os.system(cmd2)
-
-    # 将本地的文件传输到远程服务器
+    # 将本地的文件传输到远程机器
     else:
         if first_connection:
-            cmd1 = r'echo y|pscp {} {}@{}:{}'.format(file_path, username, remote_machine, target_path)
-            os.system(cmd1)
+            # 输入y保存密钥
+            first_cmd_line = r'echo y|pscp {} {}@{}:{}'.format(transfer_file_path, username, remote_machine, target_file_path)
+            os.system(first_cmd_line)
+        cmd_line = r'echo {}|pscp {} {}@{}:{}'.format(password, transfer_file_path,
+                                                      username, remote_machine, target_file_path)
+    # 开始传输文件
+    os.system(cmd_line)
 
-        # 输入密码开始传输文件
-        cmd2 = r'echo {}|pscp {} {}@{}:{}'.format(password, file_path, username, remote_machine, target_path)
-        os.system(cmd2)
 
-
-def main(machine_info):
+def ask_transfer_config():
     """
-
-    :param list machine_info: 填入远程服务器列表
+    询问传输配置信息
+    1. 是否传输到本地
+    2. 待传输文件路径
+    3. 传输目标路径
+    4. 用户名
+    5. 密码
     :return:
     """
-    loops = range(len(machine_info))
-    threads = []
+    ask_info = {
+        'whether_transfer_to_local': '是否传输到本地(Y/N，默认Y): ',
+        'transfer_file_path': '待传输文件路径: ',
+        'target_file_path': '传输目标路径(如果是传输到本地则默认到本地桌面): ',
+        'username': '用户名: ',
+        'password': '密码: '
+    }
+    for key in ask_info:
+        ask_info[key] = input(ask_info[key])
+    return ask_info
 
-    # 启用多线程传输文件
-    for each_machine in machine_info:
-        print('Now start transferring files to {} server...'.format(each_machine))
-        t = threading.Thread(target=file_transfer, args=(each_machine,))
+
+def main(machine_list):
+    """
+    多线程传输文件
+    :param machine_list: 机器名列表
+    :return:
+    """
+    transfer_config = ask_transfer_config()
+    threads = []
+    for each_machine in machine_list:
+        print('Now start transferring files to {} machine...'.format(each_machine))
+        t = threading.Thread(target=file_transfer, args=(each_machine, transfer_config))
         threads.append(t)
 
-    for i in loops:
-        threads[i].start()
+    for thread in threads:
+        thread.start()
 
-    for i in loops:
-        threads[i].join()
+    for thread in threads:
+        thread.join()
     print('All servers have been transferred')
 
 
 if __name__ == '__main__':
-    machine_list = [
+    # TODO 填入要传输的机器名
+    machine_info = [
         'fxcavp1017',
     ]
-    main(machine_info=machine_list)
+    main(machine_list=machine_info)

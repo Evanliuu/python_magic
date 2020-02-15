@@ -2,6 +2,8 @@
 import getpass
 from pexpect import pxssh
 
+__author__ = 'Evan'
+
 
 def ssh_handle():
     try:

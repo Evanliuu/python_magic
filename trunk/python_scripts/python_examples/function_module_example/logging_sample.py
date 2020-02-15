@@ -25,6 +25,8 @@ format = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message
 # -*- coding:utf-8 -*-
 import logging
 
+__author__ = 'Evan'
+
 
 def logger_sample(format_info='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s',
                   level_info=logging.WARNING, record_file_path='', record_file_mode=''):

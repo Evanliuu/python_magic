@@ -2,6 +2,8 @@
 import os
 import sys
 
+__author__ = 'Evan'
+
 
 print('getcwd ==>', os.getcwd())  # 获取当前目录路径
 print('path ==>', sys.path[0])  # 获取当前目录路径

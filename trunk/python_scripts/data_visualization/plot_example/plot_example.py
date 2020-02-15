@@ -1,4 +1,7 @@
+# -*- coding:utf-8 -*-
 from matplotlib import pyplot as plt
+
+__author__ = 'Evan'
 
 
 def plot(title, data_list=[], x_label=(), y_label=()):

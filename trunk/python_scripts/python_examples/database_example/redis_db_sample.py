@@ -52,11 +52,14 @@
 7.  config get dir/*         实时传储收到的请求
 8.  flushdb                  删除当前选择数据库中的所有key
 9.  flushall                 删除所有数据库中的数据库
+
+Tips：
+打开cmd输入 redis-cli.exe 即可进入redis命令行
 """
 # -*- coding:utf-8 -*-
 from redis import StrictRedis
 
-# 打开cmd输入 redis-cli.exe 即可进入redis命令行
+__author__ = 'Evan'
 
 
 class RedisHandle(object):

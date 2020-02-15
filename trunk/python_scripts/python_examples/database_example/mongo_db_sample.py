@@ -38,6 +38,8 @@ Mongodb数据更新指令: (指令必须使用双引号)
 import pymongo
 from bson.objectid import ObjectId
 
+__author__ = 'Evan'
+
 
 def mongodb_handle(host='localhost', port=27017):
     """

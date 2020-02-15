@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from xmlrpc.client import ServerProxy
 
+__author__ = 'Evan'
+
 
 class SocketClient(object):
 

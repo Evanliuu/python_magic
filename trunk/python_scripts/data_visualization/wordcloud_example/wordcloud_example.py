@@ -6,6 +6,8 @@ from wordcloud import WordCloud
 from matplotlib import pyplot as plt
 from PIL import Image
 
+__author__ = 'Evan'
+
 
 def generate_word_cloud(text, image_name='picture.jpg', generate_picture_name='sample.jpg'):
     """

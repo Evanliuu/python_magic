@@ -1,3 +1,8 @@
+# -*- coding:utf-8 -*-
+
+__author__ = 'Evan'
+
+
 # 二层装饰器
 def decorator(func):  # 执行函数
     def wrapper(*args, **kwargs):  # 函数的实参

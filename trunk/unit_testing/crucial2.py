@@ -1,6 +1,7 @@
 """
 爬取ccc网站
 """
+# -*- coding:utf-8 -*-
 import time
 import logging
 

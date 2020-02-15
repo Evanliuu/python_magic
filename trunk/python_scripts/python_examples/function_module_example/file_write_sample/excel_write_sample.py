@@ -2,6 +2,8 @@
 import xlrd
 import xlwt
 
+__author__ = 'Evan'
+
 
 def write_excel_table(write_info, table_name='excel_example.xls', sheet_name='first_page'):
     """

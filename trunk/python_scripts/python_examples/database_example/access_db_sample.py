@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import pyodbc
 
+__author__ = 'Evan'
+
 
 def access_table_read(db_path):
     """

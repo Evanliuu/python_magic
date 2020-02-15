@@ -36,6 +36,7 @@ re.X              该标志通过给予你更灵活的格式以便你将正则�
 # -*- coding:utf-8 -*-
 import re
 
+__author__ = 'Evan'
 example = """Just as you need air to breathe,
 you need opportunity to succeed. It takes more than just breathing in the fresh air of opportunity,
 however. You must make use of that opportunity. That's not up to the opportunity. That's up to you.

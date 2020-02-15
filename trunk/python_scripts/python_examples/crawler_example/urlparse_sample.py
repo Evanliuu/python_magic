@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 from urllib.parse import urlencode, parse_qs, parse_qsl
 from urllib.parse import quote, unquote
 
+__author__ = 'Evan'
 
 # urlparse --> 返回一个ParseResult类型的对象，包含六个部分（scheme netloc path params query fragment）
 print(urlparse('http://www.baidu.com/index.html;user?id=5#comment'))
