@@ -14,11 +14,21 @@ def file_transfer(remote_machine, transfer_config, first_connection=True):
     :param first_connection: 第一次连接没有传输过的机器会询问"Store key in cache? (y/n)", 此时要输入y，否则会传输失败
     :return:
     """
-    username = str(transfer_config['username']) or 'evan'
+    username = str(transfer_config['username']) or 'evanliu'
     password = str(transfer_config['password']) or 'Cisco321!'
     transfer_file_path = str(transfer_config['transfer_file_path'])
     target_file_path = str(transfer_config['target_file_path']) or r'C:\Users\evaliu\Desktop\\'
     whether_transfer_to_local = False if str(transfer_config['whether_transfer_to_local']).upper() == 'N' else True
+
+    print('\nTransfer configuration:')
+    print('****************************************************')
+    print('remote_machine: {}'.format(remote_machine))
+    print('username: {}'.format(username))
+    print('password: {}'.format(password))
+    print('transfer_file_path: {}'.format(transfer_file_path))
+    print('target_file_path: {}'.format(target_file_path))
+    print('whether_transfer_to_local: {}'.format(whether_transfer_to_local))
+    print('****************************************************')
 
     # 将远程机器的文件传输到本地
     if whether_transfer_to_local:
@@ -41,7 +51,7 @@ def file_transfer(remote_machine, transfer_config, first_connection=True):
     os.system(cmd_line)
 
 
-def ask_transfer_config():
+def ask_transfer_config(machine):
     """
     询问传输配置信息
     1. 是否传输到本地
@@ -58,6 +68,7 @@ def ask_transfer_config():
         'username': '用户名: ',
         'password': '密码: '
     }
+    print('Current remote machine: {}'.format(machine))
     for key in ask_info:
         ask_info[key] = input(ask_info[key])
     return ask_info
@@ -69,10 +80,9 @@ def main(machine_list):
     :param machine_list: 机器名列表
     :return:
     """
-    transfer_config = ask_transfer_config()
     threads = []
     for each_machine in machine_list:
-        print('Now start transferring files to {} machine...'.format(each_machine))
+        transfer_config = ask_transfer_config(each_machine)
         t = threading.Thread(target=file_transfer, args=(each_machine, transfer_config))
         threads.append(t)
 
