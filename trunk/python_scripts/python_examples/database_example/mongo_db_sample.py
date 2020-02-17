@@ -61,6 +61,7 @@ def mongodb_handle(host='localhost', port=27017):
     table_name = eval(str(table).split()[-1][:-1])
     print('创建集合: {}'.format(table_name))
 
+    # 定义字段
     name = dict(name='Evan')
     age = dict(age=20)
     stature = dict(stature=177)
@@ -71,16 +72,16 @@ def mongodb_handle(host='localhost', port=27017):
 
     # 更新table集合中数据
     update_format = {"$set": {'stature': 26}}  # 更新age值为26
-    result = table.update_one(age, update_format)  # 更新单个数据
+    result = table.update_one(age, update_format)  # 更新匹配到的第一个数据
     print('更新个数: {}'.format(result.matched_count))  # 查看更新个数
-    table.update_many(age, update_format)  # 更新多个数据
+    table.update_many(age, update_format)  # 更新匹配到的所有数据
 
     # 查询table集合中数据
     print(table.find_one({'_id': ObjectId('5dd642b94957a6800e0187c1')}))  # 根据ID查询，返回匹配到的第一个结果
     print(table.find_one(name))  # 根据name字段查询，返回匹配到的第一个结果
     print(table.find_one({'age': {'$gt': 10}}))  # 使用比较符号查询，返回结果大于10的age字段
-    print(table.find_one({'name': {'$regex': 'Ev.+'}}))  # 使用功能符号查询
-    print([i for i in table.find(name)])  # 返回所有的name字段
+    print(table.find_one({'name': {'$regex': 'Ev.+'}}))  # 使用正则表达式查询，返回匹配到的第一个结果
+    print([i for i in table.find(name)])  # 返回匹配到的所有name字段
     print([i for i in table.find()])  # 返回集合中所有数据
     # 计数
     print('查询name字段个数: {}'.format(table.count_documents(name)))  # 查询指定字段个数
@@ -92,9 +93,9 @@ def mongodb_handle(host='localhost', port=27017):
     print([table.find().sort('name', pymongo.ASCENDING).skip(2).limit(2)])  # 只保留第三个及以后name字段的2个匹配结果
 
     # 删除table集合中数据
-    result = table.delete_one(stature)  # 删除单行数据
+    result = table.delete_one(stature)  # 删除匹配到的第一个数据
     print('删除个数: {}'.format(result.deleted_count))  # 查看删除个数
-    table.delete_many(stature)  # 删除多行数据
+    table.delete_many(stature)  # 删除匹配到的所有数据
 
     # 关闭客户端连接
     client.close()
