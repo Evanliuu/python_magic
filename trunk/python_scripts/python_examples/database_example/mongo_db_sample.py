@@ -74,6 +74,7 @@ def mongodb_handle(host='localhost', port=27017):
     update_format = {"$set": {'stature': 26}}  # 更新age值为26
     result = table.update_one(age, update_format)  # 更新匹配到的第一个数据
     print('更新个数: {}'.format(result.matched_count))  # 查看更新个数
+    table.update_one(age, {"$set": age}, upsert=True)  # 数据去重，如果集合里面有age字段就更新该字段，没有则创建一个age字段
     table.update_many(age, update_format)  # 更新匹配到的所有数据
 
     # 查询table集合中数据
