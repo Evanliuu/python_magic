@@ -63,7 +63,7 @@ def mongodb_handle(host='localhost', port=27017):
 
     # 定义字段
     name = dict(name='Evan')
-    age = dict(age=20)
+    age = dict(age=24)
     stature = dict(stature=177)
 
     # 插入数据到table集合
