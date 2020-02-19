@@ -21,14 +21,14 @@ def file_transfer(remote_machine, transfer_config, first_connection=True):
     whether_transfer_to_local = False if str(transfer_config['whether_transfer_to_local']).upper() == 'N' else True
 
     print('\nTransfer configuration:')
-    print('****************************************************')
+    print('----------------------------------------------------')
     print('remote_machine: {}'.format(remote_machine))
     print('username: {}'.format(username))
     print('password: {}'.format(password))
+    print('whether_transfer_to_local: {}'.format(whether_transfer_to_local))
     print('transfer_file_path: {}'.format(transfer_file_path))
     print('target_file_path: {}'.format(target_file_path))
-    print('whether_transfer_to_local: {}'.format(whether_transfer_to_local))
-    print('****************************************************')
+    print('----------------------------------------------------')
 
     # 将远程机器的文件传输到本地
     if whether_transfer_to_local:
