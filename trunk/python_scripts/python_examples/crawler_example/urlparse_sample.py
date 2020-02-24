@@ -16,11 +16,11 @@ print(urljoin('http://www.baidu.com', 'index.html'))
 
 params = {
     'name': 'Evan',
-    'age': '20'
+    'id': '77'
 }
 print('http://www.baidu.com?' + urlencode(params))  # urlencode --> 将字典序列化为Get请求参数
-print(parse_qs('http://www.baidu.com?name=Evan&age=20'))  # parse_qs --> 将Get请求参数反序列化为字典
-print(parse_qsl('http://www.baidu.com?name=Evan&age=20'))  # parse_qsl --> 将Get请求参数反序列化为列表
+print(parse_qs('http://www.baidu.com?name=Evan&id=77'))  # parse_qs --> 将Get请求参数反序列化为字典
+print(parse_qsl('http://www.baidu.com?name=Evan&id=77'))  # parse_qsl --> 将Get请求参数反序列化为列表
 
 
 print('http://www.baidu.com?' + quote('年龄'))  # quote --> 将中文转化为URL编码

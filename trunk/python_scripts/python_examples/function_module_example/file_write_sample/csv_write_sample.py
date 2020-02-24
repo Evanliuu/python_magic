@@ -15,13 +15,14 @@ def write_csv_data(write_info, file_name='csv_file', headers=None):
     """
     # 取消多余的空白行: Python3.7是newline=''，Python2.7是用'wb'写入
     with open('{}.csv'.format(file_name), 'w', encoding='utf-8', newline='') as wf:
-        # TODO 这个是字典格式的写入
+        # 这个是字典格式的写入
         dict_write = csv.DictWriter(wf, fieldnames=headers)
         dict_write.writeheader()  # 写入第一行的表头数据
         for i in write_info:
             dict_write.writerow(i)  # 循环写入每行数据
         # 同时写入多行数据
         dict_write.writerows(write_info)
+
         # TODO 这个是普通格式的写入
         """
         write = csv.writer(wf)

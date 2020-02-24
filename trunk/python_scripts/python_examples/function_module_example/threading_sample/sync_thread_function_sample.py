@@ -1,5 +1,5 @@
 """
-同步多线程 函数使用例子
+多线程同步（函数化）
 """
 # -*- coding:utf-8 -*-
 import threading
@@ -36,8 +36,10 @@ def thread_run(sleep_list):
     global locks, thread_pool
 
     locks = threading.Lock()  # 线程锁
-    thread_pool = threading.Semaphore(value=2)  # 线程池（设置可同时执行的最大线程数为2）
+    max_value = 3
+    thread_pool = threading.Semaphore(value=max_value)  # 线程池（设置可同时执行的最大线程数为3）
     threads = []
+    print('线程池最大数量：{}'.format(max_value))
 
     for i in sleep_list:  # 配置所有线程
         t = threading.Thread(target=unit_test, args=(i,))

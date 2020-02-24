@@ -10,11 +10,15 @@ class SqliteDB(object):
     """
     def __init__(self, db_path=r'C:\Users\evaliu\Desktop', db_name='sql_lite3'):
         self.db_path = db_path + '\\' + db_name
-        # connect virtual Mysql database
+        # 创建一个虚拟的Mysql文件
         self.cxn = sqlite3.connect(self.db_path)
         self.cur = self.cxn.cursor()
 
     def create_table(self):
+        """
+        创建一个数据表
+        :return:
+        """
         try:
             self.cur.execute('''
             CREATE TABLE users(
@@ -28,7 +32,11 @@ class SqliteDB(object):
             self.create_table()
 
     def read_table(self):
-        print('Mysql dump:')
+        """
+        读取数据表
+        :return:
+        """
+        print('Mysql dumps:')
         self.cur.execute('SELECT * FROM users')
         for each_line in self.cur.fetchall():
             print(each_line)

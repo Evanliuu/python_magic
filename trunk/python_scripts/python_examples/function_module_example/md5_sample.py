@@ -6,8 +6,8 @@ __author__ = 'Evan'
 
 def get_file_md5(path):
     """
-    打开文件读取MD5值
-    :param path: 文件的所在路径
+    获取文件内容的MD5值
+    :param path: 文件所在路径
     :return:
     """
     with open(path, 'r') as file:

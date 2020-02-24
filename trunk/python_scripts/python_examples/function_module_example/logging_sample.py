@@ -28,7 +28,7 @@ import logging
 __author__ = 'Evan'
 
 
-def logger_sample(save_log_path='', file_mode='a',
+def simple_logger(save_log_path='', file_mode='a',
                   format_info='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s',
                   level_info=logging.INFO):
     """
@@ -48,7 +48,7 @@ def logger_sample(save_log_path='', file_mode='a',
     logging.critical('This is critical message')
 
 
-def logger_full(save_log_path, file_mode='a',
+def full_logger(save_log_path, file_mode='a',
                 format_info='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'):
     """
     打印日志消息到控制台，并保存日志消息到文件中
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     # TODO 仅打印日志消息到控制台，不保存
     # logger_sample()
 
-    # 在当前路径下创建log_sample.txt，保存日志消息到其中，不打印消息到控制台
-    logger_sample(save_log_path='./log_sample.txt', file_mode='w')
-    # 在当前路径下创建log_full.txt，保存日志消息到其中，并打印消息到控制台
-    logger_full(save_log_path='./log_full.txt', file_mode='w')
+    # 在当前路径下创建simple_logger.txt，保存日志消息到其中，不打印消息到控制台
+    simple_logger(save_log_path='./simple_logger.txt', file_mode='w')
+    # 在当前路径下创建full_logger.txt，保存日志消息到其中，并打印消息到控制台
+    full_logger(save_log_path='./full_logger.txt', file_mode='w')

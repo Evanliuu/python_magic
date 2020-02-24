@@ -1,3 +1,7 @@
+"""
+DLL文件为动态链接库(英语: Dynamic-link library, 缩写为DLL)
+它是微软公司在微软视窗操作系统中实现共享函数库概念的一种实现方式
+"""
 from ctypes import cdll
 
 __author__ = 'Evan'
@@ -5,9 +9,7 @@ __author__ = 'Evan'
 
 def run_dll(dll_path, execute_function):
     """
-    此函数用于执行DLL文件
-    DLL文件为动态链接库(英语: Dynamic-link library, 缩写为DLL)
-    它是微软公司在微软视窗操作系统中实现共享函数库概念的一种实现方式
+    执行DLL文件
     :param dll_path: DLL文件的所在路径
     :param execute_function: DLL文件内部要被执行的函数名
     :return:

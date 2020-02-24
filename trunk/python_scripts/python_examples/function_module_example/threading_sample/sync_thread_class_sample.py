@@ -1,5 +1,5 @@
 """
-同步多线程 类方法使用例子
+多线程同步（使用父类继承方法）
 """
 # -*- coding:utf-8 -*-
 import threading
@@ -29,7 +29,10 @@ class Test(threading.Thread):  # 继承threading.Thread类
 
 
 if __name__ == '__main__':
-    pool = threading.Semaphore(value=2)  # 线程池（设置可同时执行的最大线程数为2）
+    max_value = 4
+    pool = threading.Semaphore(value=max_value)  # 线程池（设置可同时执行的最大线程数为4）
+    print('线程池最大数量：{}'.format(max_value))
+
     for i in [3, 2, 6, 1, 7]:
         pool.acquire()  # 获得线程锁，可用线程数减1
         t = Test(sleep_time=i, thread_pool=pool)  # 实例化线程类

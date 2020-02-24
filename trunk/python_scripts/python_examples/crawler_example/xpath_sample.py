@@ -56,6 +56,10 @@ and they lived at the bottom of a well.</p>
 
 
 def parse():
+    """
+    使用xpath解析HTML
+    :return:
+    """
     # 初始化对象
     html = etree.HTML(html_doc)  # html文本初始化
     # html = etree.parse('./example.html', etree.HTMLParser())  # html文件初始化
