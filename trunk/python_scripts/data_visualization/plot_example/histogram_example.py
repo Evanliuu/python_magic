@@ -4,9 +4,9 @@ from matplotlib import pyplot as plt
 __author__ = 'Evan'
 
 
-def plot(title, data_list=[], x_label=(), y_label=()):
+def draw_histogram(title, data_list=[], x_label=(), y_label=()):
     """
-    绘柱形图
+    绘制柱状图
     :param str title: 图片标题
     :param list data_list: 数据列表
     :param tuple x_label: （X轴标签，X轴刻度标签）
@@ -49,4 +49,4 @@ if __name__ == '__main__':
     data = [[100, 300, 500, 700], [200, 400, 600, 800]]
     x_label_tuple = ('城市分布', ['北京市', '上海市', '天津市', '重庆市'])
     y_label_tuple = ('GDP', [50, 1000])
-    plot(title=city_title, data_list=data, x_label=x_label_tuple, y_label=y_label_tuple)
+    draw_histogram(title=city_title, data_list=data, x_label=x_label_tuple, y_label=y_label_tuple)
