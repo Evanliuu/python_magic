@@ -1,0 +1,1912 @@
+<!doctype html>
+<html>
+<head>
+  <title>编程字典 - 超级编程字典，高效编程利器！</title>
+  <link rel="canonical" href="http://CodingDict.com/"/>
+
+<meta name="description" content="
+    编程字典(www.CodingDict.com)提供了编程的基础技术教程,
+    介绍了HTML、CSS、Javascript、Python，Java，Ruby，C，PHP ,
+     MySQL等各种编程语言的基础知识。
+     同时本站中也提供了大量的在线实例，通过实例，您可以更好的学习编程。
+    "><meta name="keywords" content="
+    编程字典, CodingDict, HTML, CSS, CSS3, JavaScript, bootstrap, bootstrap4, Python, Python3, Java, C, C++, PHP,
+    jQuery, JDBC, Servlet, JSP, Structs2, Hibernate, Spring, MySQL, SQL, Oracle, MangoDB, Redis, Memcached, MariaDB,
+    Django, Flask, angularjs, VueJS, npm, Gulp, Grunt, ES6, Node.js, Linux, Hadoop, Spark, AI, 人工智能
+    ">
+
+  <meta name="baidu-site-verification" content="Rc25WeFtEn" />
+  <meta name="google-site-verification" content="3IgkZqEUFj1_IeTmHIriMJi0eU4lxHtCdr1GwsvpO58" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1" />
+
+  <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+
+<script data-ad-client="ca-pub-5812992211126268" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7d7e9d40999070aa10f00c004cf96a56";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156424463-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156424463-1');
+</script>
+
+</head>
+
+<body>
+<header id="header" class="fixed-top">
+  <div class="top_menu">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="float-left">
+            <li>编程字典，程序员的百科全书！</li>
+          </ul>
+
+          <ul class="float-right">
+
+
+
+              <li><a href="/log-in">登录</a></li>
+              <li>|</li>
+              <li><a href="/sign-up">注册</a></li>
+
+
+
+
+
+
+
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- top_menu end -->
+
+  <div class="main_menu">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #67be63;">
+    <div class="container">
+    <a class="navbar-brand" href="/" title="编程字典">编程字典</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item  active">
+          <a class="nav-link" href="/"><span class="sr-only">(current)</span>首页</a>
+        </li>
+
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/courses">学院
+          <span class="badge badge-danger badge-pill">hot</span>
+          </a>
+        </li>
+
+
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/tutorials">教程</a>
+        </li>
+
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/questions/">问答</a>
+        </li>
+
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/os/">开源</a>
+        </li>
+
+
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            源码
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/sources/py/all">Python</a>
+            <a class="dropdown-item" href="/sources/java">Java/Android</a>
+          </div>
+        </li>
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/document">文档</a>
+        </li>
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/blog">博客</a>
+        </li>
+
+         <li class="nav-item ">
+            <a class="nav-link" href="/tools/index.html">工具</a>
+         </li>
+
+
+      </ul>
+      <form class="form-inline my-2 my-lg-0" action="#">
+        <input style="line-height:20px;font-size:14px;" name="q"
+class="form-control mr-sm-2" type="search" placeholder="你想学点啥？输入试试！" aria-label="Search">
+        <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="button">搜索</button>
+       <input type="hidden" name="csrfmiddlewaretoken" value="XaJgDjv1hLRHyACaS5aIRYhuRrFh4fosVSKNNgNaEOf0glFd1o9Px2iSRlxzjRbi">
+      </form>
+
+    </div>
+  </div>
+  </nav>
+  </div>
+</header>
+
+
+
+<!-- left -->
+
+<div class="main-body container">
+  <div class="row">
+
+
+    <!-- left 免费教程 -->
+    <div class="col-md-3">
+    <div class="card">
+    <div class="card-header" style="font-weight:600;">
+      <a href="/tutorials" style="color: black !important;">免费教程</a>
+    </div>
+    <div class="card-body">
+
+      <ul class="nav flex-column">
+
+              <li class="nav-item">
+                <a href="/tutorials#基础语言" title="基础语言" style="color: #999 !important;">基础语言</a>
+                <ul>
+
+                  <li><a href="/tutorial/1" style="font-size:12px;color: #999 !important;" title="HTML教程" target="_blank">HTML教程</a></li>
+
+                  <li><a href="/tutorial/2" style="font-size:12px;color: #999 !important;" title="CSS教程" target="_blank">CSS教程</a></li>
+
+                  <li><a href="/tutorial/3" style="font-size:12px;color: #999 !important;" title="C语言教程" target="_blank">C语言教程</a></li>
+
+                  <li><a href="/tutorial/135" style="font-size:12px;color: #999 !important;" title="C语言基础教程实例源码" target="_blank">C语言基础教程实例源码</a></li>
+
+                  <li><a href="/tutorial/140" style="font-size:12px;color: #999 !important;" title="C语言100例" target="_blank">C语言100例</a></li>
+
+                  <li><a href="/tutorial/78" style="font-size:12px;color: #999 !important;" title="C语言标准库" target="_blank">C语言标准库</a></li>
+
+                  <li><a href="/tutorial/142" style="font-size:12px;color: #999 !important;" title="C语言实例教程" target="_blank">C语言实例教程</a></li>
+
+                  <li><a href="/tutorial/4" style="font-size:12px;color: #999 !important;" title="Java教程" target="_blank">Java教程</a></li>
+
+                  <li><a href="/tutorial/5" style="font-size:12px;color: #999 !important;" title="C++教程" target="_blank">C++教程</a></li>
+
+                  <li><a href="/tutorial/6" style="font-size:12px;color: #999 !important;" title="C# 教程" target="_blank">C# 教程</a></li>
+
+                  <li><a href="/tutorial/7" style="font-size:12px;color: #999 !important;" title="Python教程" target="_blank">Python教程</a></li>
+
+                  <li><a href="/tutorial/79" style="font-size:12px;color: #999 !important;" title="Python3教程" target="_blank">Python3教程</a></li>
+
+                  <li><a href="/tutorial/8" style="font-size:12px;color: #999 !important;" title="Golang语言教程" target="_blank">Golang语言教程</a></li>
+
+                  <li><a href="/tutorial/197" style="font-size:12px;color: #999 !important;" title="Go 实例教程" target="_blank">Go 实例教程</a></li>
+
+                  <li><a href="/tutorial/10" style="font-size:12px;color: #999 !important;" title="Perl语言教程" target="_blank">Perl语言教程</a></li>
+
+                  <li><a href="/tutorial/9" style="font-size:12px;color: #999 !important;" title="R语言教程" target="_blank">R语言教程</a></li>
+
+                  <li><a href="/tutorial/11" style="font-size:12px;color: #999 !important;" title="Ruby教程" target="_blank">Ruby教程</a></li>
+
+                  <li><a href="/tutorial/12" style="font-size:12px;color: #999 !important;" title="Swift教程" target="_blank">Swift教程</a></li>
+
+                  <li><a href="/tutorial/166" style="font-size:12px;color: #999 !important;" title="Dart教程" target="_blank">Dart教程</a></li>
+
+                  <li><a href="/tutorial/165" style="font-size:12px;color: #999 !important;" title="数据结构和算法教程" target="_blank">数据结构和算法教程</a></li>
+
+                  <li><a href="/tutorial/181" style="font-size:12px;color: #999 !important;" title="golang语言" target="_blank">golang语言</a></li>
+
+                  <li><a href="/tutorial/196" style="font-size:12px;color: #999 !important;" title="Dart实例教程" target="_blank">Dart实例教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#数据库教程" title="数据库教程" style="color: #999 !important;">数据库教程</a>
+                <ul>
+
+                  <li><a href="/tutorial/13" style="font-size:12px;color: #999 !important;" title="SQL教程" target="_blank">SQL教程</a></li>
+
+                  <li><a href="/tutorial/14" style="font-size:12px;color: #999 !important;" title="MySQL教程" target="_blank">MySQL教程</a></li>
+
+                  <li><a href="/tutorial/81" style="font-size:12px;color: #999 !important;" title="MariaDB教程" target="_blank">MariaDB教程</a></li>
+
+                  <li><a href="/tutorial/15" style="font-size:12px;color: #999 !important;" title="SQLite教程" target="_blank">SQLite教程</a></li>
+
+                  <li><a href="/tutorial/16" style="font-size:12px;color: #999 !important;" title="MongoDB教程" target="_blank">MongoDB教程</a></li>
+
+                  <li><a href="/tutorial/17" style="font-size:12px;color: #999 !important;" title="Redis教程" target="_blank">Redis教程</a></li>
+
+                  <li><a href="/tutorial/18" style="font-size:12px;color: #999 !important;" title="Memcached教程" target="_blank">Memcached教程</a></li>
+
+                  <li><a href="/tutorial/19" style="font-size:12px;color: #999 !important;" title="SQLServer教程" target="_blank">SQLServer教程</a></li>
+
+                  <li><a href="/tutorial/20" style="font-size:12px;color: #999 !important;" title="Oracle教程" target="_blank">Oracle教程</a></li>
+
+                  <li><a href="/tutorial/21" style="font-size:12px;color: #999 !important;" title="DB2教程" target="_blank">DB2教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#前端教程" title="前端教程" style="color: #999 !important;">前端教程</a>
+                <ul>
+
+                  <li><a href="/tutorial/1" style="font-size:12px;color: #999 !important;" title="HTML教程" target="_blank">HTML教程</a></li>
+
+                  <li><a href="/tutorial/25" style="font-size:12px;color: #999 !important;" title="HTML5 教程" target="_blank">HTML5 教程</a></li>
+
+                  <li><a href="/tutorial/77" style="font-size:12px;color: #999 !important;" title="HTML参考手册" target="_blank">HTML参考手册</a></li>
+
+                  <li><a href="/tutorial/2" style="font-size:12px;color: #999 !important;" title="CSS教程" target="_blank">CSS教程</a></li>
+
+                  <li><a href="/tutorial/26" style="font-size:12px;color: #999 !important;" title="CSS3 教程" target="_blank">CSS3 教程</a></li>
+
+                  <li><a href="/tutorial/22" style="font-size:12px;color: #999 !important;" title="JavaScript教程" target="_blank">JavaScript教程</a></li>
+
+                  <li><a href="/tutorial/36" style="font-size:12px;color: #999 !important;" title="HTTP教程" target="_blank">HTTP教程</a></li>
+
+                  <li><a href="/tutorial/37" style="font-size:12px;color: #999 !important;" title="XML教程" target="_blank">XML教程</a></li>
+
+                  <li><a href="/tutorial/38" style="font-size:12px;color: #999 !important;" title="Ajax教程" target="_blank">Ajax教程</a></li>
+
+                  <li><a href="/tutorial/23" style="font-size:12px;color: #999 !important;" title="jQuery教程" target="_blank">jQuery教程</a></li>
+
+                  <li><a href="/tutorial/80" style="font-size:12px;color: #999 !important;" title="Less教程" target="_blank">Less教程</a></li>
+
+                  <li><a href="/tutorial/24" style="font-size:12px;color: #999 !important;" title="BootStrap4教程" target="_blank">BootStrap4教程</a></li>
+
+                  <li><a href="/tutorial/27" style="font-size:12px;color: #999 !important;" title="NPM教程" target="_blank">NPM教程</a></li>
+
+                  <li><a href="/tutorial/28" style="font-size:12px;color: #999 !important;" title="Babel教程" target="_blank">Babel教程</a></li>
+
+                  <li><a href="/tutorial/29" style="font-size:12px;color: #999 !important;" title="Webpack教程" target="_blank">Webpack教程</a></li>
+
+                  <li><a href="/tutorial/30" style="font-size:12px;color: #999 !important;" title="Grunt教程" target="_blank">Grunt教程</a></li>
+
+                  <li><a href="/tutorial/31" style="font-size:12px;color: #999 !important;" title="Gulp教程" target="_blank">Gulp教程</a></li>
+
+                  <li><a href="/tutorial/32" style="font-size:12px;color: #999 !important;" title="ES6教程" target="_blank">ES6教程</a></li>
+
+                  <li><a href="/tutorial/33" style="font-size:12px;color: #999 !important;" title="AngularJS教程" target="_blank">AngularJS教程</a></li>
+
+                  <li><a href="/tutorial/34" style="font-size:12px;color: #999 !important;" title="VueJS教程" target="_blank">VueJS教程</a></li>
+
+                  <li><a href="/tutorial/35" style="font-size:12px;color: #999 !important;" title="React教程" target="_blank">React教程</a></li>
+
+                  <li><a href="/tutorial/39" style="font-size:12px;color: #999 !important;" title="Node.js教程" target="_blank">Node.js教程</a></li>
+
+                  <li><a href="/tutorial/191" style="font-size:12px;color: #999 !important;" title="Node.js项目实战" target="_blank">Node.js项目实战</a></li>
+
+                  <li><a href="/tutorial/118" style="font-size:12px;color: #999 !important;" title="Express 教程" target="_blank">Express 教程</a></li>
+
+                  <li><a href="/tutorial/134" style="font-size:12px;color: #999 !important;" title="CSS 参考手册" target="_blank">CSS 参考手册</a></li>
+
+                  <li><a href="/tutorial/146" style="font-size:12px;color: #999 !important;" title="JavaScript实例教程" target="_blank">JavaScript实例教程</a></li>
+
+                  <li><a href="/tutorial/189" style="font-size:12px;color: #999 !important;" title="koa 教程" target="_blank">koa 教程</a></li>
+
+                  <li><a href="/tutorial/136" style="font-size:12px;color: #999 !important;" title="JavaScript参考手册" target="_blank">JavaScript参考手册</a></li>
+
+                  <li><a href="/tutorial/138" style="font-size:12px;color: #999 !important;" title="jQuery参考手册" target="_blank">jQuery参考手册</a></li>
+
+                  <li><a href="/tutorial/149" style="font-size:12px;color: #999 !important;" title="Node.js&amp;ES6 实例教程" target="_blank">Node.js&amp;ES6 实例教程</a></li>
+
+                  <li><a href="/tutorial/170" style="font-size:12px;color: #999 !important;" title="JavaScript专题(常见问题)" target="_blank">JavaScript专题(常见问题)</a></li>
+
+                  <li><a href="/tutorial/177" style="font-size:12px;color: #999 !important;" title="TypeScript教程" target="_blank">TypeScript教程</a></li>
+
+                  <li><a href="/tutorial/178" style="font-size:12px;color: #999 !important;" title="JavaScript异步" target="_blank">JavaScript异步</a></li>
+
+                  <li><a href="/tutorial/190" style="font-size:12px;color: #999 !important;" title="Vue CLI教程" target="_blank">Vue CLI教程</a></li>
+
+                  <li><a href="/tutorial/193" style="font-size:12px;color: #999 !important;" title="GraphGL教程" target="_blank">GraphGL教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#Python教程" title="Python教程" style="color: #999 !important;">Python教程</a>
+                <ul>
+
+                  <li><a href="/tutorial/112" style="font-size:12px;color: #999 !important;" title="PyCharm教程" target="_blank">PyCharm教程</a></li>
+
+                  <li><a href="/tutorial/7" style="font-size:12px;color: #999 !important;" title="Python教程" target="_blank">Python教程</a></li>
+
+                  <li><a href="/tutorial/79" style="font-size:12px;color: #999 !important;" title="Python3教程" target="_blank">Python3教程</a></li>
+
+                  <li><a href="/tutorial/108" style="font-size:12px;color: #999 !important;" title="Python多线程并发教程" target="_blank">Python多线程并发教程</a></li>
+
+                  <li><a href="/tutorial/215" style="font-size:12px;color: #999 !important;" title="django专题教程" target="_blank">django专题教程</a></li>
+
+                  <li><a href="/tutorial/114" style="font-size:12px;color: #999 !important;" title="Python 100例" target="_blank">Python 100例</a></li>
+
+                  <li><a href="/tutorial/40" style="font-size:12px;color: #999 !important;" title="Python数据结构" target="_blank">Python数据结构</a></li>
+
+                  <li><a href="/tutorial/41" style="font-size:12px;color: #999 !important;" title="Django教程" target="_blank">Django教程</a></li>
+
+                  <li><a href="/tutorial/42" style="font-size:12px;color: #999 !important;" title="Flask教程" target="_blank">Flask教程</a></li>
+
+                  <li><a href="/tutorial/43" style="font-size:12px;color: #999 !important;" title="Tornado教程" target="_blank">Tornado教程</a></li>
+
+                  <li><a href="/tutorial/85" style="font-size:12px;color: #999 !important;" title="Web2py教程" target="_blank">Web2py教程</a></li>
+
+                  <li><a href="/tutorial/44" style="font-size:12px;color: #999 !important;" title="Scrapy教程" target="_blank">Scrapy教程</a></li>
+
+                  <li><a href="/tutorial/45" style="font-size:12px;color: #999 !important;" title="wxPython 教程" target="_blank">wxPython 教程</a></li>
+
+                  <li><a href="/tutorial/107" style="font-size:12px;color: #999 !important;" title="AI与Python" target="_blank">AI与Python</a></li>
+
+                  <li><a href="/tutorial/147" style="font-size:12px;color: #999 !important;" title="Python 实例教程" target="_blank">Python 实例教程</a></li>
+
+                  <li><a href="/tutorial/148" style="font-size:12px;color: #999 !important;" title="Python3 实例教程" target="_blank">Python3 实例教程</a></li>
+
+                  <li><a href="/tutorial/168" style="font-size:12px;color: #999 !important;" title="Python专题" target="_blank">Python专题</a></li>
+
+                  <li><a href="/tutorial/109" style="font-size:12px;color: #999 !important;" title="PySpark教程" target="_blank">PySpark教程</a></li>
+
+                  <li><a href="/tutorial/110" style="font-size:12px;color: #999 !important;" title="Seaborn教程" target="_blank">Seaborn教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#Java教程" title="Java教程" style="color: #999 !important;">Java教程</a>
+                <ul>
+
+                  <li><a href="/tutorial/4" style="font-size:12px;color: #999 !important;" title="Java教程" target="_blank">Java教程</a></li>
+
+                  <li><a href="/tutorial/94" style="font-size:12px;color: #999 !important;" title="Java8 教程" target="_blank">Java8 教程</a></li>
+
+                  <li><a href="/tutorial/95" style="font-size:12px;color: #999 !important;" title="Java9 教程" target="_blank">Java9 教程</a></li>
+
+                  <li><a href="/tutorial/96" style="font-size:12px;color: #999 !important;" title="Java泛型教程" target="_blank">Java泛型教程</a></li>
+
+                  <li><a href="/tutorial/100" style="font-size:12px;color: #999 !important;" title="Java设计模式教程" target="_blank">Java设计模式教程</a></li>
+
+                  <li><a href="/tutorial/99" style="font-size:12px;color: #999 !important;" title="Gson教程" target="_blank">Gson教程</a></li>
+
+                  <li><a href="/tutorial/102" style="font-size:12px;color: #999 !important;" title="Apache POI教程" target="_blank">Apache POI教程</a></li>
+
+                  <li><a href="/tutorial/104" style="font-size:12px;color: #999 !important;" title="Guava教程" target="_blank">Guava教程</a></li>
+
+                  <li><a href="/tutorial/101" style="font-size:12px;color: #999 !important;" title="Apache DBUtils教程" target="_blank">Apache DBUtils教程</a></li>
+
+                  <li><a href="/tutorial/103" style="font-size:12px;color: #999 !important;" title="Apache Commons IO教程" target="_blank">Apache Commons IO教程</a></li>
+
+                  <li><a href="/tutorial/105" style="font-size:12px;color: #999 !important;" title="JasperResports教程" target="_blank">JasperResports教程</a></li>
+
+                  <li><a href="/tutorial/46" style="font-size:12px;color: #999 !important;" title="JDBC教程" target="_blank">JDBC教程</a></li>
+
+                  <li><a href="/tutorial/47" style="font-size:12px;color: #999 !important;" title="Servlet教程" target="_blank">Servlet教程</a></li>
+
+                  <li><a href="/tutorial/183" style="font-size:12px;color: #999 !important;" title="Java Servlet规范" target="_blank">Java Servlet规范</a></li>
+
+                  <li><a href="/tutorial/48" style="font-size:12px;color: #999 !important;" title="JSP教程" target="_blank">JSP教程</a></li>
+
+                  <li><a href="/tutorial/51" style="font-size:12px;color: #999 !important;" title="Struts2 教程" target="_blank">Struts2 教程</a></li>
+
+                  <li><a href="/tutorial/204" style="font-size:12px;color: #999 !important;" title="Velocity 教程" target="_blank">Velocity 教程</a></li>
+
+                  <li><a href="/tutorial/200" style="font-size:12px;color: #999 !important;" title="FreeMarker教程" target="_blank">FreeMarker教程</a></li>
+
+                  <li><a href="/tutorial/208" style="font-size:12px;color: #999 !important;" title="Thymeleaf教程" target="_blank">Thymeleaf教程</a></li>
+
+                  <li><a href="/tutorial/49" style="font-size:12px;color: #999 !important;" title="Hibernate教程" target="_blank">Hibernate教程</a></li>
+
+                  <li><a href="/tutorial/50" style="font-size:12px;color: #999 !important;" title="Spring教程" target="_blank">Spring教程</a></li>
+
+                  <li><a href="/tutorial/120" style="font-size:12px;color: #999 !important;" title="Spring AOP教程" target="_blank">Spring AOP教程</a></li>
+
+                  <li><a href="/tutorial/121" style="font-size:12px;color: #999 !important;" title="Spring Batch 教程" target="_blank">Spring Batch 教程</a></li>
+
+                  <li><a href="/tutorial/122" style="font-size:12px;color: #999 !important;" title="Spring JDBC教程" target="_blank">Spring JDBC教程</a></li>
+
+                  <li><a href="/tutorial/198" style="font-size:12px;color: #999 !important;" title="Spring Boot教程" target="_blank">Spring Boot教程</a></li>
+
+                  <li><a href="/tutorial/124" style="font-size:12px;color: #999 !important;" title="Spring MVC教程" target="_blank">Spring MVC教程</a></li>
+
+                  <li><a href="/tutorial/123" style="font-size:12px;color: #999 !important;" title="Spring Boot CLI教程" target="_blank">Spring Boot CLI教程</a></li>
+
+                  <li><a href="/tutorial/125" style="font-size:12px;color: #999 !important;" title="Spring Web Service教程" target="_blank">Spring Web Service教程</a></li>
+
+                  <li><a href="/tutorial/52" style="font-size:12px;color: #999 !important;" title="iBatis教程" target="_blank">iBatis教程</a></li>
+
+                  <li><a href="/tutorial/199" style="font-size:12px;color: #999 !important;" title="MyBatis教程" target="_blank">MyBatis教程</a></li>
+
+                  <li><a href="/tutorial/53" style="font-size:12px;color: #999 !important;" title="JPA教程" target="_blank">JPA教程</a></li>
+
+                  <li><a href="/tutorial/54" style="font-size:12px;color: #999 !important;" title="Lucene教程" target="_blank">Lucene教程</a></li>
+
+                  <li><a href="/tutorial/55" style="font-size:12px;color: #999 !important;" title="Maven教程" target="_blank">Maven教程</a></li>
+
+                  <li><a href="/tutorial/56" style="font-size:12px;color: #999 !important;" title="Gradle教程" target="_blank">Gradle教程</a></li>
+
+                  <li><a href="/tutorial/57" style="font-size:12px;color: #999 !important;" title="JFreeChart教程" target="_blank">JFreeChart教程</a></li>
+
+                  <li><a href="/tutorial/58" style="font-size:12px;color: #999 !important;" title="jUnit教程" target="_blank">jUnit教程</a></li>
+
+                  <li><a href="/tutorial/59" style="font-size:12px;color: #999 !important;" title="log4j教程" target="_blank">log4j教程</a></li>
+
+                  <li><a href="/tutorial/139" style="font-size:12px;color: #999 !important;" title="Java实例教程" target="_blank">Java实例教程</a></li>
+
+                  <li><a href="/tutorial/143" style="font-size:12px;color: #999 !important;" title="Java实例教程（上）" target="_blank">Java实例教程（上）</a></li>
+
+                  <li><a href="/tutorial/144" style="font-size:12px;color: #999 !important;" title="Java实例教程（中）" target="_blank">Java实例教程（中）</a></li>
+
+                  <li><a href="/tutorial/145" style="font-size:12px;color: #999 !important;" title="Java实例教程(下)" target="_blank">Java实例教程(下)</a></li>
+
+                  <li><a href="/tutorial/97" style="font-size:12px;color: #999 !important;" title="Java并发教程" target="_blank">Java并发教程</a></li>
+
+                  <li><a href="/tutorial/173" style="font-size:12px;color: #999 !important;" title="Java算法大全" target="_blank">Java算法大全</a></li>
+
+                  <li><a href="/tutorial/205" style="font-size:12px;color: #999 !important;" title="Java IO" target="_blank">Java IO</a></li>
+
+                  <li><a href="/tutorial/169" style="font-size:12px;color: #999 !important;" title="Java专题" target="_blank">Java专题</a></li>
+
+                  <li><a href="/tutorial/176" style="font-size:12px;color: #999 !important;" title="IntelliJ IDEA教程" target="_blank">IntelliJ IDEA教程</a></li>
+
+                  <li><a href="/tutorial/206" style="font-size:12px;color: #999 !important;" title="Java.util教程" target="_blank">Java.util教程</a></li>
+
+                  <li><a href="/tutorial/180" style="font-size:12px;color: #999 !important;" title="RabbitMQ教程" target="_blank">RabbitMQ教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#PHP教程" title="PHP教程" style="color: #999 !important;">PHP教程</a>
+                <ul>
+
+                  <li><a href="/tutorial/159" style="font-size:12px;color: #999 !important;" title="PHP教程" target="_blank">PHP教程</a></li>
+
+                  <li><a href="/tutorial/60" style="font-size:12px;color: #999 !important;" title="PHP教程2" target="_blank">PHP教程2</a></li>
+
+                  <li><a href="/tutorial/67" style="font-size:12px;color: #999 !important;" title="PHP7教程" target="_blank">PHP7教程</a></li>
+
+                  <li><a href="/tutorial/14" style="font-size:12px;color: #999 !important;" title="MySQL教程" target="_blank">MySQL教程</a></li>
+
+                  <li><a href="/tutorial/113" style="font-size:12px;color: #999 !important;" title="WordPress教程" target="_blank">WordPress教程</a></li>
+
+                  <li><a href="/tutorial/61" style="font-size:12px;color: #999 !important;" title="Linux教程" target="_blank">Linux教程</a></li>
+
+                  <li><a href="/tutorial/62" style="font-size:12px;color: #999 !important;" title="Composer教程" target="_blank">Composer教程</a></li>
+
+                  <li><a href="/tutorial/63" style="font-size:12px;color: #999 !important;" title="Laravel教程" target="_blank">Laravel教程</a></li>
+
+                  <li><a href="/tutorial/64" style="font-size:12px;color: #999 !important;" title="Yii教程" target="_blank">Yii教程</a></li>
+
+                  <li><a href="/tutorial/65" style="font-size:12px;color: #999 !important;" title="CodeIgniter教程" target="_blank">CodeIgniter教程</a></li>
+
+                  <li><a href="/tutorial/66" style="font-size:12px;color: #999 !important;" title="Symfony教程" target="_blank">Symfony教程</a></li>
+
+                  <li><a href="/tutorial/141" style="font-size:12px;color: #999 !important;" title="PHP参考手册" target="_blank">PHP参考手册</a></li>
+
+                  <li><a href="/tutorial/150" style="font-size:12px;color: #999 !important;" title="PHP实例教程" target="_blank">PHP实例教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#大数据" title="大数据" style="color: #999 !important;">大数据</a>
+                <ul>
+
+                  <li><a href="/tutorial/4" style="font-size:12px;color: #999 !important;" title="Java教程" target="_blank">Java教程</a></li>
+
+                  <li><a href="/tutorial/9" style="font-size:12px;color: #999 !important;" title="R语言教程" target="_blank">R语言教程</a></li>
+
+                  <li><a href="/tutorial/86" style="font-size:12px;color: #999 !important;" title="Scala教程" target="_blank">Scala教程</a></li>
+
+                  <li><a href="/tutorial/68" style="font-size:12px;color: #999 !important;" title="Hadoop教程" target="_blank">Hadoop教程</a></li>
+
+                  <li><a href="/tutorial/69" style="font-size:12px;color: #999 !important;" title="Spark教程" target="_blank">Spark教程</a></li>
+
+                  <li><a href="/tutorial/109" style="font-size:12px;color: #999 !important;" title="PySpark教程" target="_blank">PySpark教程</a></li>
+
+                  <li><a href="/tutorial/70" style="font-size:12px;color: #999 !important;" title="HBase教程" target="_blank">HBase教程</a></li>
+
+                  <li><a href="/tutorial/71" style="font-size:12px;color: #999 !important;" title="Hive教程" target="_blank">Hive教程</a></li>
+
+                  <li><a href="/tutorial/72" style="font-size:12px;color: #999 !important;" title="Pig教程" target="_blank">Pig教程</a></li>
+
+                  <li><a href="/tutorial/126" style="font-size:12px;color: #999 !important;" title="Apache Flume教程" target="_blank">Apache Flume教程</a></li>
+
+                  <li><a href="/tutorial/73" style="font-size:12px;color: #999 !important;" title="Storm教程" target="_blank">Storm教程</a></li>
+
+                  <li><a href="/tutorial/127" style="font-size:12px;color: #999 !important;" title="Apache Solr教程" target="_blank">Apache Solr教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#人工智能" title="人工智能" style="color: #999 !important;">人工智能</a>
+                <ul>
+
+                  <li><a href="/tutorial/7" style="font-size:12px;color: #999 !important;" title="Python教程" target="_blank">Python教程</a></li>
+
+                  <li><a href="/tutorial/111" style="font-size:12px;color: #999 !important;" title="Python文本处理" target="_blank">Python文本处理</a></li>
+
+                  <li><a href="/tutorial/107" style="font-size:12px;color: #999 !important;" title="AI与Python" target="_blank">AI与Python</a></li>
+
+                  <li><a href="/tutorial/74" style="font-size:12px;color: #999 !important;" title="Numpy教程" target="_blank">Numpy教程</a></li>
+
+                  <li><a href="/tutorial/84" style="font-size:12px;color: #999 !important;" title="Scipy教程" target="_blank">Scipy教程</a></li>
+
+                  <li><a href="/tutorial/75" style="font-size:12px;color: #999 !important;" title="Pandas教程" target="_blank">Pandas教程</a></li>
+
+                  <li><a href="/tutorial/76" style="font-size:12px;color: #999 !important;" title="Matplotlib教程" target="_blank">Matplotlib教程</a></li>
+
+                  <li><a href="/tutorial/110" style="font-size:12px;color: #999 !important;" title="Seaborn教程" target="_blank">Seaborn教程</a></li>
+
+                  <li><a href="/tutorial/82" style="font-size:12px;color: #999 !important;" title="Python数据科学教程" target="_blank">Python数据科学教程</a></li>
+
+                  <li><a href="/tutorial/83" style="font-size:12px;color: #999 !important;" title="Python深度学习教程" target="_blank">Python深度学习教程</a></li>
+
+                  <li><a href="/tutorial/179" style="font-size:12px;color: #999 !important;" title="PyTorch教程" target="_blank">PyTorch教程</a></li>
+
+                  <li><a href="/tutorial/209" style="font-size:12px;color: #999 !important;" title="sklearn中文教程" target="_blank">sklearn中文教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#微软技术" title="微软技术" style="color: #999 !important;">微软技术</a>
+                <ul>
+
+                  <li><a href="/tutorial/161" style="font-size:12px;color: #999 !important;" title="Powerpoint教程" target="_blank">Powerpoint教程</a></li>
+
+                  <li><a href="/tutorial/164" style="font-size:12px;color: #999 !important;" title="Visio教程" target="_blank">Visio教程</a></li>
+
+                  <li><a href="/tutorial/160" style="font-size:12px;color: #999 !important;" title="Excel高级教程" target="_blank">Excel高级教程</a></li>
+
+                  <li><a href="/tutorial/163" style="font-size:12px;color: #999 !important;" title="Word教程" target="_blank">Word教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/tutorials#其他教程" title="其他教程" style="color: #999 !important;">其他教程</a>
+                <ul>
+
+                  <li><a href="/tutorial/132" style="font-size:12px;color: #999 !important;" title="HTML 元素属性" target="_blank">HTML 元素属性</a></li>
+
+                  <li><a href="/tutorial/187" style="font-size:12px;color: #999 !important;" title="atom教程" target="_blank">atom教程</a></li>
+
+                  <li><a href="/tutorial/88" style="font-size:12px;color: #999 !important;" title="C#详细" target="_blank">C#详细</a></li>
+
+                  <li><a href="/tutorial/137" style="font-size:12px;color: #999 !important;" title="JavaScript 对象属性和方法" target="_blank">JavaScript 对象属性和方法</a></li>
+
+                  <li><a href="/tutorial/192" style="font-size:12px;color: #999 !important;" title="Flutter教程" target="_blank">Flutter教程</a></li>
+
+                  <li><a href="/tutorial/90" style="font-size:12px;color: #999 !important;" title="Golang详细" target="_blank">Golang详细</a></li>
+
+                  <li><a href="/tutorial/152" style="font-size:12px;color: #999 !important;" title="Java详细" target="_blank">Java详细</a></li>
+
+                  <li><a href="/tutorial/154" style="font-size:12px;color: #999 !important;" title="YAML教程" target="_blank">YAML教程</a></li>
+
+                  <li><a href="/tutorial/213" style="font-size:12px;color: #999 !important;" title="Postman教程" target="_blank">Postman教程</a></li>
+
+                  <li><a href="/tutorial/98" style="font-size:12px;color: #999 !important;" title="SEO教程" target="_blank">SEO教程</a></li>
+
+                  <li><a href="/tutorial/156" style="font-size:12px;color: #999 !important;" title="Eclipse教程" target="_blank">Eclipse教程</a></li>
+
+                  <li><a href="/tutorial/116" style="font-size:12px;color: #999 !important;" title="iOS教程" target="_blank">iOS教程</a></li>
+
+                  <li><a href="/tutorial/158" style="font-size:12px;color: #999 !important;" title="Git教程" target="_blank">Git教程</a></li>
+
+                  <li><a href="/tutorial/119" style="font-size:12px;color: #999 !important;" title="使用Swift2开发iOS" target="_blank">使用Swift2开发iOS</a></li>
+
+                  <li><a href="/tutorial/167" style="font-size:12px;color: #999 !important;" title="UML教程" target="_blank">UML教程</a></li>
+
+                  <li><a href="/tutorial/129" style="font-size:12px;color: #999 !important;" title="HTML 全局属性" target="_blank">HTML 全局属性</a></li>
+
+                  <li><a href="/tutorial/172" style="font-size:12px;color: #999 !important;" title="iOS开发" target="_blank">iOS开发</a></li>
+
+                  <li><a href="/tutorial/131" style="font-size:12px;color: #999 !important;" title="HTML 音视频" target="_blank">HTML 音视频</a></li>
+
+                  <li><a href="/tutorial/186" style="font-size:12px;color: #999 !important;" title="Git中文参考" target="_blank">Git中文参考</a></li>
+
+                  <li><a href="/tutorial/133" style="font-size:12px;color: #999 !important;" title="Linux 命令大全" target="_blank">Linux 命令大全</a></li>
+
+                  <li><a href="/tutorial/188" style="font-size:12px;color: #999 !important;" title="Node.js中文文档" target="_blank">Node.js中文文档</a></li>
+
+                  <li><a href="/tutorial/151" style="font-size:12px;color: #999 !important;" title="Python3详细" target="_blank">Python3详细</a></li>
+
+                  <li><a href="/tutorial/91" style="font-size:12px;color: #999 !important;" title="ES6详细" target="_blank">ES6详细</a></li>
+
+                  <li><a href="/tutorial/153" style="font-size:12px;color: #999 !important;" title="Swift详细" target="_blank">Swift详细</a></li>
+
+                  <li><a href="/tutorial/212" style="font-size:12px;color: #999 !important;" title="Robot Framework自动化测试框架" target="_blank">Robot Framework自动化测试框架</a></li>
+
+                  <li><a href="/tutorial/155" style="font-size:12px;color: #999 !important;" title="Vim教程" target="_blank">Vim教程</a></li>
+
+                  <li><a href="/tutorial/214" style="font-size:12px;color: #999 !important;" title="Jmeter教程" target="_blank">Jmeter教程</a></li>
+
+                  <li><a href="/tutorial/115" style="font-size:12px;color: #999 !important;" title="Android教程" target="_blank">Android教程</a></li>
+
+                  <li><a href="/tutorial/157" style="font-size:12px;color: #999 !important;" title="JSON教程" target="_blank">JSON教程</a></li>
+
+                  <li><a href="/tutorial/117" style="font-size:12px;color: #999 !important;" title="Ionic教程" target="_blank">Ionic教程</a></li>
+
+                  <li><a href="/tutorial/162" style="font-size:12px;color: #999 !important;" title="Sublime Text教程" target="_blank">Sublime Text教程</a></li>
+
+                  <li><a href="/tutorial/128" style="font-size:12px;color: #999 !important;" title="wxPython教程详细" target="_blank">wxPython教程详细</a></li>
+
+                  <li><a href="/tutorial/130" style="font-size:12px;color: #999 !important;" title="HTML 画布" target="_blank">HTML 画布</a></li>
+
+                  <li><a href="/tutorial/185" style="font-size:12px;color: #999 !important;" title="Linux命令行" target="_blank">Linux命令行</a></li>
+
+                  <li><a href="/tutorial/87" style="font-size:12px;color: #999 !important;" title="C++详细" target="_blank">C++详细</a></li>
+
+                  <li><a href="/tutorial/89" style="font-size:12px;color: #999 !important;" title="Python详细" target="_blank">Python详细</a></li>
+
+                  <li><a href="/tutorial/210" style="font-size:12px;color: #999 !important;" title="Jmeter教程" target="_blank">Jmeter教程</a></li>
+
+                  <li><a href="/tutorial/211" style="font-size:12px;color: #999 !important;" title="Robot Framework教程" target="_blank">Robot Framework教程</a></li>
+
+                  <li><a href="/tutorial/92" style="font-size:12px;color: #999 !important;" title="Linux 服务器管理" target="_blank">Linux 服务器管理</a></li>
+
+                  <li><a href="/tutorial/93" style="font-size:12px;color: #999 !important;" title="程序员简历模板" target="_blank">程序员简历模板</a></li>
+
+                  <li><a href="/tutorial/171" style="font-size:12px;color: #999 !important;" title="Docker教程" target="_blank">Docker教程</a></li>
+
+                </ul>
+              </li>
+
+      </ul>
+    </div>
+
+  </div>
+      </div>
+
+    <div class="col-md-6">
+
+      <!-- banner -->
+      <section>
+
+<!--
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-5812992211126268"
+           data-ad-slot="4806361477"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+-->
+
+<div id="bannerIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+
+
+      <li data-target="#bannerIndicators" data-slide-to="Python测试"  class="active"></li>
+
+      <li data-target="#bannerIndicators" data-slide-to="Python促销"  class=""></li>
+
+
+  </ol>
+  <div class="carousel-inner">
+
+
+      <div class="carousel-item  active">
+        <a href="https://edu.csdn.net/combo/detail/1545" target="_blank" rel="nofollow"><img class="d-block w-100" src="static/assets/images/banner/python_testing.png" alt="Python测试" height="260"></a>
+      </div>
+
+
+
+      <div class="carousel-item ">
+        <a href="https://edu.csdn.net/combo/detail/1511" target="_blank" rel="nofollow"><img class="d-block w-100" src="static/assets/images/banner/python_sale.png" alt="Python促销" height="260"></a>
+      </div>
+
+
+
+
+  </div>
+
+  <a class="carousel-control-prev" href="#bannerIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#bannerIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+</section>
+
+      <!-- 博客 -->
+
+      <section class="mt-md-2">
+        <div class="card mb-md-3">
+        <div class="card-header" style="font-weight:600;">
+          <a href="/blog" style="color: black !important;">博客资讯</a>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush" style="font-size:14px;">
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2020/1/12/11098.html" rel="bookmark" style="color: #999 !important;">Python最性感十大操作</a>
+            <span style="float:right"><b>日期：</b>
+              2020-01-12 01:01
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/12/10/11097.html" rel="bookmark" style="color: #999 !important;">使用Newman在命令行运行集合</a>
+            <span style="float:right"><b>日期：</b>
+              2019-12-10 01:12
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/11/14/11096.html" rel="bookmark" style="color: #999 !important;">robot 命令行参数</a>
+            <span style="float:right"><b>日期：</b>
+              2019-11-14 08:11
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/11/11/11095.html" rel="bookmark" style="color: #999 !important;">一个完整的项目测试流程</a>
+            <span style="float:right"><b>日期：</b>
+              2019-11-11 03:11
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/11/7/11094.html" rel="bookmark" style="color: #999 !important;">Postman脚本</a>
+            <span style="float:right"><b>日期：</b>
+              2019-11-07 08:11
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/11/6/11093.html" rel="bookmark" style="color: #999 !important;">Postman快捷键</a>
+            <span style="float:right"><b>日期：</b>
+              2019-11-06 09:11
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/11/6/11092.html" rel="bookmark" style="color: #999 !important;">Python 读写 .ini 配置文件</a>
+            <span style="float:right"><b>日期：</b>
+              2019-11-06 06:11
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/11/3/11091.html" rel="bookmark" style="color: #999 !important;">入行测试开发-零基础入门好课</a>
+            <span style="float:right"><b>日期：</b>
+              2019-11-03 05:11
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11090.html" rel="bookmark" style="color: #999 !important;">鸣谢</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 03:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11089.html" rel="bookmark" style="color: #999 !important;">Appium 简述</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 03:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11088.html" rel="bookmark" style="color: #999 !important;">如何编写文档</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 03:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11087.html" rel="bookmark" style="color: #999 !important;">给贡献者的风格指南</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11086.html" rel="bookmark" style="color: #999 !important;">一个开发人员对于Appium的概述</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11085.html" rel="bookmark" style="color: #999 !important;">从源码运行Appium</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11084.html" rel="bookmark" style="color: #999 !important;">Settings</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11083.html" rel="bookmark" style="color: #999 !important;">Appium 事件计时</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11081.html" rel="bookmark" style="color: #999 !important;">跨域iFrame的自动化 同源策略会阻止Appium对和父页面不同域的iFrame进行自动化测试。</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11082.html" rel="bookmark" style="color: #999 !important;">如何搭建并定制 WebDriverAgent Server</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11080.html" rel="bookmark" style="color: #999 !important;">Selenium Grid</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11079.html" rel="bookmark" style="color: #999 !important;">将你的iOS测试从UIAutomation（iOS 9.3及更高版本）迁移到XCUITest（iOS 9.3及更高版本）</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11078.html" rel="bookmark" style="color: #999 !important;">多语言支持</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11077.html" rel="bookmark" style="color: #999 !important;">调整网络连接</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11076.html" rel="bookmark" style="color: #999 !important;">重置策略</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11075.html" rel="bookmark" style="color: #999 !important;">Android覆盖率指南</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 02:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11074.html" rel="bookmark" style="color: #999 !important;">uiautomator UiSelector</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 01:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11072.html" rel="bookmark" style="color: #999 !important;">iOS 谓词(Predicate)</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 01:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11073.html" rel="bookmark" style="color: #999 !important;">Touch ID</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 01:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11071.html" rel="bookmark" style="color: #999 !important;">使用 WebDriverAgent/XCTest Backend 进行iOS自动化手势操作</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 01:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11070.html" rel="bookmark" style="color: #999 !important;">自动化混合应用</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 01:10
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/blog/article/2019/10/16/11069.html" rel="bookmark" style="color: #999 !important;">自动化测试移动网络应用</a>
+            <span style="float:right"><b>日期：</b>
+              2019-10-16 01:10
+            </span>
+            </li>
+
+          </ul>
+
+        </div>
+        </div>
+      </section>
+
+      <!-- 教程 -->
+
+      <!-- 博客 -->
+
+      <section>
+        <div class="card mb-md-3">
+        <div class="card-header" style="font-weight:600;">
+          <a href="/questions" style="color: black !important;">最新问答</a>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush" style="font-size:14px;">
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2532" rel="bookmark" style="color: #999 !important;">Java为什么JSF在服务器上保存UI组件的状态？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2531" rel="bookmark" style="color: #999 !important;">用于Java的REST客户端？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2530" rel="bookmark" style="color: #999 !important;">为什么Spring的ApplicationContext.getBean被认为是不好的？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 01:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2529" rel="bookmark" style="color: #999 !important;">Java如何将堆栈跟踪转换为字符串？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 01:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2528" rel="bookmark" style="color: #999 !important;">将DEX反编译为Java源代码</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 01:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2527" rel="bookmark" style="color: #999 !important;">java等待光标显示问题</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 01:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2526" rel="bookmark" style="color: #999 !important;">Java使用OSXAdapter的JAR Bundler导致应用程序滞后或终止</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 01:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2525" rel="bookmark" style="color: #999 !important;">Java.Util.Scanner的NoSuchElementException</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-04 01:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2524" rel="bookmark" style="color: #999 !important;">将JLabel放在JPanel上居中</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2523" rel="bookmark" style="color: #999 !important;">Java类中变量影子的用途是什么？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2522" rel="bookmark" style="color: #999 !important;">如何使用AES解密用openssl命令加密的Java文件？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2521" rel="bookmark" style="color: #999 !important;">Java和GUI-根据MVC模式，ActionListeners在哪里？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2520" rel="bookmark" style="color: #999 !important;">为什么Java中的toString方法似乎不适用于数组</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2519" rel="bookmark" style="color: #999 !important;">如何使用Java在Selenium WebDriver中的框架之间切换</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2518" rel="bookmark" style="color: #999 !important;">Java 使用getResource（）获取资源</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2517" rel="bookmark" style="color: #999 !important;">无法使用通配符泛型类型向Java集合添加值</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2516" rel="bookmark" style="color: #999 !important;">Java无法解析com.google.android.gms play-services-auth：11.4.0</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2515" rel="bookmark" style="color: #999 !important;">Java等于/等于和==运算符之间的区别？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2514" rel="bookmark" style="color: #999 !important;">Java JRBeanCollectionDataSource：如何显示来自JavaBean的java.util.List中的数据？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2513" rel="bookmark" style="color: #999 !important;">Java文件上传以及Jersey静态Web服务中的其他对象</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2512" rel="bookmark" style="color: #999 !important;">Java转换给定时区的日期/时间</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2511" rel="bookmark" style="color: #999 !important;">Java 两个列表中的共同元素</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 08:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2510" rel="bookmark" style="color: #999 !important;">Java switch语句：需要常量表达式，但它是常量</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2509" rel="bookmark" style="color: #999 !important;">Java在文件中找到一行并将其删除</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2508" rel="bookmark" style="color: #999 !important;">用Java初始化多维数组</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2507" rel="bookmark" style="color: #999 !important;">数组是Java中的对象吗</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2506" rel="bookmark" style="color: #999 !important;">Java“Program to an interface”。这是什么意思？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2505" rel="bookmark" style="color: #999 !important;">Java比较两个列表</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2504" rel="bookmark" style="color: #999 !important;">一次读取后，Http Servlet请求会丢失POST正文中的参数</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2503" rel="bookmark" style="color: #999 !important;">Java 我可以用拦截进行同步请求吗？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2502" rel="bookmark" style="color: #999 !important;">如何在Java中正常处理SIGKILL信号</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2501" rel="bookmark" style="color: #999 !important;">Java 创建正则表达式匹配数组</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 07:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2500" rel="bookmark" style="color: #999 !important;">Java 将JSON转换为Map</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2499" rel="bookmark" style="color: #999 !important;">为什么Java类应实现可比性？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2498" rel="bookmark" style="color: #999 !important;">Java无法找到到请求目标的有效证书路径-即使导入证书后也出错</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2497" rel="bookmark" style="color: #999 !important;">Java字符串：“ String s = new String（“ silly”）;”</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2496" rel="bookmark" style="color: #999 !important;">在Java中调用Python？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2495" rel="bookmark" style="color: #999 !important;">为什么字符串在Java和.NET中不可变？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2494" rel="bookmark" style="color: #999 !important;">Java ArrayList的contains（）方法如何评估对象？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2493" rel="bookmark" style="color: #999 !important;">Java如何将包含整数的ArrayList转换为原始int数组？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2492" rel="bookmark" style="color: #999 !important;">Java中的全局变量</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 06:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2491" rel="bookmark" style="color: #999 !important;">如何在Java中将哈希图转换为JSON对象</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2490" rel="bookmark" style="color: #999 !important;">Java如何知道其他线程是否已完成？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2489" rel="bookmark" style="color: #999 !important;">Eclipse Java调试：找不到源</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2488" rel="bookmark" style="color: #999 !important;">Java我应该在构造函数内部还是外部初始化变量</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2487" rel="bookmark" style="color: #999 !important;">Java JDBC-如何使用服务名而不是SID连接到Oracle</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2486" rel="bookmark" style="color: #999 !important;">Java和C＃中的int和Integer有什么区别？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2485" rel="bookmark" style="color: #999 !important;">Java数组的length属性在哪里定义？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2484" rel="bookmark" style="color: #999 !important;">Java为什么我们通常使用|| 超过|？有什么区别？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2483" rel="bookmark" style="color: #999 !important;">什么是Java中的SuppressWarnings（“未选中”）？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2482" rel="bookmark" style="color: #999 !important;">从Java调用Clojure</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2481" rel="bookmark" style="color: #999 !important;">Java 如何将两个排序数组合并为一个排序数组？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2480" rel="bookmark" style="color: #999 !important;">Java使用JavaBeans的地方？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 05:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2479" rel="bookmark" style="color: #999 !important;">Java如何修复Hibernate“对象引用未保存的临时实例-刷新前保存临时实例”错误 </a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 04:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2478" rel="bookmark" style="color: #999 !important;">Java Hashset vs Treeset</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 04:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2477" rel="bookmark" style="color: #999 !important;">Java的隐藏功能</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2476" rel="bookmark" style="color: #999 !important;">java.util.NoSuchElementException:未找到行 </a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2475" rel="bookmark" style="color: #999 !important;">Java检查文件是否已经打开</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2474" rel="bookmark" style="color: #999 !important;">Java如何增加JVM内存？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2473" rel="bookmark" style="color: #999 !important;">如何在Android的RecyclerView中显示Firestore中的数据？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2472" rel="bookmark" style="color: #999 !important;">Java GC是否将内存释放回OS？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2471" rel="bookmark" style="color: #999 !important;">使用JPA创建具有保留字名称的字段</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2470" rel="bookmark" style="color: #999 !important;">在Java中，将两个字符相加的结果是int还是char？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2469" rel="bookmark" style="color: #999 !important;">JavaFX FXML控制器-构造函数与初始化方法</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2468" rel="bookmark" style="color: #999 !important;">为什么Java在SSL握手期间不发送客户端证书？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2467" rel="bookmark" style="color: #999 !important;">Java 是否打开静态字段以进行垃圾回收？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2466" rel="bookmark" style="color: #999 !important;">Java：组件中的setPreferredSize（）和setSize（）方法之间的区别</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2465" rel="bookmark" style="color: #999 !important;">Android / Java-日期差异（天）</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 03:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2464" rel="bookmark" style="color: #999 !important;">Java 如何为JVM设置默认语言环境？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2463" rel="bookmark" style="color: #999 !important;">Java Unix / Linux“ tail -f”的Java IO实现</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2462" rel="bookmark" style="color: #999 !important;">Android / Java中的JSON数组迭代</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2461" rel="bookmark" style="color: #999 !important;">Java从Unicode字符中删除变音符（criticalñṅņṋṉɳȵȵ）</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2460" rel="bookmark" style="color: #999 !important;">Java 8中使用了哪些功能接口？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2459" rel="bookmark" style="color: #999 !important;">Java String类如何覆盖+运算符？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2458" rel="bookmark" style="color: #999 !important;">File.separator和路径中的斜杠之间的区别</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2457" rel="bookmark" style="color: #999 !important;">如何在Android中获取当前位置</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2456" rel="bookmark" style="color: #999 !important;">连接到需要使用Java进行身份验证的远程URL</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2455" rel="bookmark" style="color: #999 !important;">在Java中获取集合的幂集</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2454" rel="bookmark" style="color: #999 !important;">Java多重继承</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+            <li class="list-group-item" style="color: #999 !important;">
+            <a href="/questions/2453" rel="bookmark" style="color: #999 !important;">为什么在hashCode中使用质数？</a>
+            <span style="float:right"><b>日期：</b>
+              2020-03-03 02:03
+            </span>
+            </li>
+
+          </ul>
+        </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- right 中文文档-->
+    <div class="col-md-3 mb-md-2">
+    <div class="card">
+    <div class="card-header" style="font-weight:600;">
+      <a href="/tutorials" style="color: black !important;">中文文档</a>
+    </div>
+    <div class="card-body">
+      <ul class="nav flex-column">
+
+              <li class="nav-item">
+                <a href="/document#基础语言" title="基础语言" style="color: #999 !important;">基础语言</a>
+                <ul>
+
+                  <li><a href="/doc/22" style="font-size:12px;color: #999 !important;" title="C语言参考库" target="_blank">C语言参考库</a></li>
+
+                  <li><a href="/doc/24" style="font-size:12px;color: #999 !important;" title="C++ API类库" target="_blank">C++ API类库</a></li>
+
+                  <li><a href="/doc/16" style="font-size:12px;color: #999 !important;" title="Python中文教程" target="_blank">Python中文教程</a></li>
+
+                  <li><a href="/doc/23" style="font-size:12px;color: #999 !important;" title="Java 中文 API文档" target="_blank">Java 中文 API文档</a></li>
+
+                  <li><a href="/doc/26" style="font-size:12px;color: #999 !important;" title="PHP参考手册" target="_blank">PHP参考手册</a></li>
+
+                  <li><a href="/doc/30" style="font-size:12px;color: #999 !important;" title="golang中文文档" target="_blank">golang中文文档</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#数据库文档" title="数据库文档" style="color: #999 !important;">数据库文档</a>
+                <ul>
+
+                  <li><a href="/doc/25" style="font-size:12px;color: #999 !important;" title="MySQL 中文参考手册" target="_blank">MySQL 中文参考手册</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#前端文档" title="前端文档" style="color: #999 !important;">前端文档</a>
+                <ul>
+
+                  <li><a href="/doc/61" style="font-size:12px;color: #999 !important;" title="redux中文文档" target="_blank">redux中文文档</a></li>
+
+                  <li><a href="/doc/8" style="font-size:12px;color: #999 !important;" title="BootStrap中文文档" target="_blank">BootStrap中文文档</a></li>
+
+                  <li><a href="/doc/27" style="font-size:12px;color: #999 !important;" title="NPM参考手册" target="_blank">NPM参考手册</a></li>
+
+                  <li><a href="/doc/50" style="font-size:12px;color: #999 !important;" title="Gulp中文文档" target="_blank">Gulp中文文档</a></li>
+
+                  <li><a href="/doc/28" style="font-size:12px;color: #999 !important;" title="Node.js api 参考" target="_blank">Node.js api 参考</a></li>
+
+                  <li><a href="/doc/49" style="font-size:12px;color: #999 !important;" title="Vuejs中文文档" target="_blank">Vuejs中文文档</a></li>
+
+                  <li><a href="/doc/31" style="font-size:12px;color: #999 !important;" title="Babel api 文档" target="_blank">Babel api 文档</a></li>
+
+                  <li><a href="/doc/32" style="font-size:12px;color: #999 !important;" title="Grunt api文档" target="_blank">Grunt api文档</a></li>
+
+                  <li><a href="/doc/51" style="font-size:12px;color: #999 !important;" title="Webpack中文文档" target="_blank">Webpack中文文档</a></li>
+
+                  <li><a href="/doc/54" style="font-size:12px;color: #999 !important;" title="React中文文档" target="_blank">React中文文档</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#Python文档" title="Python文档" style="color: #999 !important;">Python文档</a>
+                <ul>
+
+                  <li><a href="/doc/64" style="font-size:12px;color: #999 !important;" title="sklearn中文文档" target="_blank">sklearn中文文档</a></li>
+
+                  <li><a href="/doc/16" style="font-size:12px;color: #999 !important;" title="Python中文教程" target="_blank">Python中文教程</a></li>
+
+                  <li><a href="/doc/58" style="font-size:12px;color: #999 !important;" title="Python Guide中文版" target="_blank">Python Guide中文版</a></li>
+
+                  <li><a href="/doc/5" style="font-size:12px;color: #999 !important;" title="Django中文文档" target="_blank">Django中文文档</a></li>
+
+                  <li><a href="/doc/45" style="font-size:12px;color: #999 !important;" title="Django 2.1文档" target="_blank">Django 2.1文档</a></li>
+
+                  <li><a href="/doc/6" style="font-size:12px;color: #999 !important;" title="BeautifulSoup中文文档" target="_blank">BeautifulSoup中文文档</a></li>
+
+                  <li><a href="/doc/11" style="font-size:12px;color: #999 !important;" title="Flask中文教程" target="_blank">Flask中文教程</a></li>
+
+                  <li><a href="/doc/17" style="font-size:12px;color: #999 !important;" title="Request中文教程" target="_blank">Request中文教程</a></li>
+
+                  <li><a href="/doc/12" style="font-size:12px;color: #999 !important;" title="Jinja2中文文档" target="_blank">Jinja2中文文档</a></li>
+
+                  <li><a href="/doc/13" style="font-size:12px;color: #999 !important;" title="NumPy中文教程" target="_blank">NumPy中文教程</a></li>
+
+                  <li><a href="/doc/14" style="font-size:12px;color: #999 !important;" title="Pandas中文教程" target="_blank">Pandas中文教程</a></li>
+
+                  <li><a href="/doc/20" style="font-size:12px;color: #999 !important;" title="Tornado中文教程" target="_blank">Tornado中文教程</a></li>
+
+                  <li><a href="/doc/19" style="font-size:12px;color: #999 !important;" title="TensorFlow中文教程" target="_blank">TensorFlow中文教程</a></li>
+
+                  <li><a href="/doc/18" style="font-size:12px;color: #999 !important;" title="Scrapy中文教程" target="_blank">Scrapy中文教程</a></li>
+
+                  <li><a href="/doc/15" style="font-size:12px;color: #999 !important;" title="pyspider 中文教程" target="_blank">pyspider 中文教程</a></li>
+
+                  <li><a href="/doc/10" style="font-size:12px;color: #999 !important;" title="Djang-Redis中文教程" target="_blank">Djang-Redis中文教程</a></li>
+
+                  <li><a href="/doc/21" style="font-size:12px;color: #999 !important;" title="werkzeug中文教程" target="_blank">werkzeug中文教程</a></li>
+
+                  <li><a href="/doc/9" style="font-size:12px;color: #999 !important;" title="深度学习中文教程" target="_blank">深度学习中文教程</a></li>
+
+                  <li><a href="/doc/29" style="font-size:12px;color: #999 !important;" title="uWSGI中文教程" target="_blank">uWSGI中文教程</a></li>
+
+                  <li><a href="/doc/57" style="font-size:12px;color: #999 !important;" title="Fabric中文文档" target="_blank">Fabric中文文档</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#Java文档" title="Java文档" style="color: #999 !important;">Java文档</a>
+                <ul>
+
+                  <li><a href="/doc/63" style="font-size:12px;color: #999 !important;" title="elasticsearch中文文档" target="_blank">elasticsearch中文文档</a></li>
+
+                  <li><a href="/doc/23" style="font-size:12px;color: #999 !important;" title="Java 中文 API文档" target="_blank">Java 中文 API文档</a></li>
+
+                  <li><a href="/doc/47" style="font-size:12px;color: #999 !important;" title="Java 编程思想" target="_blank">Java 编程思想</a></li>
+
+                  <li><a href="/doc/33" style="font-size:12px;color: #999 !important;" title="Servlet API文档" target="_blank">Servlet API文档</a></li>
+
+                  <li><a href="/doc/34" style="font-size:12px;color: #999 !important;" title="JSP API文档" target="_blank">JSP API文档</a></li>
+
+                  <li><a href="/doc/44" style="font-size:12px;color: #999 !important;" title="Struts api 文档" target="_blank">Struts api 文档</a></li>
+
+                  <li><a href="/doc/43" style="font-size:12px;color: #999 !important;" title="Hibernate中文文档" target="_blank">Hibernate中文文档</a></li>
+
+                  <li><a href="/doc/52" style="font-size:12px;color: #999 !important;" title="Spring 中文文档" target="_blank">Spring 中文文档</a></li>
+
+                  <li><a href="/doc/46" style="font-size:12px;color: #999 !important;" title="Spring Boot参考指南" target="_blank">Spring Boot参考指南</a></li>
+
+                  <li><a href="/doc/48" style="font-size:12px;color: #999 !important;" title="Gradle用户指南" target="_blank">Gradle用户指南</a></li>
+
+                  <li><a href="/doc/53" style="font-size:12px;color: #999 !important;" title="Spring MVC中文文档" target="_blank">Spring MVC中文文档</a></li>
+
+                  <li><a href="/doc/55" style="font-size:12px;color: #999 !important;" title="MyBatis3中文文档" target="_blank">MyBatis3中文文档</a></li>
+
+                  <li><a href="/doc/59" style="font-size:12px;color: #999 !important;" title="netty中文指南" target="_blank">netty中文指南</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#PHP文档" title="PHP文档" style="color: #999 !important;">PHP文档</a>
+                <ul>
+
+                  <li><a href="/doc/60" style="font-size:12px;color: #999 !important;" title="laravel中文文档" target="_blank">laravel中文文档</a></li>
+
+                  <li><a href="/doc/26" style="font-size:12px;color: #999 !important;" title="PHP参考手册" target="_blank">PHP参考手册</a></li>
+
+                  <li><a href="/doc/35" style="font-size:12px;color: #999 !important;" title="Composer api 文档" target="_blank">Composer api 文档</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#大数据文档" title="大数据文档" style="color: #999 !important;">大数据文档</a>
+                <ul>
+
+                  <li><a href="/doc/62" style="font-size:12px;color: #999 !important;" title="storm中文文档" target="_blank">storm中文文档</a></li>
+
+                  <li><a href="/doc/39" style="font-size:12px;color: #999 !important;" title="Hadoop中文文档" target="_blank">Hadoop中文文档</a></li>
+
+                  <li><a href="/doc/41" style="font-size:12px;color: #999 !important;" title="Spark 中文文档" target="_blank">Spark 中文文档</a></li>
+
+                  <li><a href="/doc/40" style="font-size:12px;color: #999 !important;" title="Scala api文档" target="_blank">Scala api文档</a></li>
+
+                  <li><a href="/doc/42" style="font-size:12px;color: #999 !important;" title="HBase 中文文档" target="_blank">HBase 中文文档</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#人工智能" title="人工智能" style="color: #999 !important;">人工智能</a>
+                <ul>
+
+                  <li><a href="/doc/13" style="font-size:12px;color: #999 !important;" title="NumPy中文教程" target="_blank">NumPy中文教程</a></li>
+
+                  <li><a href="/doc/14" style="font-size:12px;color: #999 !important;" title="Pandas中文教程" target="_blank">Pandas中文教程</a></li>
+
+                  <li><a href="/doc/19" style="font-size:12px;color: #999 !important;" title="TensorFlow中文教程" target="_blank">TensorFlow中文教程</a></li>
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/document#其他文档" title="其他文档" style="color: #999 !important;">其他文档</a>
+                <ul>
+
+                </ul>
+              </li>
+
+      </ul>
+    </div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 边栏广告位-垂直 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5812992211126268"
+     data-ad-slot="1524297445"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+  </div>
+  </div>
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+<script src="/static/assets/js/compressed.js" type="application/javascript"></script>
+
+
+
+
+
+
+
+<footer class="footer">
+
+<div class="container mb-3">
+
+  <div class="row text-left">
+    <!-- 第一列 -->
+    <div class="col-md-4">
+
+      <div>
+        <h5>编程字典</h5>
+        <p><a href="http://www.codingdict.com">编程字典(CodingDict.com)</a>，
+          专注于IT课程的研发和培训，课程分为：<a href="/courses">实战课程</a>、
+          <a href="/tutorials">免费教程</a>、<a href="/document">中文文档</a>、<a href="/blog">博客</a>和<a href="/tools/index.html">在线工具</a>
+          形成了五维一体的全方位IT课程平台。内容涵盖：
+          Python、Java、PHP、Web前端、大数据、人工智能、数据库、移动开发（Android、iOS）及游戏开发等。课程以文字+视频的方式呈现，
+          极大的提高学员的学习效率，深受业界和学员一致好评。</p>
+      </div>
+
+    </div>
+
+    <!-- 第二列 -->
+    <div class="col-md-4">
+        <div class="tagcloud01">
+        <h5>热门标签</h5>
+        	<ul>
+        		<li><a href="/tutorial/1">HTML</a></li>
+            <li><a href="/tutorial/25">HTML5</a></li>
+        		<li><a href="/tutorial/2">CSS</a></li>
+        		<li><a href="/tutorial/26">CSS3</a></li>
+        		<li><a href="/tutorial/22">JavaScript</a></li>
+        		<li><a href="/tutorial/23">jQuery</a></li>
+            <li><a href="/tutorial/39">Node.js</a></li>
+            <li><a href="/tutorial/13">SQL</a></li>
+            <li><a href="/tutorial/14">MySQL</a></li>
+            <li><a href="/tutorial/3">C语言</a></li>
+        		<li><a href="/tutorial/4">Java</a></li>
+        		<li><a href="/tutorial/7">Python</a></li>
+            <li><a href="/tutorial/41">Django</a></li>
+            <li><a href="/tutorial/74">Numpy</a></li>
+        		<li><a href="/tutorial/159">PHP</a></li>
+            <li><a href="/tutorial/63">Laravel</a></li>
+        		<li><a href="/tutorials#大数据">大数据</a></li>
+        		<li><a href="/tutorials#人工智能">人工智能</a></li>
+
+        	</ul>
+        </div>
+    </div>
+
+    <!-- 第三列 -->
+    <div class="col-md-2">
+      <h5>学习线路图</h5>
+      <ul class="list-group">
+
+        <a href="/blog/article/2018/10/26/7.html">Python</a>
+        <a href="/blog/article/2018/10/26/8.html">Java</a>
+        <a href="/blog/article/2018/10/26/9.html">PHP</a>
+        <a href="/blog/article/2018/10/26/5.html">数据库</a>
+        <a href="/blog/article/2018/10/26/10.html">大数据</a>
+        <a href="/blog/article/2018/10/26/11.html">人工智能</a>
+      </ul>
+
+    </div>
+
+    <!-- 第四列 -->
+    <div class="col-md-2">
+      <h5>友情链接</h5>
+      <ul class="list-group">
+
+        <a href="/">CodingDict</a>
+        <a href="/courses">实战课程</a>
+        <a href="/tutorials">免费教程</a>
+        <a href="/document">中文文档</a>
+        <a href="/tools/index.html">在线工具</a>
+        <a href="/blog">博客</a>
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+
+</div>
+
+<div class="footer-copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <p>© Copyright 2010-2020. 编程字典版权所有.
+                    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow">京ICP备18030172号</a></p>
+                </div>
+                <div class="col-md-4">
+                    <nav id="sub-menu">
+                        <ul>
+                            <li><a href="http://www.codingdict.com">CodingDict</a></li>
+                            <li><a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=heLw6u3q6_L-7ey0tbXF4_r96OTs6avm6ug" style="text-decoration:none;">意见反馈</a></li>
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+  </div>
+
+
+</footer>
+
+
+
+
+
+
+
+
+</body>
+</html>
