@@ -22,14 +22,15 @@ def read_json_data(file_name='json_file'):
     :param file_name: json文件名称
     :return:
     """
-    print(json.load(open('file_name.json')))  # 使用load方法接受一个文件句柄
+    print(json.load(open('{}.json'.format(file_name))))  # 使用load方法接受一个文件句柄
+
     with open('{}.json'.format(file_name), 'r', encoding='utf-8') as rf:
         # 将JSON中的字符串对象反序列化为Python对象
-        json_dict = json.loads(rf.read())
+        json_dict = json.loads(rf.read())  # 使用loads方法接受一个JSON字符串
         return json_dict
 
 
 if __name__ == '__main__':
     msg = {'name': 'Evan'}
     write_json_data(msg)  # 写入json
-    print(read_json_data())  # 读取json
+    read_json_data()  # 读取json
