@@ -4,17 +4,30 @@ Tips：
 
 """
 # -*- coding:utf-8 -*-
-from flask import Flask, Request, render_template, url_for
+from flask import Flask, Request, render_template, url_for, redirect
 
 __author__ = 'Evan'
 app = Flask(__name__, template_folder='templates')  # 初始化Flask，定义模板文件夹为"templates"
 
 
 # 创建根目录
-@app.route('/', methods=['GET', 'POST'])  # 路由根目录，配置访问方式：GET和POST均可访问
+@app.route('/')
 def root_directory():
     # 返回一个字符串到网页
     return "I'm root directory"
+    # return redirect(url_for('login'))  # 重定向到login函数
+
+
+# 创建Login目录
+@app.route('/login', methods=['GET', 'POST'])  # 配置访问方式：GET和POST均可访问
+def login():
+    print('Login method: {}'.format(Request.method))  # 打印请求的方法
+    if Request.method == 'GET':
+        return 'Request method is GET'
+    elif Request.method == 'POST':
+        return 'Request method is POST'
+    else:
+        return 'Request method is {}'.format(Request.method)
 
 
 # 使用外部文件（外部文件会在template_folder定义的文件夹内查找）
