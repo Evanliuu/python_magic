@@ -8,6 +8,7 @@ import time
 
 __author__ = 'Evan'
 locks = None
+thread_pool = None
 
 
 def unit_test(sleep_time):
