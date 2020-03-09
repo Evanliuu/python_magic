@@ -68,10 +68,13 @@ def parse():
     pattern = re.compile('succeed')
     print(re.findall(pattern, example))
 
-    # 匹配中文字符
+    # 匹配中文
     text = 'abc我爱你def中国'
-    pattern = '[\u4E00-\u9FA5]+'  # 匹配所有的中文字符
+    pattern = '[\u4E00-\u9FA5]+'  # 匹配所有的中文
     print(re.findall(pattern, text))
+
+    # 只匹配字符串中的中文，字母，数字
+    print(re.findall('[\u4e00-\u9fa5a-zA-Z0-9]+', text))
 
 
 if __name__ == '__main__':
