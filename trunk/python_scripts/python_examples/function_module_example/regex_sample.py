@@ -74,7 +74,7 @@ def parse():
     print(re.findall(pattern, text))
 
     # 只匹配字符串中的中文，字母，数字
-    print(re.findall('[\u4e00-\u9fa5a-zA-Z0-9]+', text))
+    print(re.match('[\u4e00-\u9fa5a-zA-Z0-9]+', text).group())
 
 
 if __name__ == '__main__':
