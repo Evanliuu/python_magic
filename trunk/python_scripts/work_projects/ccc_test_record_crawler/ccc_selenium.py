@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 class CCCSpider(object):
 
-    def __init__(self, url=''):
+    def __init__(self, account, url=''):
         chrome_options = webdriver.ChromeOptions()  # 不加载图片
         # chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 设置为开发者模式，避免被识别
         # chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 设置无界面模式
@@ -29,7 +29,7 @@ class CCCSpider(object):
         self.waiting = WebDriverWait(self.driver, 60)  # 设置显示等待60秒
         self.driver.implicitly_wait(60)  # 设置隐示等待60秒
         self.source_url = url
-        self.account = ('evaliu', '55Dashun!')  # Login account
+        self.account = account
 
     def switch_to_windows(self, to_parent_windows=False):
         """
@@ -188,5 +188,10 @@ class CCCSpider(object):
 
 
 if __name__ == '__main__':
-    spider = CCCSpider(url='https://cesium.cisco.com/')
-    spider.main()
+    username = input('CEC Username: ')
+    password = input('CEC Password: ')
+    if username and password:
+        spider = CCCSpider((username, password), url='https://cesium.cisco.com/')
+        spider.main()
+    else:
+        raise ValueError('用户名或密码填写有误，请重新填写')

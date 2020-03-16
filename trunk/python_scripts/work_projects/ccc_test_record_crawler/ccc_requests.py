@@ -5,6 +5,7 @@
 import requests
 import re
 import time
+import json
 
 from urllib.parse import unquote
 
@@ -20,10 +21,10 @@ class CCCSpider(object):
         self.verification_prompt_url = self.verification_source_url + '/frame/prompt'
         self.verification_status_url = self.verification_source_url + '/frame/status'
         self.session = requests.Session()
-        self.session.headers = {
+        self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
                           ' Chrome/80.0.3987.132 Safari/537.36'
-        }
+        })
 
     def login(self):
         resp = self.session.get(self.root_url)
@@ -109,10 +110,7 @@ class CCCSpider(object):
                                 resp = self.session.get(token_url)
                                 token = resp.json()['session']
                                 # 在session中添加Token
-                                self.session.headers = {
-                                    'csession': token
-                                }
-                                print('Get Token - {}'.format(token))
+                                self.session.headers.update({'csession': token})
                                 print('Login CCC website successfully')
 
     def set_ccc_cookie(self, cookie, csession):
@@ -122,10 +120,10 @@ class CCCSpider(object):
         :param csession: 认证令牌
         :return:
         """
-        self.session.headers = {
+        self.session.headers.update({
             'cookie': cookie,
             'csession': csession,
-        }
+        })
 
     def login_ccc(self, whether_manually_get_cookie=False):
         """
@@ -137,16 +135,37 @@ class CCCSpider(object):
             cookie = input('Cookie: ')
             csession = input('Csession: ')
             if not cookie or not csession:
-                raise ValueError('Cookie和Csession填写有误，请重新填写')
+                raise ValueError('Cookie或Csession填写有误，请重新填写')
             self.set_ccc_cookie(cookie=cookie, csession=csession)
         else:
             self.login()
 
     def test_record_search(self):
-        check_url = 'https://cesium.cisco.com/msvcs/ccc-home-view/ccc_get_tiles_section_data'
-        resp = self.session.get(check_url)
+        multi_search_url = 'https://cesium.cisco.com/polarissvcs/central_data/multi_search'
+        data = {
+            'sernum': '',
+            'uuttype': '',
+            'area': '',
+            'machine': 'fxcavp996',
+            'location': '',
+            'test': '',
+            'passfail': 'P,F,A',
+            'start_time': '2020-03-15 00:00:00',
+            'end_time': '2020-03-16 00:00:00',
+            'dataset': 'test_results',
+            'database': None,
+            'start': 0,
+            'limit': '5000',
+            'user': '',
+            'attribute': '',
+            'fttd': 0,
+            'lttd': 0,
+            'ftta': 0,
+            'passedsampling': 0,
+        }
+        resp = self.session.post(multi_search_url, data=json.dumps(data))
         if resp.status_code == 200:
-            print('Check url')
+            print('Search result:')
             print(resp.json())
 
     def main(self, whether_manually_get_cookie=False):
@@ -160,6 +179,10 @@ class CCCSpider(object):
 
 
 if __name__ == '__main__':
-    account = ('evaliu', '******')
-    spider = CCCSpider(login_account=account)
-    spider.main(whether_manually_get_cookie=True)
+    username = input('CEC Username: ')
+    password = input('CEC Password: ')
+    if username and password:
+        spider = CCCSpider(login_account=(username, password))
+        spider.main(whether_manually_get_cookie=True)
+    else:
+        raise ValueError('用户名或密码填写有误，请重新填写')
