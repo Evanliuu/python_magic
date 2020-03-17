@@ -39,8 +39,8 @@ class CCCSpider(object):
             resp = self.session.post(login_url.group(1), data=data)
             if resp.status_code == 200:
                 # 登陆账号后进入认证界面 "Two-Factor Authentication"
-                sig_request = re.search("'sig_request': '(.+?)(:APP.+?)'", resp)
-                post_action = re.search("'post_action': '(.+?)'", resp)
+                sig_request = re.search("'sig_request': '(.+?)(:APP.+?)'", resp.text)
+                post_action = re.search("'post_action': '(.+?)'", resp.text)
                 referer = 'https://cloudsso.cisco.com/' + post_action.group(1)
                 duo_security_url = 'https://api-dbbfec7f.duosecurity.com/frame/web/v1/auth?'
                 authentication_url = '{}tx={}&parent={}&v={}'.format(duo_security_url, sig_request.group(1),
@@ -183,6 +183,6 @@ if __name__ == '__main__':
     password = input('CEC Password: ')
     if username and password:
         spider = CCCSpider(login_account=(username, password))
-        spider.main(whether_manually_get_cookie=True)
+        spider.main(whether_manually_get_cookie=False)
     else:
         raise ValueError('用户名或密码填写有误，请重新填写')
