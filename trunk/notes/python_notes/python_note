@@ -1,2 +1,0 @@
-<<python开启网络服务>>（有效端口号：1024-65535）
-python -m http.server 7777
