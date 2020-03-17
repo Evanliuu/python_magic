@@ -95,4 +95,4 @@ def send_email(sender_email, receive_email, auth_code):
 
 
 if __name__ == '__main__':
-    send_email(sender_email='evanliuu@qq.com', receive_email='evan.liuu@qq.com', auth_code='sample')
+    send_email(sender_email='evanliuu@qq.com', receive_email='evan.liuu@qq.com', auth_code='enter_your_auth_code')
