@@ -1,4 +1,4 @@
-<<pyinstaller使用说明>>
+<<pyinstaller安装使用说明>>
     pip安装完成后，进入要打包的py文件所在目录
     输入以下命令：
         pyinstaller ./(py文件名)  # 效果是有一堆的文件在dist文件夹下

@@ -1,10 +1,3 @@
-<<pip升级命令>>
-    1.使用python -m pip install --upgrade pip
-    2.使用python -m pip install -U --force-reinstall pip
-    3.使用pip install --user --upgrade pip
-
-===================================================================
-<<VBS>>
 <<调用bat文件隐藏cmd框>>
     Set obj = CreateObject("Wscript.Shell")
     obj.run "cmd /c C:\Users\evan\Desktop\test.bat", vbhide
