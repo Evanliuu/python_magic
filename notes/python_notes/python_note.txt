@@ -1,3 +1,10 @@
 <<python开启网络服务>>（有效端口号：1024-65535）
 python -m http.server 7777
 电脑开启网络服务后，使用手机浏览器输入该服务IP地址可直接下载电脑内的文件
+
+<<pyinstaller命令>>
+1. pyinstaller ./(py文件名)  # 效果是有一堆的依赖文件在dist文件夹下
+2. pyinstaller -F ./(py文件名)  # 在dist文件夹下只生成一个exe文件
+2. pyinstaller -c ./(py文件名)  # 创建一个命令行程序（就是那个小黑框），这是默认的选项
+3. pyinstaller -w ./(py文件名)  # 不弹出命令行
+4. pyinstaller -i ./(py文件名)  # 为程序指定一个图标，需要跟上图标的路径（在命令的末尾添加-i test.ico）
