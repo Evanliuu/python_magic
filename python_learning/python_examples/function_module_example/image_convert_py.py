@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import base64
 import importlib
+import os
 
 __author__ = 'Evan'
 
@@ -40,6 +41,10 @@ def get_py_image(image_list=[], py_name=''):
             base64_data = base64.b64decode(eval('py_object.{}'.format(image_variable)))  # 动态取出对应的image变量
             wf.write(base64_data)
             print('成功写入 << {} >> 图像'.format(image_name))
+
+    # TODO 临时图片使用完毕后可以删除
+    # os.remove('Rudder.ico')
+    # os.remove('Star.PNG')
 
 
 if __name__ == '__main__':
