@@ -4,8 +4,6 @@
 # -*- coding:utf-8 -*-
 import turtle as t
 
-__author__ = 'Evan'
-
 
 def main():
     # 背景布局

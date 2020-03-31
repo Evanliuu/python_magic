@@ -4,8 +4,6 @@
 # -*- coding:utf-8 -*-
 import turtle
 
-__author__ = 'Evan'
-
 
 def getPosition(x, y):
     turtle.setx(x)
