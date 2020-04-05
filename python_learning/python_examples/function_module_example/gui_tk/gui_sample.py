@@ -40,6 +40,10 @@ class GuiSample(object):
     def __init__(self):
         self.root = tk.Tk()
         self.root.title('Gui sample')
+        # 去除边框
+        self.root.overrideredirect(-1)
+        # 设置置顶
+        self.root.wm_attributes("-topmost", True)
         # 设置界面居中
         self.set_window_center(width=720, height=410)
         # 显示一个文本或图象
