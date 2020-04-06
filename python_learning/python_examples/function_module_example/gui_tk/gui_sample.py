@@ -40,12 +40,16 @@ class GuiSample(object):
     def __init__(self):
         self.root = tk.Tk()
         self.root.title('Gui sample')
+
         # 去除边框
-        self.root.overrideredirect(-1)
+        # self.root.overrideredirect(-1)
+
         # 设置置顶
         self.root.wm_attributes("-topmost", True)
+
         # 设置界面居中
-        self.set_window_center(width=720, height=410)
+        self.set_window_center(window=self.root, width=720, height=410)
+
         # 显示一个文本或图象
         self.label = tk.Label(self.root, text="Label is here")
         # 单行文本输入域
@@ -60,21 +64,34 @@ class GuiSample(object):
         self.entry.grid(row=1, column=0, sticky=tk.W)
         self.text.grid(row=3, column=0)
 
-    def set_window_center(self, width=300, height=300):
+    @staticmethod
+    def set_gui_geometry(window, x=2.5, y=4):
         """
-        设置GUI界面居中显示
-        :param width: expect width (type： int)
-        :param height: expect height (type： int)
+        设置window的几何分布，可以控制x轴和y轴的位置
+        :param window:
+        :param x: x轴位置
+        :param y: y轴位置
         :return:
         """
-        # 获取电脑屏幕高度和宽度
-        ws = self.root.winfo_screenwidth()
-        hs = self.root.winfo_screenheight()
-        # 计算X & Y轴位置
+        window.update_idletasks()
+        x_info = (window.winfo_screenwidth() - window.winfo_reqwidth()) / x
+        y_info = (window.winfo_screenwidth() - window.winfo_reqwidth()) / y
+        window.geometry('+%d+%d' % (x_info, y_info))
+
+    @staticmethod
+    def set_window_center(window, width=300, height=300):
+        """
+        设置window居中显示
+        :param window:
+        :param width: 宽度
+        :param height: 高度
+        :return:
+        """
+        ws = window.winfo_screenwidth()
+        hs = window.winfo_screenheight()
         x = (ws / 2) - (width / 2)
         y = (hs / 2) - (height / 2)
-        # 设置GUI大小和位置
-        self.root.geometry('%dx%d+%d+%d' % (width, height, x, y))
+        window.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
 
 if __name__ == '__main__':
