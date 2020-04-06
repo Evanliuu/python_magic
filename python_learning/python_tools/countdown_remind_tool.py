@@ -13,7 +13,6 @@ class TimingTool(object):
     def __init__(self):
         self.root = tk.Tk()
         self.root.title('倒计时工具')
-
         self.build_select_button_frame()
         self.build_display_times()
         self.set_window_center(window=self.root, width=285, height=90)
