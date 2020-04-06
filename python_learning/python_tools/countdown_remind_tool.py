@@ -8,14 +8,15 @@ from tkinter import messagebox
 __author__ = 'Evan'
 
 
-class TimingTool(object):
+class CountdownTool(object):
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title('倒计时工具')
+        self.root.title('倒计时小工具')
+        self.root.wm_attributes("-topmost", True)
         self.build_select_button_frame()
         self.build_display_times()
-        self.set_window_center(window=self.root, width=285, height=90)
+        self.set_window_center(window=self.root, width=275, height=135)
 
     def build_display_times(self):
         frames = tk.Frame(relief='ridge', borderwidth=0)
@@ -24,17 +25,17 @@ class TimingTool(object):
         frames.grid(row=1, column=0, sticky=tk.NSEW)
 
     def build_select_button_frame(self):
-        frames = tk.Frame(relief='ridge', borderwidth=0)
-        tk.Label(frames, text='请选择倒计时数: ').grid(row=0, column=0, sticky=tk.W)
+        frames = tk.Frame(relief='ridge', borderwidth=5)
+        tk.Label(frames, text='请选择倒计时间: ').grid(row=0, column=0, sticky=tk.W)
 
         self.var = tk.IntVar()
-        tk.Radiobutton(frames, text="30分钟", variable=self.var, value=30).grid(row=0, column=1, sticky=tk.W)
-        enable = tk.Radiobutton(frames, text="60分钟", variable=self.var, value=60)
-        enable.select()
-        enable.grid(row=0, column=2, sticky=tk.W)
+        tk.Scale(frames, label='Minutes', from_=1, to=60, resolution=1,
+                 orient=tk.HORIZONTAL, variable=self.var, showvalue=1).\
+            grid(row=0, column=1, sticky=tk.W)
+        self.var.set(30)
 
         self.start_button = tk.Button(frames, text='开始', command=self.progress, bg='LightBlue')
-        self.start_button.grid(row=0, column=3, sticky=tk.W, padx=3)
+        self.start_button.grid(row=0, column=2, sticky=tk.W, padx=5)
         frames.grid(row=0, column=0, sticky=tk.NSEW)
 
     def quit(self):
@@ -73,5 +74,5 @@ class TimingTool(object):
 
 
 if __name__ == '__main__':
-    countdown = TimingTool()
+    countdown = CountdownTool()
     countdown.root.mainloop()
