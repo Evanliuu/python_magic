@@ -19,10 +19,10 @@ class CountdownTool(object):
         self.set_window_center(window=self.root, width=275, height=135)
 
     def build_display_times(self):
-        frames = tk.Frame(relief='ridge', borderwidth=0)
-        self.label = tk.Label(frames, text='00:00', font=('times', 40, 'bold'))
+        self.frame = tk.Frame(relief='ridge', borderwidth=0)
+        self.label = tk.Label(self.frame, text='00:00', font=('times', 40, 'bold'), fg='#FF4500')
         self.label.grid(row=0, column=0, sticky=tk.W, padx=70)
-        frames.grid(row=1, column=0, sticky=tk.NSEW)
+        self.frame.grid(row=1, column=0, sticky=tk.NSEW)
 
     def build_select_button_frame(self):
         frames = tk.Frame(relief='ridge', borderwidth=5)
@@ -56,7 +56,10 @@ class CountdownTool(object):
     def _progress(self):
         self.start_button.config(text='运行中', state='disable')
         try:
-            close_time = (datetime.datetime.now() + datetime.timedelta(minutes=self.var.get())).strftime('%H:%M:%S')
+            minute_input = self.var.get()
+            self.display_label = tk.Label(self.frame, text='共{}分钟'.format(minute_input))
+            self.display_label.grid(row=0, column=0, sticky=tk.W, padx=2)
+            close_time = (datetime.datetime.now() + datetime.timedelta(minutes=minute_input)).strftime('%H:%M:%S')
             close_time = datetime.datetime.strptime(close_time, '%H:%M:%S')
             while True:
                 time.sleep(1)
@@ -70,6 +73,7 @@ class CountdownTool(object):
                 self.label.config(text='{}:{}'.format(minutes, seconds))
             messagebox.showinfo('Info', '倒计时间已到，请注意休息！')
         finally:
+            self.display_label.config(text='')
             self.start_button.config(text='开始', state='active')
 
 
