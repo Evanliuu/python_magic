@@ -37,27 +37,38 @@ def thread_run(sleep_list):
     global locks, thread_pool
 
     locks = threading.Lock()  # 线程锁
-    max_value = 3
-    thread_pool = threading.Semaphore(value=max_value)  # 线程池（设置可同时执行的最大线程数为3）
-    threads = []
+    max_value = 3  # 设置可同时执行的最大线程数为3
+    thread_pool = threading.Semaphore(value=max_value)  # 初始化线程池
     print('线程池最大数量：{}'.format(max_value))
 
+    threads = []
     for i in sleep_list:  # 配置所有线程
         t = threading.Thread(target=unit_test, args=(i,))
         threads.append(t)
 
     for thread in threads:  # 开启所有线程
         thread.start()
+        while True:
+            # 判断正在运行的线程数量, 控制执行的线程数量永远为4-1=3个
+            if len(threading.enumerate()) <= 4:
+                # threading.enumerate()包括主线程和所有的活动子线程，长度最少为1
+                print('剩余活动线程数量: {}'.format(len(threading.enumerate())))
+                break
 
-    for thread in threads:  # 主线程在此阻塞，等待所有线程结束
-        thread.join()
-        print('剩余活动线程数量: {}'.format(len(threading.enumerate())))  # 包括主线程和所有活动子线程，长度最少为1
+    # TODO thread.join()和下面的while循环都可阻塞所有线程，依据情况进行选择
+    # for thread in threads:  # 主线程在此阻塞，等待所有线程结束
+    #     thread.join()
+
+    while True:
+        # 当线程数量等于1时，并且只剩下一个主线程，退出循环
+        if len(threading.enumerate()) == 1 and 'MainThread(MainThread' in str(threading.enumerate()[0]):
+            break
 
     print('所有线程执行结束')
 
 
 def main():
-    thread_run(sleep_list=[3, 2, 6, 1, 7])
+    thread_run(sleep_list=[3, 2, 6, 1, 7, 5, 8])
 
 
 if __name__ == '__main__':
