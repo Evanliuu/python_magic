@@ -51,6 +51,7 @@ def thread_run(sleep_list):
 
     for thread in threads:  # 主线程在此阻塞，等待所有线程结束
         thread.join()
+        print('剩余活动线程数量: {}'.format(len(threading.enumerate())))  # 包括主线程和所有活动子线程，长度最少为1
 
     print('所有线程执行结束')
 
