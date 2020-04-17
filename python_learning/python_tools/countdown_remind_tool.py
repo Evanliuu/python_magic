@@ -13,7 +13,7 @@ class CountdownTool(object):
     def __init__(self):
         self.root = tk.Tk()
         self.root.title('倒计时小工具')
-        self.root.wm_attributes("-topmost", True)
+        self.root.wm_attributes("-topmost", True)  # GUI置顶，置顶后可手动最小化
         self.build_select_button_frame()
         self.build_display_times()
         self.set_window_center(window=self.root, width=347, height=135)
