@@ -2,6 +2,8 @@
 import time
 from ctypes import *
 
+__author__ = 'Evan'
+
 
 def close_windows(close_time):
     """
