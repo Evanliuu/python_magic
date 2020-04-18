@@ -39,13 +39,14 @@ class GuiSample(object):
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title('Gui sample')  # GUI标题
+        self.root.title('Gui sample')  # 设置GUI标题
 
-        # 设置GUI基础属性
+        # 设置GUI界面属性
         self.root.wm_attributes("-alpha", 1.0)  # 设置GUI透明度(0.0~1.0)
         self.root.wm_attributes("-topmost", True)  # 设置GUI置顶
-        # self.root.overrideredirect(-1)  # 去除GUI边框（GUI标题、放大缩小和关闭按钮都会消失）
         # self.root.wm_attributes("-toolwindow", True)  # 设置为工具窗口（没有放大和缩小按钮）
+        self.root.overrideredirect(-1)  # 去除GUI边框（GUI标题、放大缩小和关闭按钮都会消失）
+        self.bind_window_move_events()  # 如果去除GUI边框了，就要绑定窗口移动事件，否则GUI无法移动和退出
 
         # 设置所有窗口部件
         self.build_label()
@@ -113,6 +114,28 @@ class GuiSample(object):
         self.text_input.insert(tk.END, 'Test is here')  # 写入信息到Text
         # self.text_input.get(1.0, tk.END).strip()  # 获取Text控件内所有信息
         # self.text_input.delete(1.0, tk.END)  # 清空Text控件内所有信息
+
+    def bind_window_move_events(self):
+        def start_move(event):
+            global x, y
+            x = event.x
+            y = event.y
+
+        def stop_move(event):
+            global x, y
+            x = None
+            y = None
+
+        def on_motion(event):
+            global x, y
+            deltax = event.x - x
+            deltay = event.y - y
+            self.root.geometry("+%s+%s" % (self.root.winfo_x() + deltax, self.root.winfo_y() + deltay))
+            self.root.update()
+
+        self.root.bind("<ButtonPress-1>", start_move)  # 监听左键按下操作响应函数
+        self.root.bind("<ButtonRelease-1>", stop_move)  # 监听左键松开操作响应函数
+        self.root.bind("<B1-Motion>", on_motion)  # 监听鼠标移动操作响应函数
 
     @staticmethod
     def set_gui_geometry(window, x=2.5, y=4):
