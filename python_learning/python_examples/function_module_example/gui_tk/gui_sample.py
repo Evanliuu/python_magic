@@ -39,30 +39,80 @@ class GuiSample(object):
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title('Gui sample')
+        self.root.title('Gui sample')  # GUI标题
 
-        # 去除边框
-        # self.root.overrideredirect(-1)
+        # 设置GUI基础属性
+        self.root.wm_attributes("-alpha", 1.0)  # 设置GUI透明度(0.0~1.0)
+        self.root.wm_attributes("-topmost", True)  # 设置GUI置顶
+        # self.root.overrideredirect(-1)  # 去除GUI边框（GUI标题、放大缩小和关闭按钮都会消失）
+        # self.root.wm_attributes("-toolwindow", True)  # 设置为工具窗口（没有放大和缩小按钮）
 
-        # 设置置顶
-        self.root.wm_attributes("-topmost", True)
+        # 设置所有窗口部件
+        self.build_label()
+        self.build_entry()
+        self.build_text()
+        self.build_check_button()
+        self.build_button()
 
-        # 设置界面居中
-        self.set_window_center(window=self.root, width=720, height=410)
-
-        # 显示一个文本或图象
-        self.label = tk.Label(self.root, text="Label is here")
-        # 单行文本输入域
-        self.input = tk.StringVar()
-        self.entry = tk.Entry(self.root, textvariable=self.input)
-        self.input.set('Entry is here')
-        # 多行文本输入域，允许你用不同的样式和属性来显示和编辑文本。同时支持内嵌图象和窗口。
-        self.text = tk.Text(self.root)
-        self.text.insert(tk.END, 'Test is here')
         # 执行所有窗口部件
         self.label.grid(row=0, column=0, sticky=tk.W)
         self.entry.grid(row=1, column=0, sticky=tk.W)
-        self.text.grid(row=3, column=0)
+        self.checkbutton1.grid(row=0, column=1, sticky=tk.W)
+        self.checkbutton2.grid(row=1, column=1, sticky=tk.W)
+        self.text_input.grid(row=2, column=0, sticky=tk.W, columnspan=2)
+        self.quit_button.grid(row=3, column=0, sticky=tk.E)
+
+        # 设置窗口位置居中
+        self.set_gui_geometry(window=self.root)
+
+    def build_label(self):
+        """
+        构建文本或图像控件
+        :return:
+        """
+        self.label = tk.Label(self.root, text="Label is here")
+
+    def build_button(self):
+        """
+        构建点击按钮控件
+        :return:
+        """
+        self.quit_button = tk.Button(self.root, text='Quit', command=self.root.quit, bg='tomato')
+
+    def build_check_button(self):
+        """
+        构建多选按钮控件
+        :return:
+        """
+        self.checkbutton_a = tk.StringVar()
+        self.checkbutton1 = tk.Checkbutton(self.root, text="CheckbuttonA", variable=self.checkbutton_a,
+                                           offvalue='', onvalue='A')  # 选中后variable值为'A'，不选默认为空字符串
+        self.checkbutton1.select()  # 默认选中这个按钮
+
+        self.checkbutton_b = tk.StringVar()
+        self.checkbutton2 = tk.Checkbutton(self.root, text="CheckbuttonB", variable=self.checkbutton_b,
+                                           offvalue='', onvalue='B')  # 选中后variable值为'B'，不选默认为空字符串
+
+    def build_entry(self):
+        """
+        构建单行文本输入域
+        :return:
+        """
+        self.entry_input = tk.StringVar()
+        self.entry = tk.Entry(self.root, textvariable=self.entry_input)
+        self.entry_input.set('Entry is here')  # 写入信息到Entry
+        # self.entry_input.get()  # 获取Entry控件内所有信息
+        # self.entry_input.set('')  # 清空Entry控件内所有信息
+
+    def build_text(self):
+        """
+        构建多行文本输入域
+        :return:
+        """
+        self.text_input = tk.Text(self.root, height=5, width=40)
+        self.text_input.insert(tk.END, 'Test is here')  # 写入信息到Text
+        # self.text_input.get(1.0, tk.END).strip()  # 获取Text控件内所有信息
+        # self.text_input.delete(1.0, tk.END)  # 清空Text控件内所有信息
 
     @staticmethod
     def set_gui_geometry(window, x=2.5, y=4):
@@ -81,7 +131,7 @@ class GuiSample(object):
     @staticmethod
     def set_window_center(window, width=300, height=300):
         """
-        设置window居中显示
+        设置window居中显示，可以控制窗口的宽度和高度
         :param window:
         :param width: 宽度
         :param height: 高度
