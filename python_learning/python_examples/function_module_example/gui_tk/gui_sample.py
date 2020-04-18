@@ -116,6 +116,10 @@ class GuiSample(object):
         # self.text_input.delete(1.0, tk.END)  # 清空Text控件内所有信息
 
     def bind_window_move_events(self):
+        """
+        绑定窗口移动事件
+        :return:
+        """
         def start_move(event):
             global x, y
             x = event.x
