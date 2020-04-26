@@ -50,6 +50,7 @@ def mongodb_handle(host='localhost', port=27017):
     """
     # 连接mongodb客户端
     client = pymongo.MongoClient(host=host, port=port)
+    print('连接MongoDB成功')
 
     # 创建数据库example
     database = client['example']  # 或者写成 client.example

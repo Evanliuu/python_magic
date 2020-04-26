@@ -16,6 +16,7 @@ def mysql_handle(host='localhost', user='root', password='', port=27017):
     # 连接Mysql客户端
     db = pymysql.connect(host=host, user=user, password=password, port=port)
     cursor = db.cursor()  # 获取一个句柄
+    print('连接Mysql成功')
 
     # 创建表users
     create_table = 'users'
