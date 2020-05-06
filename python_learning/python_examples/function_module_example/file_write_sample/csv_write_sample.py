@@ -14,6 +14,7 @@ def write_csv_data(write_info, file_name='csv_file', headers=None):
     :return:
     """
     # 取消多余的空白行: Python3.7是newline=''，Python2.7是用'wb'写入
+    # 使用 encoding=utf-8-sig 可以防止写入中文乱码
     with open('{}.csv'.format(file_name), 'w', encoding='utf-8', newline='') as wf:
         # 这个是字典格式的写入
         dict_write = csv.DictWriter(wf, fieldnames=headers)
