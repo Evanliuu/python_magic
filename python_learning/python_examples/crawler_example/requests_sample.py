@@ -38,6 +38,7 @@ class Crawler(object):
         # requests.post(self.source_url, headers=headers, data=data)  # Post请求
         response = requests.get(self.source_url, headers=headers, params=params)  # Get请求
 
+        response.encoding = 'utf-8'  # 指定response为UTF-8编码
         # 获取网页信息
         print(response.url)  # 获取当前URL，返回一个字符串
         print(response.status_code)  # 获取响应状态码，返回一个整形
