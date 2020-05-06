@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-绘制曲线图
+绘制折线图
 """
 import matplotlib.pyplot as plt
 
