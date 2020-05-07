@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""
-绘制折线图
-"""
 import matplotlib.pyplot as plt
 
 __author__ = 'Evan'
 
 
 def draw_tendency_chart():
+    """
+    绘制折线图
+    """
     # 处理中文乱码
     plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
     plt.rcParams['axes.unicode_minus'] = False
@@ -41,7 +41,9 @@ def draw_tendency_chart():
     plt.plot(case_3_x, case_3_y, linewidth=2, label='case_3', color='g')
 
     # 显示曲线标注
-    plt.legend(loc="right")
+    plt.legend()  # 默认位置
+    # plt.legend(loc="right")  # 居右
+    # plt.legend(loc="row right")  # 居右下
     plt.grid(linewidth=1.0, linestyle='--')
     plt.savefig('tendency_chart.jpg', bbox_inches='tight')  # 保存图片
 
