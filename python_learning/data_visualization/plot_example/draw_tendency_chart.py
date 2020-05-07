@@ -12,6 +12,7 @@ def draw_tendency_chart():
     plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
     plt.rcParams['axes.unicode_minus'] = False
 
+    # 提高画质
     plt.figure(figsize=(10, 5), dpi=300)
     plt.subplot(111)
 
@@ -40,7 +41,7 @@ def draw_tendency_chart():
     plt.plot(case_3_x, case_3_y, linewidth=2, label='case_3', color='g')
 
     # 显示曲线标注
-    plt.legend(loc="lower right")
+    plt.legend(loc="right")
     plt.grid(linewidth=1.0, linestyle='--')
     plt.savefig('tendency_chart.jpg', bbox_inches='tight')  # 保存图片
 
