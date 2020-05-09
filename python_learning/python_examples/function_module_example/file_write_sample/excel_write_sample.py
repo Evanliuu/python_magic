@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import xlrd
 import xlwt
+import openpyxl
 
 __author__ = 'Evan'
 
@@ -28,6 +29,25 @@ def write_excel_table(write_info, table_name='excel_example.xls', sheet_name='fi
             sheet1.write(row_index, 0, each_row)
     # 保存数据到表格
     ex_wt.save(table_name)
+
+
+def read_excel_table_color(file_name):
+    """
+    读取Excel表格，返回每个单元格的颜色和值
+    :param file_name: Excel文档名称
+    :return:
+    """
+    workbook = openpyxl.load_workbook(file_name)  # 打开Excel文档
+    worksheet = workbook.active  # 读取Excel表格
+    rows, cols = worksheet.max_row, worksheet.max_column  # 返回表格内的总行数和总列数
+    result = []
+    for row in range(1, rows + 1):  # 循环遍历所有行
+        row_data_total = []
+        for column in range(1, cols + 1):  # 循环遍历所有列
+            ce = worksheet.cell(row=row, column=column)
+            row_data_total.append([ce.fill.start_color.rgb, ce.value])  # 返回每个单元格的颜色和值
+        result.append(row_data_total)
+    return result
 
 
 def read_excel_table(file_name, sheet_index=0):
