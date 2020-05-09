@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import xlwt
 
+__author__ = 'Evan'
+
 
 def write_excel_table(write_info, table_name='excel.xls', sheet_name='Sheet1'):
     """
