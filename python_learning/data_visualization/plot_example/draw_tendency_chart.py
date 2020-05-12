@@ -29,6 +29,7 @@ def draw_tendency_chart():
     case_3_x = ['2020/5/1', '2020/5/2', '2020/5/3', '2020/5/4']
     case_3_y = [18, 28, 38, 48]
 
+    # 画点
     for i in range(0, len(case_1_x)):
         plt.scatter(case_1_x[i], case_1_y[i], marker='D', s=30, color="#1E90FF")
     for i in range(0, len(case_2_x)):
@@ -36,6 +37,7 @@ def draw_tendency_chart():
     for i in range(0, len(case_3_x)):
         plt.scatter(case_3_x[i], case_3_y[i], marker='D', s=30, color="g")
 
+    # 画线
     plt.plot(case_1_x, case_1_y, linewidth=2, label='case_1', color="#1E90FF")
     plt.plot(case_2_x, case_2_y, linewidth=2, label='case_2', color='#FFA500')
     plt.plot(case_3_x, case_3_y, linewidth=2, label='case_3', color='g')
