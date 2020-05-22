@@ -8,3 +8,4 @@ python -m http.server 7777
 2. pyinstaller -c ./(py文件名)  # 创建一个命令行程序（就是那个小黑框），这是默认的选项
 3. pyinstaller -w ./(py文件名)  # 不弹出命令行
 4. pyinstaller -i ./(py文件名)  # 为程序指定一个图标，需要跟上图标的路径（在命令的末尾添加-i test.ico）
+常用命令：pyinstaller python.py -F -w -i test.io
