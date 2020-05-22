@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
+"""
+GUI倒计时小工具
+"""
 import time
 import datetime
 import threading
 import tkinter as tk
-
 from tkinter import messagebox
 
 __author__ = 'Evan'
@@ -11,7 +13,10 @@ __author__ = 'Evan'
 
 class CountdownTool(object):
 
-    def __init__(self):
+    def __init__(self, minimum_value=1, maximum_value=90, default_value=30):
+        self.minimum_value = minimum_value
+        self.maximum_value = maximum_value
+        self.default_value = default_value
         self.root = tk.Tk()
         self.root.title('倒计时小工具')
         self.root.wm_attributes("-topmost", True)  # GUI置顶，置顶后可手动最小化
@@ -35,10 +40,10 @@ class CountdownTool(object):
         tk.Label(frames, text='请选择倒计时间: ').grid(row=0, column=0, sticky=tk.W)
 
         self.var = tk.IntVar()
-        tk.Scale(frames, label='Minutes', from_=1, to=90, resolution=1,
+        tk.Scale(frames, label='Minutes', from_=self.minimum_value, to=self.maximum_value, resolution=1,
                  orient=tk.HORIZONTAL, variable=self.var, showvalue=1).\
             grid(row=0, column=1, sticky=tk.W)
-        self.var.set(30)
+        self.var.set(self.default_value)
 
         self.start_button = tk.Button(frames, text='开始', command=self.progress, bg='LightSkyBlue')
         self.start_button.grid(row=0, column=2, sticky=tk.W, padx=10)
@@ -94,5 +99,8 @@ class CountdownTool(object):
 
 
 if __name__ == '__main__':
-    countdown = CountdownTool()
+    minimum_time = 1  # 滑块最小时间
+    maximum_time = 90  # 滑块最大时间
+    default_time = 30  # 滑块预设时间
+    countdown = CountdownTool(minimum_time, maximum_time, default_time)
     countdown.root.mainloop()
