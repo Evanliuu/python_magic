@@ -48,6 +48,7 @@ def read_csv_data(file_name='csv_file'):
     # 用CSV读取
     with open('{}.csv'.format(file_name), 'r', encoding='utf-8') as rf:
         # 读取CSV表格并返回所有行数据
+        # reader = csv.reader((line.replace('\0', '') for line in rf))  # 如果读取报错，使用这个
         reader = csv.reader(rf)
         result = []
         for i in reader:
