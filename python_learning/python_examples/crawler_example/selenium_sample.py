@@ -223,6 +223,7 @@ class Crawler(object):
         print(self.driver.current_url)  # 获取当前的URL
         print(self.driver.get_cookies())  # 获取当前的Cookies
         print(self.driver.page_source)  # 获取网页源代码
+        # self.driver.page_source.encode('GBK', 'ignore')  # 遇到编码问题使用这个
 
         # 节点交互
         input_box.clear()  # 清空文本
