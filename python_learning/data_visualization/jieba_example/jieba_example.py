@@ -13,7 +13,7 @@ __author__ = 'Evan'
 def jieba_example():
     # 三种模式
     seg_str = "好好学习，天天向上。"
-    print('简单模式：{}'.format(jieba.lcut(seg_str)))  # 精简模式，返回一个列表类型的结果
+    print('精确模式：{}'.format(jieba.lcut(seg_str)))  # 精确模式，返回一个列表类型的结果
     print('全模式：{}'.format(jieba.lcut(seg_str, cut_all=True)))  # 全模式，使用 'cut_all=True' 指定
     print('搜索引擎模式：{}'.format(jieba.lcut_for_search(seg_str)))  # 搜索引擎模式
 
