@@ -47,7 +47,8 @@ def draw_tendency_chart():
     # plt.legend(loc="right")  # 居右
     # plt.legend(loc="row right")  # 居右下
     plt.grid(linewidth=1.0, linestyle='--')
-    plt.savefig('tendency_chart.jpg', bbox_inches='tight')  # 保存图片
+    plt.show()
+    # plt.savefig('tendency_chart.jpg', bbox_inches='tight')  # 保存图片
 
 
 if __name__ == '__main__':
