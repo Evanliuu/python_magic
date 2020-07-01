@@ -1,9 +1,13 @@
 # -*- coding:utf-8 -*-
+"""
+Python制作翻译词典
+"""
 import requests
 import json
 import os
 import base64
 import tkinter as tk
+from tkinter import messagebox
 
 __author__ = 'Evan'
 
@@ -12,43 +16,99 @@ class Translate(object):
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.geometry('590x265')
-        self.root.title('阿萨GA17-翻译词典')
+        self.root.geometry('589x285')
+        self.root.title('翻译词典')
         self.translate_mapping = {'自动检测语言': 'Auto', '中文': 'zh-CH', '英语': 'en', '日语': 'ja', '韩语': 'ko',
                                   '法语': 'fr', '俄语': 'ru', '西班牙语': 'es', '葡萄牙语': 'pt', '越南语': 'vi',
                                   '德语': 'de', '印尼语': 'id', '阿拉伯语': 'ar'}
         self.build_select_menu()
         self.build_input_text()
+        self.build_confirm_button()
         self.load_image()
-        self.set_gui_center(window=self.root, x=2.5, y=4)
+        self.set_gui_space(window=self.root, x=2.5, y=4)
+
+    def spider(self):
+        # 请求头
+        headers = {
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Content-Length': '38',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Host': 'aidemo.youdao.com',
+            'Origin': 'http://ai.youdao.com',
+            'Pragma': 'no-cache',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)'
+                          ' Chrome/64.0.3282.186 Safari/537.36',
+            'Referer': 'http://ai.youdao.com/product-fanyi-text.s',
+        }
+        # 请求链接
+        url = 'https://aidemo.youdao.com/trans'
+        # 请求参数
+        payload = {'q': self.input_text.get(1.0, tk.END).strip(),
+                   'from': self.translate_mapping[self.from_language.get()],
+                   'to': self.translate_mapping[self.to_language.get()]}
+        try:
+            response = requests.post(url, data=payload, headers=headers)  # 请求数据
+            data = json.loads(response.text)  # 将数据转为json格式
+            if data['translation'][0] != self.input_text.get(1.0, tk.END).strip():  # 判断是否翻译成功
+                return data['translation'][0]  # 返回翻译后的字符串
+            else:
+                return None
+        except Exception:
+            return None
+
+    def build_confirm_button(self):
+        tk.Button(self.root, text='翻译', command=self.translate, bg='LightSkyBlue').grid(row=5, column=0, sticky=tk.S, ipadx=10)
+        tk.Button(self.root, text='清空', command=self.cleanup, bg='#98FB98').grid(row=5, column=2, sticky=tk.S, ipadx=10)
+
+    def cleanup(self):
+        self.input_text.delete(1.0, tk.END)
+        self.output_text.delete(1.0, tk.END)
+
+    def translate(self):
+        input_text = self.input_text.get(1.0, tk.END).strip()
+        if input_text:
+            self.output_text.delete(1.0, tk.END)
+            if self.spider():
+                self.output_text.insert(tk.END, self.spider())
+            else:
+                self.output_text.insert(tk.END, '翻译失败！！！')
+                messagebox.showerror('错误', '翻译失败，请重试！')
+        else:
+            messagebox.showwarning('警告', '请输入要翻译的文字！')
 
     def build_input_text(self):
         x_length = 1
         tk.Label(self.root, text='请输入要翻译的文字：').grid(row=2, column=0, sticky=tk.W)
-        self.text1 = tk.Text(self.root, width=30, height=8)
-        self.text1.grid(row=3, column=0, sticky=tk.W, rowspan=4)
+        self.input_text = tk.Text(self.root, width=30, height=10)
+        self.input_text.grid(row=3, column=0, sticky=tk.W, rowspan=4)
 
         tk.Label(self.root, text='翻译结果：').grid(row=2, column=2, sticky=tk.W, padx=x_length)
-        self.text2 = tk.Text(self.root, width=30, height=8)
-        self.text2.grid(row=3, column=2, sticky=tk.W, rowspan=4, padx=x_length)
+        self.output_text = tk.Text(self.root, width=30, height=10)
+        self.output_text.grid(row=3, column=2, sticky=tk.W, rowspan=4, padx=x_length)
 
     def build_select_menu(self):
         select_list = [i for i in self.translate_mapping.keys()]
         x_length = 10
-        tk.Label(self.root, text='请选择要翻译的语言：').grid(row=2, column=1, sticky=tk.W, padx=x_length)
+        tk.Label(self.root, text='翻译前语言：').grid(row=2, column=1, sticky=tk.W, padx=x_length)
         self.from_language = tk.StringVar()
         self.from_language.set('自动检测语言')
-        menu = tk.OptionMenu(self.root, self.from_language, *select_list)
-        menu.grid(row=3, column=1, sticky=tk.W, padx=x_length)
+        menu1 = tk.OptionMenu(self.root, self.from_language, *select_list)
+        menu1.config(bg='#AFEEEE')
+        menu1.grid(row=3, column=1, sticky=tk.W, padx=x_length, pady=5)
 
-        tk.Label(self.root, text='请选择翻译后的语言：').grid(row=4, column=1, sticky=tk.W, padx=x_length)
+        tk.Label(self.root, text='翻译后语言：').grid(row=4, column=1, sticky=tk.W, padx=x_length)
         self.to_language = tk.StringVar()
         self.to_language.set('中文')
-        menu = tk.OptionMenu(self.root, self.to_language, *select_list)
-        menu.grid(row=5, column=1, sticky=tk.W, padx=x_length)
+        menu2 = tk.OptionMenu(self.root, self.to_language, *select_list)
+        menu2.config(bg='#AFEEEE')
+        menu2.grid(row=5, column=1, sticky=tk.W, padx=x_length)
 
     @staticmethod
-    def set_gui_center(window, x=None, y=None):
+    def set_gui_space(window, x, y):
         window.update_idletasks()
         x_info = (window.winfo_screenwidth() - window.winfo_reqwidth()) / x
         y_info = (window.winfo_screenwidth() - window.winfo_reqwidth()) / y
