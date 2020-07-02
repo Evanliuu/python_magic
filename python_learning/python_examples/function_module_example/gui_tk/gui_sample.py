@@ -54,17 +54,30 @@ class GuiSample(object):
         self.build_text()
         self.build_check_button()
         self.build_button()
+        self.build_option_menu()
 
         # 执行所有窗口部件
         self.label.grid(row=0, column=0, sticky=tk.W)
         self.entry.grid(row=1, column=0, sticky=tk.W)
         self.checkbutton1.grid(row=0, column=1, sticky=tk.W)
         self.checkbutton2.grid(row=1, column=1, sticky=tk.W)
-        self.text_input.grid(row=2, column=0, sticky=tk.W, columnspan=2)
-        self.quit_button.grid(row=3, column=0, sticky=tk.E)
+        self.option_menu.grid(row=2, column=0, sticky=tk.W)
+        self.text_input.grid(row=3, column=0, sticky=tk.W, columnspan=2)
+        self.quit_button.grid(row=4, column=0, sticky=tk.E)
 
         # 设置窗口位置居中
         self.set_gui_geometry(window=self.root)
+
+    def build_option_menu(self):
+        """
+        构建选择菜单控件
+        :return:
+        """
+        self.from_language = tk.StringVar()
+        self.from_language.set('OptionMenu is here')
+        select_list = ['Evan', 'Jane']
+        self.option_menu = tk.OptionMenu(self.root, self.from_language, *select_list)
+        self.option_menu.config(bg='LightSkyBlue')
 
     def build_label(self):
         """
@@ -111,7 +124,7 @@ class GuiSample(object):
         :return:
         """
         self.text_input = tk.Text(self.root, height=5, width=40)
-        self.text_input.insert(tk.END, 'Test is here')  # 写入信息到Text
+        self.text_input.insert(tk.END, 'Text is here')  # 写入信息到Text
         # self.text_input.get(1.0, tk.END).strip()  # 获取Text控件内所有信息
         # self.text_input.delete(1.0, tk.END)  # 清空Text控件内所有信息
 
