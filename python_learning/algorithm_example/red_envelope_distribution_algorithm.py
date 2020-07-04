@@ -1,4 +1,7 @@
 # -*- coding:utf-8 -*-
+"""
+红包分发算法
+"""
 import random
 
 __author__ = 'Evan'
