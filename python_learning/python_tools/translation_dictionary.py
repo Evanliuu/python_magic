@@ -17,7 +17,7 @@ class Translate(object):
     def __init__(self):
         self.root = tk.Tk()
         self.root.geometry('589x285')
-        self.root.title('翻译词典')
+        self.root.title('翻译词典                                      Author: ★～Evan～★')
         self.translate_mapping = {'自动检测语言': 'Auto', '中文': 'zh-CH', '英语': 'en', '日语': 'ja', '韩语': 'ko',
                                   '法语': 'fr', '俄语': 'ru', '西班牙语': 'es', '葡萄牙语': 'pt', '越南语': 'vi',
                                   '德语': 'de', '印尼语': 'id', '阿拉伯语': 'ar'}
