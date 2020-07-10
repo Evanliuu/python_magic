@@ -63,7 +63,8 @@ class GuiSample(object):
         self.checkbutton2.grid(row=1, column=1, sticky=tk.W)
         self.option_menu.grid(row=2, column=0, sticky=tk.W)
         self.text_input.grid(row=3, column=0, sticky=tk.W, columnspan=2)
-        self.quit_button.grid(row=4, column=0, sticky=tk.E)
+        self.display_button.grid(row=4, column=0, sticky=tk.W)
+        self.quit_button.grid(row=4, column=1, sticky=tk.W)
 
         # 设置窗口位置居中
         self.set_gui_geometry(window=self.root)
@@ -91,7 +92,13 @@ class GuiSample(object):
         构建点击按钮控件
         :return:
         """
+        def display(info):
+            self.text_input.delete(1.0, tk.END)  # 清空text控件内容
+            self.text_input.insert(tk.END, info)  # 写入内容到text控件
         self.quit_button = tk.Button(self.root, text='Quit', command=self.root.quit, bg='tomato')
+        # 实用lambda函数进行传参
+        self.display_button = tk.Button(self.root, text='Display',
+                                        command=lambda: display(self.entry_input.get()), bg='green')
 
     def build_check_button(self):
         """
