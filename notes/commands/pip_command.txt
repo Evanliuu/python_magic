@@ -1,4 +1,0 @@
-<<pip升级命令>>
-    1.使用python -m pip install --upgrade pip
-    2.使用python -m pip install -U --force-reinstall pip
-    3.使用pip install --user --upgrade pip
