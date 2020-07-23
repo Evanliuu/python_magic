@@ -52,7 +52,7 @@ def read_excel_table_color(file_name):
 
 def read_excel_table(file_name, sheet_index=0):
     """
-    读取Excel表格
+    读取Excel表格，返回所有数据
     :param file_name: Excel表格名称
     :param sheet_index: 表格的页面索引值，第一页为0，以此类推
     :return:

@@ -96,9 +96,9 @@ class GuiSample(object):
             self.text_input.delete(1.0, tk.END)  # 清空text控件内容
             self.text_input.insert(tk.END, info)  # 写入内容到text控件
         self.quit_button = tk.Button(self.root, text='Quit', command=self.root.quit, bg='tomato')
-        # 实用lambda函数进行传参
+        # 使用lambda函数进行传参
         self.display_button = tk.Button(self.root, text='Display',
-                                        command=lambda: display(self.entry_input.get()), bg='green')
+                                        command=lambda: display(self.entry_input.get()), bg='gold')
 
     def build_check_button(self):
         """

@@ -12,7 +12,9 @@ def write_json_data(write_info, file_name='json_file'):
     :return:
     """
     with open('{}.json'.format(file_name), 'w', encoding='utf-8') as wf:
-        # 将Python对象序列化为JSON中的字符串对象，如果有中文ensure_ascii要设置为False，indent代表缩进字符个数
+        # 将Python对象序列化为JSON中的字符串对象
+        # 如果有中文ensure_ascii要设置为False
+        # indent代表缩进字符个数
         wf.write(json.dumps(write_info, ensure_ascii=False, indent=2) + '\n')
 
 
