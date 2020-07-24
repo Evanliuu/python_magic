@@ -45,7 +45,7 @@ It doesn't matter what "floor" the opportunity is on. What matters is what you d
 
 
 def parse():
-    # 匹配方式
+    # 匹配模式
     print(re.match('Just as you need air to breathe', example).group())  # 起始位置匹配
     print(re.search("That's up to you", example).group())  # 任意位置匹配
     print(re.findall("is", example))  # 匹配所有指定内容，返回一个列表
@@ -58,8 +58,8 @@ def parse():
         print(result.group(2))  # 返回第二个圆括号的匹配结果
         print(result.groups())  # 返回一个列表，包含所有圆括号的结果
 
-    # 输出匹配的范围
-    print(re.match('Just as you need air to breathe', example).span())  # 返回一个元组
+    # 返回匹配字符在原字符串中的索引位置
+    print(re.search('Just as you need air to breathe', example).span())  # 返回一个索引元组（起始位置，结束位置）
 
     # 替换字符串
     print(re.sub('what', 'happy', example))  # 把所有的'what'替换成'happy'
@@ -69,7 +69,7 @@ def parse():
     print(re.findall(pattern, example))
 
     # 匹配中文
-    text = 'abc我爱你def中国'
+    text = 'abc好好学习def天天向上'
     pattern = '[\u4E00-\u9FA5]+'  # 匹配所有的中文
     print(re.findall(pattern, text))
 
