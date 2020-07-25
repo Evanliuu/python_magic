@@ -122,7 +122,7 @@ def close(*ignore):
 if __name__ == "__main__":
     root = tk.Tk()
     # 绘制一个画布
-    cv = tk.Canvas(root, height=400, width=600)
+    cv = tk.Canvas(root, height=128, width=560)
     # 背景图
     image = Image.open("sample.jpg")
     photo = ImageTk.PhotoImage(image)
