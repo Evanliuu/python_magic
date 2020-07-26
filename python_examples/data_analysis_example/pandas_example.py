@@ -2,6 +2,8 @@
 """
 Pandas使用例子
 """
+import os
+import sys
 import csv
 import pandas as pd
 
@@ -84,12 +86,34 @@ import pandas as pd
 # print('删除指定行\n{}'.format(frame.drop([1, 3])))
 # print('删除指定列\n{}'.format(frame.drop(['Id', 'Weight'], axis='columns')))  # axis控制轴的位置，默认为index
 
-# TODO 数据载入存储
-print('写入CSV...')
+
+# TODO 文件载入存储
+print('读取CSV文件')
 with open('example.csv', 'w', encoding='utf-8', newline='') as f:
     csv_file = csv.writer(f)
-    csv_file.writerows([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    csv_file.writerows([[1, 2, 3], [4, 5, 6], [7, 8, 'NULL']])
 print('自动分配默认列标签（从0开始）\n{}'.format(pd.read_csv('example.csv', header=None)))
 print('指定列标签\n{}'.format(pd.read_csv('example.csv', names=['a', 'b', 'c'])))
 print('指定"a"列的值为行索引\n{}'.format(pd.read_csv('example.csv', names=['a', 'b', 'c'], index_col='a')))
 print('指定"a"列和"b"列的值为行索引（分层索引）\n{}'.format(pd.read_csv('example.csv', names=['a', 'b', 'c'], index_col=['a', 'b'])))
+print('使用缺失值替换文件内的指定值\n{}'.format(pd.read_csv('example.csv', names=['a', 'b', 'c'], na_values={'b': [5, 8]})))
+# pd.options.display.max_rows = 5  # 设置文件读取显示的行数，多出的行数变为省略号显示
+print('跳过指定的行读取\n{}'.format(pd.read_csv('example.csv', names=['a', 'b', 'c'], skiprows=[0, 2])))  # 跳过第0行和第2行
+print('读取指定的行范围\n{}'.format(pd.read_csv('example.csv', names=['a', 'b', 'c'], nrows=2)))  # 只读取前2行
+
+
+print('写入CSV文件')
+data = pd.read_csv('example.csv', names=['a', 'b', 'c'])
+# index：是否写入行索引，header：是否写入列标签
+# columns：可指定写入对应的列标签数据并且有顺序，na_rep会赋值给缺失值（默认为空）
+data.to_csv('test.csv', index=False, header=False, columns=['a', 'b'], na_rep='NULL')  # 写入到新的CSV文件
+data.to_csv(sys.stdout, sep='|')  # 输出到屏幕，sep为分隔符（可用于临时查看写入的数据）
+os.remove('example.csv')
+os.remove('test.csv')
+
+
+# print('读取TXT文件')
+# with open('example.txt', 'w', encoding='utf-8', newline='') as f:
+#     txt_file = f.writelines([' A B C\n', 'aaa 1 2 3\n', 'bbb 4 5 6\n', 'bbb 4 5 6\n'])
+# print('使用sep分割txt文本内的每个数据\n{}'.format(pd.read_csv('example.txt', sep=r'\s+')))  # 使用正则表达式，根据空白分割
+# os.remove('example.txt')
