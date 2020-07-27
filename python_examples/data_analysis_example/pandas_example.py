@@ -6,6 +6,8 @@ import os
 import sys
 import pandas as pd
 
+__author__ = 'Evan'
+
 
 def build_series():
     """

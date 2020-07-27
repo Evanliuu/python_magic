@@ -4,6 +4,7 @@ Numpy基本用法
 """
 import numpy as np
 
+__author__ = 'Evan'
 
 # 创建数组
 print('创建一维数组\n{}'.format(np.array([1, 2, 3])))
