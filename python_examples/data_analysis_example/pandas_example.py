@@ -5,6 +5,7 @@ Pandas基本用法
 import os
 import sys
 import pandas as pd
+from numpy import nan as NA
 
 __author__ = 'Evan'
 
@@ -67,7 +68,7 @@ def build_data_frame():
 
 def array_operations():
     """
-    数组操作（Serials和DataFrame一致）
+    数组操作
     :return:
     """
     data = {
@@ -111,12 +112,12 @@ def file_operations():
     使用pandas载入存储文件
     :return:
     """
-    data = pd.DataFrame([[1, 2, 3, '11'], [4, 5, 6, '22'], [7, 8, 9, 'NULL']], columns=['a', 'b', 'c', 'd'])
+    data = pd.DataFrame([[1, 2, 3, '11'], [4, 5, 6, '22'], [7, 8, 9, None]], columns=['a', 'b', 'c', 'd'])
     # 写入CSV文件
     file_name = 'example.csv'
     # index：是否写入行索引，header：是否写入列标签
     # columns：可指定写入对应的列标签数据并且有顺序，na_rep会赋值给缺失值（默认为空）
-    data.to_csv(file_name, index=False, header=False, columns=['b', 'd', 'a'], na_rep='NULL')  # 写入到新的CSV文件
+    data.to_csv(file_name, index=False, header=False, columns=['b', 'd', 'a'], na_rep='NULL')  # 写入CSV文件
     data.to_csv(sys.stdout, sep='|')  # 输出到屏幕，sep为分隔符（可用于临时查看写入的数据）
     print('读取CSV文件')
     print('自动分配默认列标签（从0开始）\n{}'.format(pd.read_csv(file_name, header=None)))
@@ -151,8 +152,37 @@ def file_operations():
     os.remove(file_name)
 
 
+def data_cleansing():
+    """
+    数据清洗
+    :return:
+    """
+    # 过滤缺失值
+    data = pd.DataFrame([[1, 2, 3, 1], [4, 5, None, 1], [None, NA, NA, NA], [1, 2, 3, 1]], columns=['a', 'b', 'c', 'd'])
+    print('过滤所有包含缺失值的行\n{}'.format(data.dropna()))  # 默认删除包含缺失值的行
+    print('过滤所有包含缺失值的列\n{}'.format(data.dropna(axis='columns')))
+    print('过滤所有值均为NA的行\n{}'.format(data.dropna(how='all')))  # 只删除所有值均为NA的行
+    print('过滤并保留包含一定数量NA的行\n{}'.format(data.dropna(thresh=1)))  # 保留一行NA值
+    # 补全缺失值
+    print('补全所有缺失值\n{}'.format(data.fillna(0)))  # 全部的缺失值变为0
+    print('只补全指定列标签内的缺失值\n{}'.format(data.fillna({'a': 0, 'b': 1})))  # 只补全"a"列和"b"列的缺失值
+    print('补全所有缺失值（向前填充）\n{}'.format(data.fillna(method='ffill', limit=1)))  # 向前填充（缺失值和其前面的值相同），limit为最大填充范围
+    print('补全所有缺失值（向后填充）\n{}'.format(data.fillna(method='bfill')))  # 向后填充（缺失值和其后面的值相同）
+    # 删除重复值
+    print('删除所有重复的行（默认保留第一个观测到的行）\n{}'.format(data.drop_duplicates()))
+    print('删除所有重复的行（保留最后一个观测到的行）\n{}'.format(data.drop_duplicates(keep='last')))
+    print('删除指定列标签下重复的行\n{}'.format(data.drop_duplicates(['b'])))
+    # 替代值
+    print('替换所有的NA为0\n{}'.format(data.replace(NA, 0)))
+    print('替换指定数量的值\n{}'.format(data.replace({1: 10, 2: 20})))  # 1替换为10，2替换为20
+    # 重命名轴索引
+    print('重命名行索引\n{}'.format(data.rename(index={1: 10})))
+    print('重命名列标签\n{}'.format(data.rename(columns={'d': 'dd'})))
+
+
 if __name__ == '__main__':
-    build_series()
-    build_data_frame()
-    array_operations()
-    file_operations()
+    build_series()  # 构建Series对象
+    build_data_frame()  # 构建DataFrame对象
+    array_operations()  # 数组操作
+    file_operations()  # 文件操作
+    data_cleansing()  # 数据清洗
