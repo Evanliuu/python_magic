@@ -6,7 +6,7 @@ __author__ = 'Evan'
 
 class SqliteDB(object):
     """
-    在本地创建一个虚拟的Mysql文件
+    在本地创建一个虚拟的sql文件
     """
     def __init__(self, db_path=r'C:\Users\evaliu\Desktop', db_name='sql_lite3'):
         self.db_path = db_path + '\\' + db_name

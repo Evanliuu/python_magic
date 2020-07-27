@@ -41,19 +41,19 @@ def read_csv_data(file_name='csv_file'):
     :param file_name: CSV表格名称
     :return:
     """
-    # 用pandas读取，返回一个CSV表格，并且有行数显示
+    # 用pandas读取，返回一个二维数组
     result = pandas.read_csv('{}.csv'.format(file_name))
     print(result)
 
     # 用CSV读取
     with open('{}.csv'.format(file_name), 'r', encoding='utf-8') as rf:
-        # 读取CSV表格并返回所有行数据
+        # 读取所有行数据
         # reader = csv.reader((line.replace('\0', '') for line in rf))  # 如果读取报错，使用这个
-        reader = csv.reader(rf)
-        result = []
-        for i in reader:
-            result.append(i)
-        return result
+        data = list(csv.reader(rf))
+
+    header, values = data[0], data[1:]  # 切分列索引和数据行
+    print('读取每一列的数据：{}'.format({h: v for h, v in zip(header, zip(*values))}))
+    return data  # 返回所有行的数据
 
 
 if __name__ == '__main__':

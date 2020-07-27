@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-Numpy使用例子
+Numpy基本用法
 """
 import numpy as np
 

@@ -15,7 +15,7 @@ def write_json_data(write_info, file_name='json_file'):
         # 将Python对象序列化为JSON中的字符串对象
         # 如果有中文ensure_ascii要设置为False
         # indent代表缩进字符个数
-        wf.write(json.dumps(write_info, ensure_ascii=False, indent=2) + '\n')
+        wf.write(json.dumps(write_info, ensure_ascii=False, indent=2))
 
 
 def read_json_data(file_name='json_file'):
