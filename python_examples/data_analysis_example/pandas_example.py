@@ -5,7 +5,7 @@ Pandas基本用法
 import os
 import sys
 import pandas as pd
-from numpy import nan as NA
+import numpy as np
 
 __author__ = 'Evan'
 
@@ -20,6 +20,7 @@ def build_series():
     test = pd.Series(['aa', 'bb', 'cc', 'aa'], index=[1, 3, 5, 7])  # 使用列表生成一个Series，并指定行索引值（默认从0开始）
     test.name = 'Data'  # 指定数组名称
     test.index.name = 'Info'  # 指定行索引名称
+
     # 查看数组属性
     print('返回数组名称\n{}'.format(test.name))
     print('返回指定行索引内的值\n{}'.format(test[3]))
@@ -52,6 +53,7 @@ def build_data_frame():
     # 指定行索引值、列标签顺序（使用columns参数时，只会读取该列表内的列索引数据）
     frame = pd.DataFrame(data, columns=['Id', 'Name', 'Weight', 'Stature'], index=[3, 2, 1, 6, 5, 4])
     print('构建指定列标签顺序和行索引的DataFrame\n{}'.format(frame))
+
     # 查看数组属性
     print('返回数组的行索引是否唯一\n{}'.format(frame.index.is_unique))
     print('返回数组的头5行\n{}'.format(frame.head()))
@@ -113,7 +115,7 @@ def file_operations():
     :return:
     """
     data = pd.DataFrame([[1, 2, 3, '11'], [4, 5, 6, '22'], [7, 8, 9, None]], columns=['a', 'b', 'c', 'd'])
-    # 写入CSV文件
+    # 写入读取CSV文件
     file_name = 'example.csv'
     # index：是否写入行索引，header：是否写入列标签
     # columns：可指定写入对应的列标签数据并且有顺序，na_rep会赋值给缺失值（默认为空）
@@ -130,25 +132,26 @@ def file_operations():
     print('读取指定的行范围\n{}'.format(pd.read_csv(file_name, names=['a', 'b', 'c'], nrows=2)))  # 只读取前2行
     os.remove(file_name)
 
-    # 写入Excel文件
+    # 写入读取Excel文件
     file_name = 'example.xls'
     data.to_excel(file_name, index=True, header=True, sheet_name='sheet1', na_rep='NULL')
     print('读取Excel文件')
     print(pd.read_excel(file_name, sheet_name='sheet1'))
     os.remove(file_name)
 
-    # 写入JSON文件
+    # 写入读取JSON文件
     file_name = 'example.json'
     data.to_json(file_name)
     print('读取JSON文件')
     print(pd.read_json(file_name))
     os.remove(file_name)
 
+    # 读取TXT文件
     print('读取TXT文件')
     file_name = 'example.txt'
     with open(file_name, 'w', encoding='utf-8') as f:
         f.writelines(['A,B,C\n', '1,2,3\n', '4,5,6\n', '4,5,6\n'])
-    print(pd.read_csv(file_name, sep=','))  # 使用sep根据逗号切分
+    print(pd.read_csv(file_name, sep=','))  # 使用sep根据逗号切分每个数据
     os.remove(file_name)
 
 
@@ -157,27 +160,69 @@ def data_cleansing():
     数据清洗
     :return:
     """
+    nan = np.NAN
     # 过滤缺失值
-    data = pd.DataFrame([[1, 2, 3, 1], [4, 5, None, 1], [None, NA, NA, NA], [1, 2, 3, 1]], columns=['a', 'b', 'c', 'd'])
+    data = pd.DataFrame([[1, 2, 3], [4, 5, nan], [None, nan, nan], [1, 2, 3]], columns=['a', 'b', 'c'])
     print('过滤所有包含缺失值的行\n{}'.format(data.dropna()))  # 默认删除包含缺失值的行
     print('过滤所有包含缺失值的列\n{}'.format(data.dropna(axis='columns')))
     print('过滤所有值均为NA的行\n{}'.format(data.dropna(how='all')))  # 只删除所有值均为NA的行
     print('过滤并保留包含一定数量NA的行\n{}'.format(data.dropna(thresh=1)))  # 保留一行NA值
+
     # 补全缺失值
     print('补全所有缺失值\n{}'.format(data.fillna(0)))  # 全部的缺失值变为0
     print('只补全指定列标签内的缺失值\n{}'.format(data.fillna({'a': 0, 'b': 1})))  # 只补全"a"列和"b"列的缺失值
     print('补全所有缺失值（向前填充）\n{}'.format(data.fillna(method='ffill', limit=1)))  # 向前填充（缺失值和其前面的值相同），limit为最大填充范围
     print('补全所有缺失值（向后填充）\n{}'.format(data.fillna(method='bfill')))  # 向后填充（缺失值和其后面的值相同）
+
     # 删除重复值
     print('删除所有重复的行（默认保留第一个观测到的行）\n{}'.format(data.drop_duplicates()))
     print('删除所有重复的行（保留最后一个观测到的行）\n{}'.format(data.drop_duplicates(keep='last')))
     print('删除指定列标签下重复的行\n{}'.format(data.drop_duplicates(['b'])))
+
     # 替代值
-    print('替换所有的NA为0\n{}'.format(data.replace(NA, 0)))
+    print('替换所有的NA为0\n{}'.format(data.replace(nan, 0)))
     print('替换指定数量的值\n{}'.format(data.replace({1: 10, 2: 20})))  # 1替换为10，2替换为20
+
     # 重命名轴索引
     print('重命名行索引\n{}'.format(data.rename(index={1: 10})))
-    print('重命名列标签\n{}'.format(data.rename(columns={'d': 'dd'})))
+    print('重命名列标签\n{}'.format(data.rename(columns={'c': 'cc'})))
+
+
+def data_structured():
+    """
+    数据规整
+    :return:
+    """
+    # Series分层索引
+    data = pd.Series(np.random.randn(6), index=[['a', 'a', 'b', 'b', 'c', 'c'], [1, 2, 3, 1, 2, 3]])
+    print('创建Series分层索引\n{}'.format(data))
+    print('分层索引重新排列\n{}'.format(data.unstack()))  # 第二索引变为列标签（Series对象转化为DataFrame对象）
+    print('分层索引复原\n{}'.format(data.unstack().stack()))
+
+    # DataFrame分层索引
+    data = pd.DataFrame(np.arange(12).reshape((4, 3)), index=[['a', 'a', 'b', 'b'], [1, 2, 1, 2]],
+                        columns=[['one', 'one', 'two'], ['three', 'four', 'five']])
+    # 定义层级行名称和列名称
+    data.index.names = ['key1', 'key2']
+    data.columns.names = ['number1', 'number2']
+    print('创建DataFrame分层索引\n{}'.format(data))
+
+    # 层级交换（数据不会跟着变）
+    print('行层级名称交换（使用名称）\n{}'.format(data.swaplevel('key1', 'key2')))
+    print('列层级名称交换（使用序号）\n{}'.format(data.swaplevel(0, 1, axis='columns')))
+
+    # 层级排序（数据会跟着变）
+    print('行层级名称排序\n{}'.format(data.sort_index(level=1)))
+    print('列层级名称排序\n{}'.format(data.sort_index(level=1, axis='columns')))
+
+    # 按层级进行汇总统计
+    print('按行层级求和\n{}'.format(data.sum(level='key1')))
+    print('按列层级求和\n{}'.format(data.sum(level='number2', axis='columns')))
+
+    # 将DataFrame的列变为行索引
+    data = pd.DataFrame(np.arange(12).reshape((4, 3)), columns=['a', 'b', 'c'])
+    print('将DataFrame的列变为行索引（移除该列）\n{}'.format(data.set_index(['c'])))  # "c"会从数组中移除变为行索引
+    print('将DataFrame的列变为行索引（保留该列）\n{}'.format(data.set_index(['c'], drop=False)))  # "c"会保留在数组中
 
 
 if __name__ == '__main__':
@@ -186,3 +231,4 @@ if __name__ == '__main__':
     array_operations()  # 数组操作
     file_operations()  # 文件操作
     data_cleansing()  # 数据清洗
+    data_structured()  # 数据规整
