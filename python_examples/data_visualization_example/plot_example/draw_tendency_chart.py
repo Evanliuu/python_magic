@@ -13,7 +13,7 @@ def draw_tendency_chart():
     plt.rcParams['axes.unicode_minus'] = False
 
     # 提高画质
-    plt.figure(figsize=(10, 5), dpi=300)
+    plt.figure(figsize=(10, 5), dpi=130)
     plt.subplot(111)
 
     plt.xlabel('天数', size=12)  # 添加X轴标签
