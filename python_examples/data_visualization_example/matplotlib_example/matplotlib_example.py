@@ -33,7 +33,7 @@ def build_figure():
     axes[1, 1].bar(range(10), [np.random.randint(1, 10) for i in range(10)])  # 在子图[1, 1]位置绘制柱状图
 
     # 设置当前各个子图之间的间距（wspace：图片宽度，hspace：高度百分比）
-    plt.subplots_adjust(wspace=0, hspace=0)  # 间距缩小到零，没有边界
+    plt.subplots_adjust(wspace=0.2, hspace=0.2)
     plt.show()  # 显示图片
 
 
