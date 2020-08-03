@@ -46,7 +46,10 @@ def set_figure_attribute():
     plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
     plt.rcParams['axes.unicode_minus'] = False
 
-    # 设置颜色、标签和线类型
+    # 设置全局属性，自定义组件属性（包含：figure、axes、xtick、ytick、grid、legend）
+    plt.rc(group='figure', figsize=(10, 5))  # 设置所有的figure数字大小为10x10
+
+    # 设置颜色（color）、标签（linestyle）和线类型（marker）
     plt.plot(np.random.randn(30).cumsum(), color='k', linestyle='--', marker='o')  # plot会默认在当前最后一个子图上绘制
 
     # 设置标题、标签和刻度
@@ -93,6 +96,20 @@ def set_figure_attribute():
     plt.show()  # 显示图片
 
 
+def save_figure():
+    """
+    保存图片
+    :return:
+    """
+    fig = plt.figure()  # 创建一个新的空白图片
+    ax = fig.add_subplot(1, 1, 1)  # 添加一个子图
+    ax.plot([np.random.randint(1, 11) for i in range(10)])  # 绘制折线图
+
+    # dpi：每英寸点数的分辨率（默认为100），bbox_inches：要保存的图片范围，如果设置为"tight"将会去除掉图片周围空白的部分
+    plt.savefig(fname='example.jpg', dpi=120, bbox_inches='tight')  # 保存图片
+
+
 if __name__ == '__main__':
     build_figure()  # 创建图形和子图
     set_figure_attribute()  # 设置图形属性
+    save_figure()  # 保存图片
