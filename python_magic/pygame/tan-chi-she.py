@@ -8,6 +8,7 @@ import random
 import time
 from pygame.locals import *
 
+__author__ = 'Evan'
 
 # 定义颜色变量
 black_colour = pygame.Color(28, 56, 20)
