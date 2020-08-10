@@ -123,7 +123,7 @@ def file_operations():
     data.to_csv(sys.stdout, sep='|')  # 输出到屏幕，sep为分隔符（可用于临时查看写入的数据）
     print('读取CSV文件')
     print('自动分配默认列标签（从0开始）\n{}'.format(pd.read_csv(file_name, header=None)))
-    print('指定列标签\n{}'.format(pd.read_csv(file_name, names=['a', 'b', 'c'])))
+    print('指定列标签顺序\n{}'.format(pd.read_csv(file_name, names=['a', 'b', 'c'])))
     print('指定"a"列的值为行索引\n{}'.format(pd.read_csv(file_name, names=['a', 'b', 'c'], index_col='a')))
     print('指定"a"列和"b"列的值为行索引（分层索引）\n{}'.format(pd.read_csv(file_name, names=['a', 'b', 'c'], index_col=['a', 'b'])))
     print('使用缺失值替换文件内的指定值\n{}'.format(pd.read_csv(file_name, names=['a', 'b', 'c'], na_values={'b': [5, 8]})))
