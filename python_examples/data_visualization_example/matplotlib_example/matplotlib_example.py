@@ -92,7 +92,11 @@ def set_figure_attribute():
     # }
     # ax.set(**props)
 
-    plt.legend(loc='best')  # 添加图例（label）
+    plt.legend(loc='best')  # 添加图例（最好的位置）
+    # plt.legend(loc='upper left')  # 添加图例（左上位置）
+    # plt.legend(loc='upper right')  # 添加图例（右上位置）
+    # plt.legend(loc='lower left')  # 添加图例（左下位置）
+    # plt.legend(loc='lower right')  # 添加图例（右下位置）
     plt.show()  # 显示图片
 
 
