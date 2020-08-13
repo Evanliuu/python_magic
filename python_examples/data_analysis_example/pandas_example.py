@@ -17,7 +17,7 @@ def build_series():
     """
     # 创建数组
     pd.Series(dict(names='Evan', id=66))  # 使用字典生成一个Series（字典的键是行索引）
-    test = pd.Series(['aa', 'bb', 'cc', 'aa'], index=[1, 3, 5, 7])  # 使用列表生成一个Series，并指定行索引值（默认从0开始）
+    test = pd.Series(['12k', '15k16k', '18k1', 'k20'], index=[1, 3, 5, 7])  # 使用列表生成一个Series，并指定行索引值（默认从0开始）
     test.name = 'Data'  # 指定数组名称
     test.index.name = 'Info'  # 指定行索引名称
 
@@ -29,6 +29,27 @@ def build_series():
     print('返回数组所有的唯一值（去重）\n{}'.format(test.unique()))
     print('返回数组所有值的出现次数（默认降序）\n{}'.format(test.value_counts()))
     print('计算数组中每个值是否包含于传入序列的值，返回一个布尔值\n{}'.format(test.isin(['aa', 'cc'])))
+
+    # 强制转换为字符串类型
+    test.astype(str)
+
+    # 数组字符串操作常用方法（使用str属性：自动开启正则表达式模式）
+    # cat：和指定字符进行拼接
+    print('字符拼接（不指定参数）\n{}'.format(test.str.cat()))  # 返回一个字符串
+    print('和指定字符进行拼接（指定“-”）\n{}'.format(test.str.cat(sep='-')))  # 返回一个字符串
+    print('字符组合（每个字符末尾加xx）\n{}'.format(test.str.cat(others=['xx'] * len(test), sep='=')))  # 返回一个Series
+
+    # extract：提取指定字符（如有多个符合规则，则会放入不同的列）
+    print('提取所有的数字（extract）\n{}'.format(test.str.extract(r'(\d+)')))
+    # extractall：基本与 extract 一样，但是能把多个匹配放入同一列(按 index 分组)
+    print('提取所有的数字（extractall）\n{}'.format(test.str.extractall(r'(\d+)')))
+
+    # split：和python内置方法一样
+    # rsplit：和split用法一致，只不过默认是从右往左分隔
+    # get：获取指定位置的字符，每项只能获取1个
+    # contains：判断字符串是否含有指定子串，返回的是bool类型
+    # match：和python正则中的match一样，是从头开始匹配的。返回布尔型，表示是否匹配给定的模式
+    # replace：和python内置方法一样，替换指定字符串
 
 
 def build_data_frame():
@@ -227,8 +248,8 @@ def data_structured():
 
 if __name__ == '__main__':
     build_series()  # 构建Series对象
-    build_data_frame()  # 构建DataFrame对象
-    array_operations()  # 数组操作
-    file_operations()  # 文件操作
-    data_cleansing()  # 数据清洗
-    data_structured()  # 数据规整
+    # build_data_frame()  # 构建DataFrame对象
+    # array_operations()  # 数组操作
+    # file_operations()  # 文件操作
+    # data_cleansing()  # 数据清洗
+    # data_structured()  # 数据规整

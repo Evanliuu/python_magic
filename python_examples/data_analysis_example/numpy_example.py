@@ -25,7 +25,7 @@ print('返回每个元素的大小，以字节为单位 ，每个元素占4个�
 
 # 数组操作
 test.resize((3, 2))  # 改变当前数组，依shape生成
-print('改变数组维度的大小\n{}'.format(test.reshape(1, 6)))  # 不改变当前数组，依shape生成
-print('转换数组的数据类型\n{}'.format(test.astype(np.float64)))
 print('数组转置\n{}'.format(test.transpose()))  # 行列转置
 print('数组转换为列表\n{}'.format(test.tolist()))
+print('改变数组维度的大小\n{}'.format(test.reshape(1, 6)))  # 不改变当前数组，依shape生成
+print('转换数组的数据类型\n{}'.format(test.astype(np.float64)))
