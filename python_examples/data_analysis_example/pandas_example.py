@@ -248,8 +248,8 @@ def data_structured():
 
 if __name__ == '__main__':
     build_series()  # 构建Series对象
-    # build_data_frame()  # 构建DataFrame对象
-    # array_operations()  # 数组操作
-    # file_operations()  # 文件操作
-    # data_cleansing()  # 数据清洗
-    # data_structured()  # 数据规整
+    build_data_frame()  # 构建DataFrame对象
+    array_operations()  # 数组操作
+    file_operations()  # 文件操作
+    data_cleansing()  # 数据清洗
+    data_structured()  # 数据规整
