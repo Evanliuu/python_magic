@@ -26,7 +26,7 @@ def generate_word_cloud(text, background_image='', save_file_name=''):
                    width=600,
                    height=800,
                    mask=img_array,  # 添加图片背景框
-                   font_path=r'C:\Windows\Fonts\STFANGSO.ttf',  # 如果是中文必须要添加这个，否则会显示成框框
+                   font_path=r'C:\Windows\Fonts\simkai.ttf',  # 如果是中文必须要添加这个，否则会显示成框框
                    max_words=2000,  # 设置最大字数
                    random_state=30,  # 设置有多少种随机生成状态，即有多少种配色方案
                    )
@@ -42,4 +42,4 @@ def generate_word_cloud(text, background_image='', save_file_name=''):
 if __name__ == '__main__':
     with open('template.txt', 'r') as f:
         txt = f.read()
-    generate_word_cloud(text=txt, background_image='background.jpg', save_file_name='result.jpg')
+    generate_word_cloud(text=txt, background_image='background.jpg')
