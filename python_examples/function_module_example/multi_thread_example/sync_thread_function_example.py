@@ -66,6 +66,20 @@ def thread_run(sleep_list):
 
     print('所有线程执行结束')
 
+    # 标准写法
+    """
+    threads = []
+    for i in range(5):
+        t = threading.Thread(target=unit_test, args=(i,))
+        threads.append(t)
+
+    for thread in threads:
+        thread.start()
+
+    for thread in threads:
+        thread.join()
+    """
+
 
 def main():
     thread_run(sleep_list=[3, 2, 6, 1, 7, 5, 8])
