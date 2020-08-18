@@ -1,15 +1,12 @@
 import os
-from win32com.client.gencache import EnsureDispatch as Dispatch
+from win32com import client as win32  # 发送邮件模块
+from win32com.client.gencache import EnsureDispatch as Dispatch  # 读取邮件模块
 
 __author__ = 'Evan'
 
 
-def read_outlook_mailbox(save_attachment_path):
-    """
-    访问Outlook邮箱，读取收件箱内的邮件内容
-    :param save_attachment_path: 附件保存路径
-    :return:
-    """
+def read_outlook_mailbox():
+    """连接Outlook邮箱，读取收件箱内的邮件内容"""
     # 使用MAPI协议连接Outlook
     account = Dispatch('Outlook.Application').GetNamespace('MAPI')
 
@@ -38,10 +35,30 @@ def read_outlook_mailbox(save_attachment_path):
         # 保存邮件中的附件，如果没有附件不会执行也不会产生异常
         attachment = mail.Attachments
         for each in attachment:
+            save_attachment_path = os.getcwd()  # 保存附件到当前路径
             each.SaveAsFile(r'{}\{}'.format(save_attachment_path, each.FileName))
             print('附件（{}）保存完毕'.format(each.FileName))
 
 
+def send_mail():
+    """
+    连接Outlook邮箱，发送邮件
+    :return:
+    """
+    outlook = win32.Dispatch('Outlook.Application')  # 连接Outlook
+
+    mail_item = outlook.CreateItem(0)  # 创建新邮件
+    mail_item.Recipients.Add('test@test.com')  # 收件人邮箱
+    mail_item.Subject = 'Mail Test'  # 主题
+    mail_item.BodyFormat = 2  # 使用HTML格式编写正文
+    mail_item.HTMLBody = """"
+    <H2>Hello, This is a test mail.</H2>
+    Hello World.
+    """
+    # mail_item.Attachments.Add('test.csv')  # 添加附件
+    mail_item.Send()  # 发送邮件
+
+
 if __name__ == '__main__':
-    save_path = os.getcwd()  # 保存附件到当前路径
-    read_outlook_mailbox(save_attachment_path=save_path)
+    read_outlook_mailbox()
+    send_mail()
