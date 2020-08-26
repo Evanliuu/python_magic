@@ -4,7 +4,7 @@ import pymysql
 __author__ = 'Evan'
 
 
-def mysql_handle(host='localhost', user='root', password='', port=3306):
+def mysql_handle(host='localhost', user='root', password='66dashun', port=3306):
     """
     连接Mysql客户端
     :param host: Mysql database name
@@ -14,14 +14,14 @@ def mysql_handle(host='localhost', user='root', password='', port=3306):
     :return:
     """
     # 连接Mysql客户端
-    db = pymysql.connect(host=host, user=user, password=password, port=port)
+    db = pymysql.connect(host=host, user=user, password=password, port=port, db='example')
     cursor = db.cursor()  # 获取一个句柄
     print('连接Mysql成功')
 
-    # 创建表users
+    # 创建表users（如果存在则不创建）
     create_table = 'users'
     create_keys = 'uid INTEGER, pid INTEGER'
-    sql = "CREATE TABLE {0}({1})".format(create_table, create_keys)  # 动态创建数据表
+    sql = "CREATE TABLE if not exists {0}({1})".format(create_table, create_keys)  # 动态创建数据表
     cursor.execute(sql)
 
     data = {
@@ -33,7 +33,7 @@ def mysql_handle(host='localhost', user='root', password='', port=3306):
     table = 'users'
     keys = ', '.join(data.keys())
     values = ', '.join(['%s'] * len(data))
-    sql = "INSERT INFO {0}({1}) values({2})".format(table, keys, values)  # 动态插入数据表
+    sql = "INSERT INTO {0}({1}) values({2})".format(table, keys, values)  # 动态插入数据表
     cursor.execute(sql, tuple(data.values()))
 
     # 更新users表中数据
@@ -66,14 +66,14 @@ def mysql_handle(host='localhost', user='root', password='', port=3306):
     db.close()
 
     # 标准写法
-    try:
-        cursor.execute(sql)
-        db.commit()
-    except Exception as ex:
-        print('Error: {}'.format(ex))
-        db.rollback()
-    finally:
-        db.close()
+    # try:
+    #     cursor.execute(sql)
+    #     db.commit()
+    # except Exception as ex:
+    #     print('Error: {}'.format(ex))
+    #     db.rollback()
+    # finally:
+    #     db.close()
 
 
 if __name__ == '__main__':
