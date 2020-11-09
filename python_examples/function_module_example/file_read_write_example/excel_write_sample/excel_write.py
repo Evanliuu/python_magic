@@ -20,6 +20,7 @@ def write_excel_table(write_info, table_name='excel.xls', sheet_name='Sheet1'):
     # 写入表格第一行标题
     title = write_info[0][0][1]  # 获取标题信息
     style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow; font: bold on')  # 填充灰色背景，字体加粗
+    # write_merge用法：前两个参数是纵坐标的起始位置-结束位置，后两个是横坐标的，第五个参数是写入的值，第六个是单元格颜色）
     sheet1.write_merge(0, 0, 0, 19, title, style)  # 合并第一行的第0列到第19列
 
     # 从第二行开始写剩下的数据
