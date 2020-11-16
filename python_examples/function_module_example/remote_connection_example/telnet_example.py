@@ -1,16 +1,26 @@
-# -*- coding:utf-8 -*-
 import time
 import telnetlib
 import logging
+import sys
 
 __author__ = 'Evan'
 
-save_log_path = 'result.txt'
-file_mode = 'a+'
-format_info = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+# input parameter check
+input_info = sys.argv
+if len(input_info) == 3:
+    container = input_info[1]
+    serial_number = input_info[2]
+else:
+    raise ValueError('Please attach running parameters,'
+                     ' the first parameter is "Container", and the second parameter is "Serial Number"')
+
+save_log_path = '{}_{}.txt'.format(container, serial_number)
+file_mode = 'a+'
+format_info = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
 
 # Add record logger function
 fh = logging.FileHandler(save_log_path, mode=file_mode)
