@@ -106,9 +106,9 @@ class Crawler(object):
         2. 设置为开发者模式，避免被识别
         3. 设置无界面模式
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
-        chrome_options.add_argument('--headless')
+        1. chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        2. chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        3. chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(options=chrome_options)
 
         =============================================================
@@ -219,6 +219,7 @@ class Crawler(object):
         print(input_box.location)  # 获取节点在页面中的相对位置
         print(input_box.tag_name)  # 获取节点的标签名称
         print(input_box.size)  # 获取节点的大小
+
         # 获取网页信息
         print(self.driver.current_url)  # 获取当前的URL
         print(self.driver.get_cookies())  # 获取当前的Cookies
@@ -229,12 +230,21 @@ class Crawler(object):
         input_box.clear()  # 清空文本
         input_box.send_keys('python')  # 输入文本
         input_box.send_keys(Keys.ENTER)  # 执行输入
+
         # 网页交互
         self.driver.back()  # 网页后退
         time.sleep(1)
         self.driver.forward()  # 网页前进
+
+        # 弹窗交互
+        self.driver.switch_to.alert.accept()  # 点击确认
+        self.driver.switch_to.alert.dismiss()  # 点击取消
+        self.driver.switch_to.alert.send_keys('123')  # 在弹窗的文本框内输入信息
+        text = self.driver.switch_to.alert.text  # 获取弹窗的文本信息
+
         # 滚动页面
         self.page_scrolling()  # 执行javascript
+
         # 动作链
         source = self.driver.find_element_by_xpath('//*[@id="result_logo"]/img[1]')
         target = self.driver.find_element_by_xpath('//*[@id="kw"]')
