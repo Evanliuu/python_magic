@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 """
-Python制作翻译词典
+使用Python结合爬虫和GUI来制作翻译词典
+功能实现：请求网易有道词典的接口，获取翻译结果
 """
 import requests
 import json
