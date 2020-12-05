@@ -1,4 +1,7 @@
+# -*- coding:utf-8 -*-
 import pandas as pd
+
+__author__ = 'Evan'
 
 
 def write_excel(file_name, sheets, data):
