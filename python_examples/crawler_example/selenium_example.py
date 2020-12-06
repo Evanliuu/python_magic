@@ -222,9 +222,14 @@ class Crawler(object):
 
         # 获取网页信息
         print(self.driver.current_url)  # 获取当前的URL
-        print(self.driver.get_cookies())  # 获取当前的Cookies
         print(self.driver.page_source)  # 获取网页源代码
+        print(self.driver.get_cookies())  # 获取当前页面所有cookie值
+        print(self.driver.get_cookie(name='key'))  # 获取指定cookie值
         # self.driver.page_source.encode('GBK', 'ignore')  # 遇到编码问题使用这个
+
+        # cookie交互
+        self.driver.add_cookie({'domain': '.baidu.com', 'name': 'name'})  # 添加cookie
+        self.driver.delete_all_cookies()  # 删除当前页面所有cookie值
 
         # 节点交互
         input_box.clear()  # 清空文本
@@ -235,6 +240,8 @@ class Crawler(object):
         self.driver.back()  # 网页后退
         time.sleep(1)
         self.driver.forward()  # 网页前进
+        time.sleep(1)
+        self.driver.refresh()  # 网页刷新
 
         # 弹窗交互
         self.driver.switch_to.alert.accept()  # 点击确认

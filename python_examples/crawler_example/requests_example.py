@@ -23,8 +23,7 @@ class Crawler(object):
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
             ' Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'
         ]
-        ua = random.choice(ua_list)
-        return ua
+        return random.choice(ua_list)
 
     def main(self):
         # files = {'file': open('favicon.ico', 'rb')}  # 上传的文件
