@@ -7,7 +7,7 @@ __author__ = 'Evan'
 
 class Crawler(object):
 
-    def __init__(self, url=''):
+    def __init__(self, url):
         self.source_url = url
         self.session = requests.Session()  # Session初始化
 
@@ -27,23 +27,29 @@ class Crawler(object):
 
     def main(self):
         # files = {'file': open('favicon.ico', 'rb')}  # 上传的文件
-        # data = {'wd': 'python'}  # Post请求参数
-        params = {'wd': 'python'}  # Get请求参数
+        params = {'wd': 'python'}  # 请求参数
         headers = {"User-Agent": self.random_user_agent()}  # 请求头参数
+
+        # 构造cookies
+        raw_cookie = 'CSPROD.CAEAXprod=eyJraWQiOiJtZCIsImFsZyI6IkVTMjU2Iiwic;name=Evan'
+        cookies = {}
+        for line in raw_cookie.split(';'):
+            name, value = line.strip().split('=', 1)  # 只分割一次，拆分成2份
+            cookies[name] = value
+        # requests.post(self.source_url, headers=headers, data=params, cookies=raw_cookie)  # 使用带cookie的post请求
 
         # 访问页面
         # self.session.get(self.source_url, headers=headers, params=params)  # 使用Session保持会话
         # requests.post(self.source_url, headers=headers, files=files)  # 文件上传
-        # requests.post(self.source_url, headers=headers, data=data)  # Post请求
         response = requests.get(self.source_url, headers=headers, params=params)  # Get请求
-
         response.encoding = 'utf-8'  # 指定response为UTF-8编码
+
         # 获取网页信息
         print(response.url)  # 获取当前URL，返回一个字符串
         print(response.status_code)  # 获取响应状态码，返回一个整形
         print(response.headers)  # 获取头部信息，返回一个字典
         print(response.history)  # 获取访问的历史记录，可以查看是否重定向，返回一个列表
-        print(response.cookies)  # 获取网页Cookies，返回一个字典
+        print(dict(response.cookies))  # 获取网页Cookies，返回一个RequestsCookieJar类型，可以转换为字典
         print(response.content)  # 获取二进制格式，返回一个二进制数据
         print(response.text)  # 获取网页源代码，返回一个字符串
         # print(response.json())  # 如果响应信息是JSON格式则调用此方法，返回一个字典
@@ -57,7 +63,7 @@ class Crawler(object):
         # 身份认证（打开网页需要身份验证时调用此方法）
         requests.get('http://localhost:5000', auth=('username', 'password'))
 
-        # TODO 使用代理（需要提供有效的代理IP，使用SOCKS协议需要安装 'requests[socks] 外部库'）
+        # TODO(Evan): 使用代理（需要提供有效的代理IP，使用SOCKS协议需要安装 'requests[socks] 外部库'）
         # proxies = {"http": "http://10.10.1.10:3128", "https": "http://10.10.1.10:1080"}  # 使用普通格式
         # proxies = {"http": "http://user:password@10.10.1.10:3128"}  # 使用HTTP Basic Auth格式
         # proxies = {"http": "socks5://user:password@host:port", "https": "socks5://user:password@host:port"}  # SOCKS
