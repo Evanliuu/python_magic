@@ -10,11 +10,11 @@ def get_file_md5(path):
     :param path: 文件所在路径
     :return:
     """
-    with open(path, 'r') as file:
+    with open(path, 'rb') as file:
         data = file.read()
 
     diff_check = hashlib.md5()
-    diff_check.update(data.encode())
+    diff_check.update(data)
     md5_code = diff_check.hexdigest()
     return md5_code
 
