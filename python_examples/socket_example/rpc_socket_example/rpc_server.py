@@ -61,5 +61,5 @@ class SocketServer(object):
 
 
 if __name__ == '__main__':
-    server = SocketServer(port=6666)
+    server = SocketServer(ip_address='127.0.0.1', port=6666)
     server.setup_socket_server()

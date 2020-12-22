@@ -21,5 +21,5 @@ class SocketClient(object):
 
 
 if __name__ == '__main__':
-    client = SocketClient(ip_address='10.28.205.207')
+    client = SocketClient(ip_address='127.0.0.1')
     client.get_server_host_name()
