@@ -1,5 +1,6 @@
 import os
-import chardet
+
+__author__ = 'Evan'
 
 
 def bytes_conversion(size):
@@ -20,7 +21,3 @@ def bytes_conversion(size):
 
 if __name__ == '__main__':
     print(bytes_conversion(size=os.path.getsize('bytes_conversion_example.py')))
-
-    # 获取文件的编码格式
-    result = chardet.detect(open('bytes_conversion_example.py', mode='rb').read())
-    print(result)
