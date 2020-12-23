@@ -20,5 +20,5 @@ def bytes_conversion(size):
 
 
 if __name__ == '__main__':
-    for each in [1024000, 666666666, 9999999999]:
+    for each in [1024000, 666666666, 77777777777, 88888888888888]:
         print('原大小(b): {} -> 转换后: {}'.format(each, bytes_conversion(size=each)))
