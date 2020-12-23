@@ -77,7 +77,7 @@ def receive_socket_info(handle, expected_msg, side='server', do_decode=True, do_
 
 def start_client_socket():
     """
-    启动客户端socket
+    启动客户端TCP Socket
     :return:
     """
     ip, port = REMOTE_IP

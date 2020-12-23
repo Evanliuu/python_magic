@@ -80,7 +80,7 @@ def receive_socket_info(handle, expected_msg, side='server', do_decode=True, do_
 
 def start_server_socket():
     """
-    启动服务端socket
+    启动服务端TCP Socket
     :return:
     """
     ip, port = SOCKET_IP
