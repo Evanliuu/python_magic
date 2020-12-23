@@ -38,7 +38,7 @@ def send_socket_info(handle, msg, side='server', do_encode=True, do_print_info=T
 
 def receive_socket_info(handle, expected_msg, side='server', do_decode=True, do_print_info=True):
     """
-    循环接收socket info，判断其返回值，直到返回值出现为止，防止socket信息粘连，并根据side打印不同的前缀信息
+    循环接收socket info，判断其返回值，直到指定的值出现为止，防止socket信息粘连，并根据side打印不同的前缀信息
     :param handle: socket句柄
     :param expected_msg: 期待接受的内容，如果接受内容不在返回结果中，一直循环等待，期待内容可以为字符串，也可以为多个字符串组成的列表或元组
     :param side: 默认server端
