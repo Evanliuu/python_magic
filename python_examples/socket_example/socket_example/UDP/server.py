@@ -20,8 +20,8 @@ def start_server_socket():
 
     # 不断循环，接受客户端发来的消息
     while True:
-        socket_data = server.recv(BUFFER_SIZE).decode()
-        print('收到客户端发来的消息: {}'.format(socket_data))
+        socket_data, address = server.recvfrom(BUFFER_SIZE)
+        print('收到客户端 -> {} 发来的消息: {}'.format(address, socket_data.decode()))
 
 
 if __name__ == '__main__':
