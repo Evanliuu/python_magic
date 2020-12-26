@@ -7,7 +7,7 @@ __author__ = 'Evan'
 
 class MysqlHandle(object):
 
-    def __init__(self, host='10.167.219.250', port=3306, user='npbg', password='', db_name='npbg'):
+    def __init__(self, host='', port=3306, user='', password='', db_name=''):
         """
         数据库连接池初始化
         :param host: 数据库地址
