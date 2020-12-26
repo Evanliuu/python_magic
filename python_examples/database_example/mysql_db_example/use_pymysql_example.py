@@ -4,7 +4,7 @@ import pymysql
 __author__ = 'Evan'
 
 
-def mysql_handle(host='localhost', user='root', password='66dashun', port=3306):
+def mysql_handle(host='localhost', user='root', password='', port=3306):
     """
     连接Mysql客户端
     :param host: Mysql database name
