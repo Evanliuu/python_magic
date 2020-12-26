@@ -85,8 +85,9 @@ class MysqlHandle(object):
                 params = {
                     'where': 'name="Evan"'
                 }
-            else:
+            else:  # Default QUERY
                 params = {
+                    'fields': ['id', 'name', 'value'] or ''
                     'where': 'name="Evan"' or ''
                 }
         :return:
@@ -121,10 +122,19 @@ class MysqlHandle(object):
             self.execute_sql_command(sql)
 
         else:  # Default QUERY
-            if params.get('where'):
-                sql = """SELECT * FROM {0} WHERE {1}""".format(data_table, params['where'])
-            else:
-                sql = """SELECT * FROM {}""".format(data_table)
+            if params.get('fields'):  # 如果fields有值，返回指定的fields
+                assert isinstance(params['fields'], list), 'fields必须是个列表'
+                fields = ','.join(str(f) for f in params['fields'])
+
+                if params.get('where'):
+                    sql = """SELECT {0} FROM {1} WHERE {2}""".format(fields, data_table, params['where'])
+                else:
+                    sql = """SELECT {0} FROM {1}""".format(fields, data_table)
+            else:  # 返回所有字段
+                if params.get('where'):
+                    sql = """SELECT * FROM {0} WHERE {1}""".format(data_table, params['where'])
+                else:
+                    sql = """SELECT * FROM {}""".format(data_table)
 
             data = self.execute_sql_command(sql)
             if data:
