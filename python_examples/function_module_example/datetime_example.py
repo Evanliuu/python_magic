@@ -7,7 +7,7 @@ print('当前时间减1天：{}\n'.format(current_time - datetime.timedelta(days
 
 
 # 时间计算
-now_time = datetime.datetime.now() - datetime.timedelta(days=1)
+now_time = datetime.datetime.now() + datetime.timedelta(days=1)
 print('两个时间差（秒）：{}'.format((now_time - current_time).total_seconds()))
 print('两个时间差（天）：{}'.format((now_time - current_time).days))
 
