@@ -11,3 +11,7 @@ print('北京时间转换为西八区时间：{}\n'.format(current_time.astimezo
 
 print('字符转换为datetime类型：{}'.format(datetime.datetime.strptime('2020-12-01 08:00:00', '%Y-%m-%d %H:%M:%S')))
 print('datetime类型转换为字符：{}'.format(current_time.strftime('%Y-%m-%d %H:%M:%S')))
+
+now_time = datetime.datetime.now() - datetime.timedelta(days=1)
+print('两个时间差（秒）：{}'.format((now_time - current_time).total_seconds()))
+print('两个时间差（天）：{}'.format((now_time - current_time).days))
