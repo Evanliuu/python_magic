@@ -46,7 +46,7 @@
 1.  ping                     PING返回响应是否连接成功
 2.  echo                     在命令行打印一些内容
 3.  select                   0~15 编号的数据库
-4.  quit                     /exit 退出客户端
+4.  quit                     退出客户端
 5.  dbsize                   返回当前数据库中所有key的数量
 6.  info                     返回redis的相关信息
 7.  config get dir/*         实时传储收到的请求
