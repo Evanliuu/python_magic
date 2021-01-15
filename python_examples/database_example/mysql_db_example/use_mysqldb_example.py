@@ -53,7 +53,7 @@ class MysqlHandle(object):
         except Exception as ex:
             print('SQL: [{}] execute failed, error msg: {}'.format(sql, ex))
             if 'SELECT' in sql.upper():
-                return []
+                return ()
             conn.rollback()
             return False
         finally:
