@@ -9,11 +9,13 @@ print('当前时间减1天：{}\n'.format(current_time - datetime.timedelta(days
 # 时间计算
 now_time = datetime.datetime.now() + datetime.timedelta(days=1)
 print('两个时间差（秒）：{}'.format((now_time - current_time).total_seconds()))
-print('两个时间差（天）：{}'.format((now_time - current_time).days))
+print('两个时间差（天）：{}\n'.format((now_time - current_time).days))
 
 
 # 时间转化
 print('取起始整点：{}'.format(current_time.replace(minute=0, second=0, microsecond=0)))
+print('转化为时间戳：{}'.format(current_time.timestamp()))
+print('时间戳转换为datetime：{}\n'.format(datetime.datetime.fromtimestamp(current_time.timestamp())))
 
 
 # 时区转化：北京时间为东八区时间(UTC+8)，美国为西八区时间(UTC-8)，UTC0为世界标准时间
