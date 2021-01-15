@@ -1,5 +1,8 @@
+"""
+使用PooledDB连接池连接Mysql数据库
+"""
 # -*- coding:utf-8 -*-
-import MySQLdb
+import pymysql
 from DBUtils.PooledDB import PooledDB
 
 __author__ = 'Evan'
@@ -7,9 +10,9 @@ __author__ = 'Evan'
 
 class MysqlHandle(object):
 
-    def __init__(self, host='', port=3306, user='', password='', db_name=''):
+    def __init__(self, host='localhost', user='root', password='', db_name='', port=3306):
         """
-        数据库连接池初始化
+        初始化PooledDB连接池
         :param host: 数据库地址
         :param port: 数据库端口
         :param user: 用户名
@@ -17,13 +20,14 @@ class MysqlHandle(object):
         :param db_name: 数据库名
         """
         self.pool = PooledDB(
-            creator=MySQLdb,
-            mincached=0,
-            maxcached=6,
-            maxshared=3,
-            blocking=True,
+            creator=pymysql,
+            mincached=0,  # 连接池中空闲连接的初始数量
+            maxcached=6,  # 连接池中空闲连接的最大数量
+            maxshared=3,  # 共享连接的最大数量
+            maxconnections=0,  # 连接池最大值，默认无上限
+            blocking=True,  # 超过最大连接数的处理，为True阻塞连接，等待连接池空位，为False直接报错
             ping=0,
-            maxusage=None,
+            maxusage=None,  # 单个连接的最大重复使用次数，默认无限制
             host=host,
             user=user,
             password=password,
@@ -32,18 +36,18 @@ class MysqlHandle(object):
             charset='utf8mb4'
         )
 
-    def execute_sql_command(self, sql='', as_dict=True):
+    def execute_sql(self, sql, as_dict=True):
         """
         执行SQL命令，如果是SELECT会返回所有的查询结果，通用方法
-        :param sql: Mysql语句
-        :param as_dict: 是否将结果转换为字典类型
+        :param sql: SQL语句
+        :param as_dict: 是否将结果转换为字典类型，默认True
         :return:
         """
         conn = None
         cursor = None
         try:
             conn = self.pool.connection()  # 使用pool连接数据库
-            cursor = conn.cursor(MySQLdb.cursors.DictCursor) if as_dict else conn.cursor()
+            cursor = conn.cursor(pymysql.cursors.DictCursor) if as_dict else conn.cursor()
             cursor.execute(sql)
             if 'SELECT' in sql.upper():
                 return cursor.fetchall()
@@ -54,7 +58,34 @@ class MysqlHandle(object):
             print('SQL: [{}] execute failed, error msg: {}'.format(sql, ex))
             if 'SELECT' in sql.upper():
                 return ()
-            conn.rollback()
+            if conn:
+                conn.rollback()
+            return False
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+    def execute_many_sql(self, sql, params):
+        """
+        同时执行多次SQL命令
+        :param sql: SQL语句，例：'INSERT INTO table (id,name) VALUES (%s,%s)'  # 占位符统一使用 %s，且不能加上引号
+        :param params: 必须是元组或列表类型，例：((), ()) or [(), ()]
+        :return:
+        """
+        conn = None
+        cursor = None
+        try:
+            conn = self.pool.connection()  # 使用pool连接数据库
+            cursor = conn.cursor()
+            cursor.executemany(sql, params)
+            conn.commit()
+            return True
+        except Exception as ex:
+            print('SQL: [{}] execute failed, error msg: {}'.format(sql, ex))
+            if conn:
+                conn.rollback()
             return False
         finally:
             if cursor:
@@ -132,7 +163,7 @@ class MysqlHandle(object):
                 else:
                     sql = """SELECT * FROM {}""".format(data_table)
 
-        return self.execute_sql_command(sql)
+        return self.execute_sql(sql)
 
 
 SQL = MysqlHandle()
