@@ -57,47 +57,243 @@ Tips：
 打开cmd输入 redis-cli.exe 即可进入redis命令行
 """
 # -*- coding:utf-8 -*-
-from redis import StrictRedis
+import redis
+import pickle
+import datetime
 
 __author__ = 'Evan'
 
 
-class RedisHandle(object):
+class Redis(object):
 
-    def __init__(self, host='localhost', port=6379):
-        self.host = host
-        self.port = port
-        # 连接redis数据库
-        self.client = StrictRedis(host=self.host, port=self.port, db=0, password='')
-        print('连接redis数据库成功！')
+    def __init__(self, host='localhost', port=6379, db=0, password=''):
+        """
+        初始化Redis连接池
+        :param host: 主机名
+        :param port: 端口
+        :param db: 数据库
+        :param password: 密码
+        """
+        pool = redis.ConnectionPool(
+            host=host,
+            port=port,
+            db=db,
+            password=password,
+            max_connections=None  # 连接池最大值，默认2**31
+        )
+        self.redis = redis.Redis(connection_pool=pool)
 
-    def write_data(self, key, value):
-        self.client.set(key, value)
+    def __del__(self):
+        """程序结束后，自动关闭连接，释放资源"""
+        self.redis.connection_pool.disconnect()
 
-    def get_data(self, key):
-        value = self.client.get(key)
-        return value
+    def exists(self, name):
+        """
+        检查name是否存在
+        :param name:
+        :return:
+        """
+        return self.redis.exists(name)
 
-    def get_all_data(self):
-        all_keys = []
-        if self.client.keys():
-            for i in self.client.keys():
-                key = i.decode('ascii')
-                value = self.get_data(i).decode('ascii')
-                all_keys.append({key: value})
+    def delete(self, name):
+        """
+        删除指定的name
+        :param name:
+        :return:
+        """
+        return self.redis.delete(name)
+
+    def rename(self, old, new):
+        """
+        重命名
+        :param old:
+        :param new:
+        :return:
+        """
+        if self.exists(old):
+            return self.redis.rename(old, new)
+
+    def set_expire_by_second(self, name, second=60 * 60 * 24 * 7):
+        """
+        以秒为单位设置过期时间
+        :param name:
+        :param second: 默认7天
+        :return:
+        """
+        return self.redis.expire(name, time=second)
+
+    def remove_expire(self, name):
+        """
+        移除name的过期时间，name将持久保持
+        :param name:
+        :return:
+        """
+        return self.redis.persist(name)
+
+    def get_expire_by_second(self, name):
+        """
+        以秒为单位返回name的剩余过期时间
+        :param name:
+        :return:
+        """
+        return self.redis.ttl(name)
+
+    def get_name_type(self, name):
+        """
+        获取name的数据类型
+        :param name:
+        :return:
+        """
+        return self.redis.type(name).decode()
+
+    def check_name_type(self, name, expect_type='string'):
+        """
+        检查name的数据类型
+        数据类型对照表：
+            set   ->  'string'
+            hset  ->  'hash'
+            lpush ->  'list'
+            sadd  ->  'set'
+            zadd  ->  'zset'
+        :param name:
+        :param expect_type: string / hash / list / set / zset
+        :return:
+        """
+        name_type = self.get_name_type(name)
+        if name_type == expect_type:
+            return True
         else:
-            all_keys = None
-        print('find total items:\n{}'.format(all_keys))
-        return all_keys
+            return False
 
-    def delete_data(self, key):
-        self.client.delete(key)
-        print('delete the key: {}'.format(key))
+    def set(self, name, value, do_pickle=True, expire=60 * 60 * 24 * 7):
+        """
+        添加set类型，使用pickle进行持久化存储
+        :param name:
+        :param value:
+        :param do_pickle: 是否使用pickle进行二进制序列化，默认True
+        :param expire: 单位second，默认7天
+        :return:
+        """
+        if do_pickle:
+            self.redis.set(name=name, value=pickle.dumps(value), ex=expire)
+        else:
+            self.redis.set(name=name, value=value, ex=expire)
+
+    def get_set_value(self, name, do_pickle=True):
+        """
+        获取指定的set value
+        :param name:
+        :param do_pickle: 是否使用pickle进行二进制反序列化，默认True
+        :return:
+        """
+        value = self.redis.get(name=name)
+        if value:
+            if do_pickle:
+                return pickle.loads(value)
+            else:
+                return value
+        else:
+            return None
+
+    def get_set_all(self, do_pickle=True):
+        """
+        获取所有的set value
+        :param do_pickle: 是否使用pickle进行二进制反序列化，默认True
+        :return: [{}, {}, {}]
+        """
+        all_data = []
+        if self.redis.keys():
+            for key in self.redis.keys():  # 获取所有的key
+                flag = self.check_name_type(name=key, expect_type='string')  # 判断是否为set类型
+                if not flag:
+                    continue
+                value = self.get_set_value(name=key, do_pickle=do_pickle)
+                all_data.append({key.decode(): value})
+        return all_data
+
+    def zadd(self, name, value=[], do_pickle=True, expire=60 * 60 * 24 * 7):
+        """
+        添加有序集合类型，默认score为当前时间戳，使用pickle进行持久化存储
+        :param name:
+        :param value: [{}, {}, {}]
+        :param do_pickle: 是否使用pickle进行二进制序列化，默认True
+        :param expire: 单位second，默认7天
+        :return:
+        """
+        assert value, 'value不能为空'
+        value_dict = {}
+        for each in value:
+            score = each.get('timestamp') or datetime.datetime.now().timestamp()  # 如果没有timestamp，取当前时间戳为score
+            if do_pickle:
+                value_dict.setdefault(pickle.dumps(each), score)
+            else:
+                value_dict.setdefault(str(each), score)  # 如果不进行序列化，需要将字典转化为字符串作为Key，否则会报错
+
+        self.redis.zadd(name=name, mapping=value_dict)
+        self.set_expire_by_second(name, expire)  # 设置expire
+
+    def get_zadd_data_by_score(self, name, start_score=None, end_score=None, do_pickle=True):
+        """
+        根据score范围，返回对应的数据，只用于有序集合
+        :param name:
+        :param start_score: timestamp时间戳
+        :param end_score: timestamp时间戳
+        :param do_pickle: 是否使用pickle进行二进制序列化，默认True
+        :return:
+        """
+        # 如果start_score为空，默认为前一天的时间戳
+        start_score = start_score or (datetime.datetime.now() - datetime.timedelta(days=1)).timestamp()
+        # 如果end_score为空，默认为当前时间的时间戳
+        end_score = end_score or datetime.datetime.now().timestamp()
+
+        data = self.redis.zrangebyscore(name, start_score, end_score)
+        if do_pickle:
+            return [pickle.loads(i) for i in data]
+        else:
+            return [i for i in data]
+
+    def delete_zadd_data_by_score(self, name, start_score, end_score):
+        """
+        根据score范围，删除对应的数据，只用于有序集合
+        :param name:
+        :param start_score: timestamp时间戳
+        :param end_score: timestamp时间戳
+        :return:
+        """
+        return self.redis.zremrangebyscore(name, start_score, end_score)
+
+    def get_zadd_timestamp_range(self, name):
+        """
+        获取指定name对应集合中的score最小值和最大值，只用于有序集合
+        :param name:
+        :return: [start_datetime, end_datetime]
+        """
+        status = self.exists(name)
+        if status != 0:
+            # 转换为datetime类型
+            start_datetime = datetime.datetime.fromtimestamp(self.redis.zrange(name,
+                                                                               start=0,
+                                                                               end=0,
+                                                                               desc=False,
+                                                                               withscores=True)[0][1])
+            end_datetime = datetime.datetime.fromtimestamp(self.redis.zrange(name,
+                                                                             start=0,
+                                                                             end=0,
+                                                                             desc=True,
+                                                                             withscores=True)[0][1])
+            return [start_datetime, end_datetime]
+        else:
+            return []
 
 
 if __name__ == '__main__':
-    redisDb = RedisHandle()
-    redisDb.write_data('name', 'evan')
-    redisDb.get_all_data()
-    redisDb.delete_data('name')
-    redisDb.get_all_data()
+    REDIS = Redis()
+    # 测试set
+    REDIS.set(name='name', value='Evan', do_pickle=True, expire=60)
+    REDIS.set(name='id', value=6, do_pickle=True, expire=60)
+    print(REDIS.get_set_value('name', do_pickle=True))
+    print(REDIS.get_set_all())
+    # 测试有序集合
+    REDIS.zadd(name='demo', value=[{'name': 'Evan'}, {'id': 6}], do_pickle=True, expire=60)
+    print(REDIS.get_zadd_data_by_score(name='demo', do_pickle=True))
+    print(REDIS.get_zadd_timestamp_range(name='demo'))
