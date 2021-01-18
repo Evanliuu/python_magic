@@ -1,7 +1,6 @@
 """
 Tips：
 所有带@app装饰器的函数会自动调用，其他不带装饰器的函数必须手动调用才会执行
-
 """
 # -*- coding:utf-8 -*-
 from flask import Flask, Request, render_template, url_for, redirect
