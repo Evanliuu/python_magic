@@ -69,7 +69,7 @@ def generate_new_url():
 
 def main():
     # app.run(host='0.0.0.0')  # 使服务器可被网络内其他设备访问（不配置host，只能用本地电脑访问）
-    app.run(debug=True)  # 启用Debug模式，服务器会在代码修改后自动重新载入（慎用，有安全隐患）
+    app.run(debug=True)  # 启用Debug模式，服务器会在代码修改后自动重新载入
 
 
 if __name__ == '__main__':
