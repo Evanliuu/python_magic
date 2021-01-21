@@ -72,7 +72,7 @@ def send_email(sender, receiver, auth_code, subject='This is a test'):
     :param sender: 发件邮箱
     :param receiver: 收件邮箱
     :param auth_code: 发件邮箱的授权登录密码
-    :param subject: 邮件正文
+    :param subject: 邮件主题
     :return:
     """
     # 实例化容器对象
