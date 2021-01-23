@@ -217,10 +217,10 @@ class GuiSample(object):
         构建选择菜单控件
         :return:
         """
-        self.from_language = tk.StringVar()
-        self.from_language.set('OptionMenu is here')
+        self.menu = tk.StringVar()
+        self.menu.set('OptionMenu is here')
         select_list = ['Evan', 'Jane']
-        self.option_menu = tk.OptionMenu(self.root, self.from_language, *select_list)
+        self.option_menu = tk.OptionMenu(self.root, self.menu, *select_list)
         self.option_menu.config(bg='LightSkyBlue')
 
     def build_label(self):
