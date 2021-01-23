@@ -181,9 +181,9 @@ class GuiSample(object):
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title('Gui sample')  # 设置GUI标题
 
         # 设置GUI界面属性
+        self.root.title('Gui sample')  # 设置GUI标题
         self.root.wm_attributes("-alpha", 1.0)  # 设置GUI透明度(0.0~1.0)
         self.root.wm_attributes("-topmost", True)  # 设置GUI置顶
         # self.root.wm_attributes("-toolwindow", True)  # 设置为工具窗口（没有放大和缩小按钮）
