@@ -32,14 +32,14 @@
 
     使用MIMEMultipart对象：
         MIMEMultipart实例化有三个可选类型，分别为:
+        * mixed: 邮件包含附件，图片，文本等（默认值，选择mixed类型什么都可以发）
         * alternative: 邮件正文中包含纯文本正文（text/plain）和超文本正文（text/html）
         * related: 邮件正文中包含图片，声音等内嵌资源
-        * mixed: 邮件包含附件，图片，文本等（默认为这个，选择mixed类型什么都可以发）
 
         multipart_obj = MIMEMultipart('mixed')
-        multipart_obj['subject'] = Header('Hello Evan’, 'utf-8')  # 配置邮件主题
-        multipart_obj['From'] = '777@qq.com'  # 配置发件方邮箱
-        multipart_obj['To'] = '666@qq.com'  # 配置发件方邮箱
+        multipart_obj['subject'] = Header('Hello boys', 'utf-8')  # 配置邮件主题
+        multipart_obj['From'] = '666@qq.com'  # 配置发件方邮箱
+        multipart_obj['To'] = '777@qq.com'  # 配置收件方邮箱
         multipart_obj.attach(ready_obj)  # 添加构造好的文本对象或者附件对象（txt_obj、image_obj、html_obj）
 
 发送邮件模块（使用QQ邮箱例子）：
@@ -77,8 +77,8 @@ def send_email(sender, receiver, auth_code, subject='This is a test'):
     """
     # 实例化容器对象
     send_obj = MIMEMultipart('mixed')
-    send_obj['From'] = 'Evan Liu'
-    send_obj['To'] = ','.join(receiver)  # 将所有的接收邮箱转成字符串，用逗号隔开
+    send_obj['From'] = sender
+    send_obj['To'] = ','.join(receiver) if isinstance(receiver, list) else receiver
     send_obj['subject'] = Header(subject, 'utf-8')
 
     # 构造普通文本内容
@@ -119,4 +119,4 @@ def send_email(sender, receiver, auth_code, subject='This is a test'):
 
 
 if __name__ == '__main__':
-    send_email(sender='**@qq.com', receiver=['**@qq.com'], auth_code='Enter your pass code')
+    send_email(sender='**@qq.com', receiver='**@qq.com', auth_code='Enter your pass code')
