@@ -188,7 +188,7 @@ class GuiSample(object):
         self.root.wm_attributes("-topmost", True)  # 设置GUI置顶
         # self.root.wm_attributes("-toolwindow", True)  # 设置为工具窗口（没有放大和缩小按钮）
         # self.root.overrideredirect(-1)  # 去除GUI边框（GUI标题、放大缩小和关闭按钮都会消失）
-        # self.bind_window_move_events()  # 如果去除GUI边框了，就要绑定窗口移动事件，否则GUI无法移动和退出
+        # self.bind_window_move_events()  # 如果去除GUI边框了，就要绑定窗口移动事件，否则GUI无法移动
 
         # 设置所有窗口部件
         self.build_label()
