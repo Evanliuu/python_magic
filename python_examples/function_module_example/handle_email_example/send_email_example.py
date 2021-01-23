@@ -103,6 +103,7 @@ def send_email(sender, receiver, auth_code, subject='This is a test'):
 
     # 使用服务器登陆
     # sftp_obj = smtplib.SMTP('smtp_server_ip', 'server_port')
+    # sftp_obj.connect(host='smtp_server_ip', port='server_port')
     # sftp_obj.login(user=sender, password=auth_code)
 
     # 使用QQ邮箱登陆
