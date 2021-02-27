@@ -18,12 +18,13 @@ import configparser
 __author__ = 'Evan'
 
 
-def read_ini_file(section, option, file='config.ini'):
+def read_ini_file(section, option='', file='config.ini', get_all=False):
     """
-    读取ini文件
+    读取ini配置文件
     :param section:
     :param option:
     :param file:
+    :param get_all:
     :return:
     """
     config = configparser.ConfigParser()
@@ -35,9 +36,11 @@ def read_ini_file(section, option, file='config.ini'):
     print('section [{}] 下所有键值对: {}'.format(section, config.items(section)))
     print('*' * 80)
 
-    value = config.get(section, option)  # 获取指定的value
-    print(f'Read result：section={section}, option={option}, value={value}')
-    return value
+    if get_all:
+        return config.items(section)  # 返回所有的option（键值对）
+    else:
+        print(f'Read result：section={section}, option={option}, value={value}')
+        return config.get(section, option)  # 返回指定的value
 
 
 def update_ini_file(section, option, value, file='config.ini'):
