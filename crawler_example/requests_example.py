@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import random
 import requests
+from requests.adapters import HTTPAdapter
 
 __author__ = 'Evan'
 
@@ -10,6 +11,10 @@ class Crawler(object):
     def __init__(self, url):
         self.source_url = url
         self.session = requests.Session()  # Session初始化
+
+        # 设置超时重试次数
+        self.session.mount('http://', HTTPAdapter(max_retries=3))
+        self.session.mount('https://', HTTPAdapter(max_retries=3))
 
     @staticmethod
     def random_user_agent():
