@@ -36,13 +36,16 @@ class Crawler(object):
         for line in raw_cookie.split(';'):
             name, value = line.strip().split('=', 1)  # 只分割一次，拆分成2份
             cookies[name] = value
-        # requests.post(self.source_url, headers=headers, data=params, cookies=raw_cookie)  # 使用带cookie的post请求
+        # requests.post(self.source_url, headers=headers, data=params, cookies=cookies)  # 使用带cookies的post请求
 
         # 访问页面
         # self.session.get(self.source_url, headers=headers, params=params)  # 使用Session保持会话
         # requests.post(self.source_url, headers=headers, files=files)  # 文件上传
         response = requests.get(self.source_url, headers=headers, params=params)  # Get请求
         response.encoding = 'utf-8'  # 指定response为UTF-8编码
+
+        # 获取响应时间
+        print(response.elapsed.total_seconds())  # 单位s
 
         # 获取网页信息
         print(response.url)  # 获取当前URL，返回一个字符串
