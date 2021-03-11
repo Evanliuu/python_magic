@@ -4,8 +4,6 @@
 """
 import random
 
-__author__ = 'Evan'
-
 
 def get_random_red_envelope(all_money=100, count=15):
     """
