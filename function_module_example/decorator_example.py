@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
-
-__author__ = 'Evan'
+import functools
 
 
 # 二层装饰器
@@ -26,6 +25,22 @@ def full_decorator(value=None):  # 装饰器的实参
     return decorator
 
 
+# 使用wraps
+def my_decorator(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        '''decorator'''
+        print('Calling decorated function...')
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@my_decorator
+def example():
+    """Docstring"""
+    print('Called example function')
+
+
 @decorator
 def example1(*args):
     return 'hi {}'.format(args)
@@ -37,7 +52,12 @@ def example2(*args):
 
 
 if __name__ == '__main__':
+    print('使用wraps结果：')
+    print('name: {}'.format(example.__name__))
+    print('docstring: {}'.format(example.__doc__))
+
     print('二层装饰器结果：')
     print(example1('example1'))
+
     print('三层装饰器结果：')
     print(example2('example2'))
