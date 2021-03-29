@@ -60,29 +60,29 @@ chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
 chrome_options.add_argument('--headless')
 
 # 设置默认编码为utf-8
-options.add_argument('lang=zh_CN.UTF-8')
+chrome_options.add_argument('lang=zh_CN.UTF-8')
 
 # 通过设置user-agent，用来模拟移动设备
 <模拟 Android QQ浏览器>
-options.add_argument('user-agent="MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"')
+chrome_options.add_argument('user-agent="MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"')
 <模拟iPhone 6>
-options.add_argument('user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"')
+chrome_options.add_argument('user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"')
 
 # 设置selenium窗口大小
-browser.set_window_size(configure.windowHeight, configure.windowWidth)  # configure为桌面分辨率实际大小
+driver.set_window_size(configure.windowHeight, configure.windowWidth)  # configure为桌面分辨率实际大小
 
 # 阻止密码保存提示框的弹出
 prefs = {}
 prefs[“credentials_enable_service”] = False
 prefs[“profile.password_manager_enabled”] = False
-options.add_experimental_option(“prefs”, prefs)
+chrome_options.add_experimental_option(“prefs”, prefs)
 
 # 添加应用扩展程序 （.crx文件）
 extension_path = 'D:/extension/XPath-Helper_v2.0.2.crx'
 chrome_options.add_extension(extension_path)
 
 # 启动配置选项
-self.driver = webdriver.Chrome(options=chrome_options)
+driver = webdriver.Chrome(options=chrome_options)
 ================================================================================================================
 """
 # -*- coding:utf-8 -*-
@@ -176,7 +176,7 @@ class Crawler(object):
             js = "window.scrollBy({}, {})".format(rolling_distance[0], rolling_distance[1])
         self.driver.execute_script(js)
 
-    def screen_shot(self, picture_name='example.jpg'):
+    def screenshot(self, picture_name='example.jpg'):
         """
         截取当前网页并保存为图片
         :param picture_name: 保存的图片名称
