@@ -10,7 +10,7 @@ print(f'所有的输入参数：{sys.argv[1:]}')
 
 def check_ip(ip):
     """
-    add_argument的检查函数
+    检查输入的ip是否符合规范
     :param ip:
     :return:
     """
