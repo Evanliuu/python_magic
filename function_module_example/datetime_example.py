@@ -18,9 +18,10 @@ print('转化为时间戳：{}'.format(current_time.timestamp()))
 print('时间戳转换为datetime：{}\n'.format(datetime.datetime.fromtimestamp(current_time.timestamp())))
 
 
-# 时区转化：北京时间为东八区时间(UTC+8)，美国为西八区时间(UTC-8)，UTC0为世界标准时间
+# 时区转化：UTC0为世界标准时间，夏令时比冬令时快1小时，夏令时比北京时间慢15小时，冬令时慢16小时
 print('北京时间转换为UTC0时间：{}'.format(current_time.astimezone(datetime.timezone(datetime.timedelta(hours=0)))))
-print('北京时间转换为西八区时间：{}\n'.format(current_time.astimezone(datetime.timezone(datetime.timedelta(hours=-8)))))
+print('北京时间转换为西八区时间：{}'.format(current_time.astimezone(datetime.timezone(datetime.timedelta(hours=-8)))))
+print('转换为可计算的datetime类型：{}\n'.format(current_time.astimezone(datetime.timezone(datetime.timedelta(hours=-8))).replace(tzinfo=None)))
 
 
 # 类型转化
