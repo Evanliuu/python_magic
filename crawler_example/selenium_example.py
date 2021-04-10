@@ -45,28 +45,31 @@
 16. element_located_selection_state_to_be           传入定位元组以及状态，相等返回True，否则返回False
 17. staleness_of                                    判断一个节点是否仍在DOM，可判断当前页面是否已经刷新
 
-<<Chrome浏览器配置选项>>
+<<浏览器配置选项>>
 ================================================================================================================
 # 实例化配置选项
-chrome_options = webdriver.ChromeOptions()
+options = webdriver.ChromeOptions()
 
 # 不加载图片，加快访问速度
-chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
 
-# 设置为开发者模式，避免被识别
-chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+# 设置为开发者模式，避免被识别（隐藏浏览器的受控制提示语）
+options.add_experimental_option('excludeSwitches', ['enable-automation'])
 
 # 设置无界面模式
-chrome_options.add_argument('--headless')
+options.add_argument('--headless')
+
+# 设置窗口最大化
+options.add_argument("--start-maximized")
 
 # 设置默认编码为utf-8
-chrome_options.add_argument('lang=zh_CN.UTF-8')
+options.add_argument('lang=zh_CN.UTF-8')
 
 # 通过设置user-agent，用来模拟移动设备
 <模拟 Android QQ浏览器>
-chrome_options.add_argument('user-agent="MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"')
+options.add_argument('user-agent="MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"')
 <模拟iPhone 6>
-chrome_options.add_argument('user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"')
+options.add_argument('user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"')
 
 # 设置selenium窗口大小
 driver.set_window_size(configure.windowHeight, configure.windowWidth)  # configure为桌面分辨率实际大小
@@ -75,14 +78,14 @@ driver.set_window_size(configure.windowHeight, configure.windowWidth)  # configu
 prefs = {}
 prefs[“credentials_enable_service”] = False
 prefs[“profile.password_manager_enabled”] = False
-chrome_options.add_experimental_option(“prefs”, prefs)
+options.add_experimental_option(“prefs”, prefs)
 
 # 添加应用扩展程序 （.crx文件）
 extension_path = 'D:/extension/XPath-Helper_v2.0.2.crx'
-chrome_options.add_extension(extension_path)
+options.add_extension(extension_path)
 
 # 启动配置选项
-driver = webdriver.Chrome(options=chrome_options)
+driver = webdriver.Chrome(options=options)
 ================================================================================================================
 """
 # -*- coding:utf-8 -*-
@@ -103,13 +106,13 @@ class Crawler(object):
         """
         Chrome常用配置选项:
         1. 不加载图片，加快访问速度
-        2. 设置为开发者模式，避免被识别
+        2. 设置为开发者模式，避免被识别（隐藏浏览器的受控制提示语）
         3. 设置无界面模式
-        chrome_options = webdriver.ChromeOptions()
-        1. chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        2. chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
-        3. chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(options=chrome_options)
+        options = webdriver.ChromeOptions()
+        1. options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        2. options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        3. options.add_argument('--headless')
+        self.driver = webdriver.Chrome(options=options)
 
         =============================================================
         # PhantomJS设置缓存和禁用图片加载
@@ -117,9 +120,16 @@ class Crawler(object):
         self.driver = webdriver.PhantomJS(service_args=service_args)
         """
         self.source_url = url
-        self.driver = webdriver.Chrome()  # 选择浏览器驱动
+
+        options = webdriver.ChromeOptions()
+        options.add_argument("--start-maximized")  # 设置窗口最大化
+        options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        self.driver = webdriver.Chrome(options=options)  # 选择浏览器驱动
+        # self.driver.maximize_window()  # 设置窗口最大化，但是有延迟
+
         self.waiting = WebDriverWait(self.driver, 30)  # 设置显示等待30秒
         self.driver.implicitly_wait(30)  # 设置隐示等待30秒
+
         self.actions = webdriver.ActionChains(self.driver)  # 动作链初始化
 
     def switch_to_windows(self, to_parent_windows=False):
