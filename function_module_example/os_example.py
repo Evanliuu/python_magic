@@ -6,6 +6,11 @@ import chardet
 __author__ = 'Evan'
 
 
+# 获取父级完整路径
+print(os.path.dirname(__file__))
+# 获取当前路径的文件名
+print(os.path.basename(__file__))
+
 print('getcwd ==>', os.getcwd())  # 获取当前目录路径
 print('path ==>', sys.path[0])  # 获取当前目录路径
 print('dirname ==>', os.path.dirname(os.path.abspath(__file__)))  # 获取当前目录路径
