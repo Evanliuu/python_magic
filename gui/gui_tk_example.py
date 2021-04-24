@@ -172,7 +172,9 @@ sticky:             空间位置 [NSWE - if cell is larger on which sides will t
 * #000000 Black 纯黑
 """
 # -*- coding:utf-8 -*-
+import os
 import tkinter as tk
+from tkinter import filedialog
 
 __author__ = 'Evan'
 
@@ -211,6 +213,17 @@ class GuiSample(object):
 
         # 设置窗口位置居中
         self.set_gui_geometry(window=self.root)
+
+    def build_file_open_control(self):
+        """
+        构建文件选择控件
+        :return:
+        """
+        # multiple=True 可以上传多个
+        file_path = filedialog.askopenfilename(title='选择照片',
+                                               filetypes=[('jpg', '*.jpg'), ('png', '*.png')],
+                                               initialdir=os.getcwd())
+        file_name = os.path.basename(file_path)
 
     def build_option_menu(self):
         """
