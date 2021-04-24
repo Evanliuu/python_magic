@@ -120,15 +120,15 @@ class ChangeBackgroundTool(object):
         self.execute_bt.config(text='正在转换中...', state='disable')
 
         # 新图片名称：在末尾补"_new"
-        new_picture_name = os.path.join(os.getcwd(), self.picture_name.split('.')[0] + '_new.' + self.picture_name.split('.')[1])
+        new_picture_name = self.picture_name.split('.')[0] + '_new.' + self.picture_name.split('.')[1]
 
         self.change_background_color(picture=self.picture_path,
                                      changed_color=self.background_color[self.menu.get()],
                                      resize=resize_value,
                                      new_picture_name=new_picture_name)
         self.entry_input.set('')
-        messagebox.showinfo('提示', '转换完成！\n新图片名称：{}\n存放路径：{}'.format(os.path.basename(new_picture_name),
-                                                                    new_picture_name))
+        messagebox.showinfo('提示', '转换完成！\n新图片名称：{}\n存放路径：{}'.format(new_picture_name,
+                                                                    os.path.join(os.getcwd(), new_picture_name)))
         self.execute_bt.config(text='开始转换', state='active')
 
     @staticmethod
